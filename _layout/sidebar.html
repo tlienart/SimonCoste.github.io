@@ -1,0 +1,25 @@
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+
+    <div class="sidebar-about">
+
+      <h1><a class="sidebar-about" href="/">{{author}}</a></h1>
+      <p class="sidebar-about">{{website_descr}}</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item {{ispage index.html}}active{{end}}" href="/">About</a>
+      <a class="sidebar-nav-item {{ispage research/*}}active{{end}}" href="/research/">Research</a>
+      <a class="sidebar-nav-item {{ispage teaching/*}}active{{end}}" href="/teaching/">Teaching</a>
+    </nav>
+
+
+
+  </div>
+  
+  <div class="sidebar-foot">
+    <p class=sidebar-foot">&copy; {{ fill author }}, modified: {{ fill fd_mtime }}. Built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the wonderful <a href="https://julialang.org">Julia programming language. </a></p>
+  </div>
+  
+</div>
+<div class="content container">
