@@ -1,4 +1,4 @@
-@def title = "More goodies"
+@def title = "Teaching"
 @def hascode = true
 
 @def tags = ["syntax", "code", "image"]
