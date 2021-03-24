@@ -261,7 +261,7 @@ td {
 
 body { counter-reset: eqnum; }
 
-.katex { font-size: 1em !important; }
+.katex { font-size: var(--normal) !important; }
 
 .katex-display .katex {
   /* Overwrite KaTeX settings. */
@@ -338,4 +338,39 @@ code {
   width: 1cm;
   height: 1cm;
   border-radius: 50%;
+}
+
+
+
+/* ==================================================================
+    BLOG POSTS (source: abhishalya)
+================================================================== */
+
+ul.blog-posts {
+  list-style-type: none;
+  padding: unset;
+}
+
+ul.blog-posts li {
+  display: flex;
+}
+
+ul.blog-posts li span {
+  flex: 0 0 130px;
+}
+
+
+/* ==================================================================
+    BLOGPOSTS ADDITIONS
+================================================================== */
+
+.description {
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.page-date {
+  display: block;
+  font-style: italic;
+  margin-bottom: 40px;
 }
