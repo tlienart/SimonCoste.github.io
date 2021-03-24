@@ -11,3 +11,10 @@
 <body>
 {{insert sidebar.html}}
 <!-- Content appended here -->
+
+{{isdef titlepost}}
+<div class="franklin-content">
+  {{isdef date}} <h1 class="page-title"> {{fill titlepost}} </h1> {{end}}
+  {{isdef date}} <span class="page-date"> {{fill date}} </span> {{end}}
+</div>
+{{end}}
