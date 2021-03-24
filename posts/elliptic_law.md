@@ -44,7 +44,7 @@ where the $X_\ell$ are iid standard real Gaussian random variables. The mode of 
 
 Since the limiting random function $z \mapsto \kappa(z)\mathrm{e}^{-F(z)}$ does not vanish inside $\mathbb{D}$, one can use results like [the Hurwitz theorem](https://en.wikipedia.org/wiki/Hurwitz%27s_theorem_(complex_analysis)) to show that when $n$ is large, it is highly unlikely that $q_n$ has a root inside $D(0, 1-\epsilon)$ -- thus proving that the eigenvalue of $A/\sqrt{n}$ with highest modulus, say $\lambda_1$, has $\limsup |\lambda_1| \leqslant 1 + \epsilon$ with probability $1-o(1)$. 
 
-This is already visible in the picture corresponding to $\rho=0$ above, even though $n=100$ is pretty small here; the inverse eigenvalues seem to avoid the disk $\mathbb{D}$, or be very close to its boundary. Looking at the other pictures, one would merrily suppose that a similar statement holds for every $\rho$, with no eigenvalue of $X_\rho/\sqrt{n}$ being really far away outside of the ellipse boundary. 
+This is already visible in the picture corresponding to $\rho=0$ above, even though $n=100$ is pretty small here; the inverse eigenvalues seem to avoid the disk $\mathbb{D}$, or be very close to its boundary. Looking at the other pictures, one would merrily suppose that a similar statement holds for every $\rho$ between $-1$ and $1$, with no eigenvalue of $X_\rho/\sqrt{n}$ being really far away outside of the ellipse boundary. 
 
 ## Notes and References
 
