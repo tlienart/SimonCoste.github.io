@@ -12,7 +12,7 @@ Here are two nice facts on spectra of random matrices of large size $n$.
 - When $A$ is a Wigner matrix, the eigenvalues of $A/\sqrt{n}$ asymptotically follow a [semi-circle law](https://en.wikipedia.org/wiki/Wigner_semicircle_distribution), and in particular they are real. By **Wigner matrix**, I mean a symmetric matrix where all the entries on and above the diagonal are iid real random variables, centered, with variance 1. 
 
 What happens in between lies in the **elliptic** realm.  If $A$ is a Wigner matrix, the symmetry of $A$ is indeed equivalent to $A$ being maximally correlated with its own transpose $A^*$, since they are equal. One can thus create intermediary models between Girko and Wigner, by parametrizing the degree of correlation above and below the diagonal: for this, we just take $A$ to be a fully independent matrix (Girko), and set
-$$X_\rho = A + \rho A.$$
+$$X_\rho = A + \rho A^*.$$
 The matrix $X_0 = A$ is a Girko matrix; the matrix $X_1 = A + A^*$ is a symmetric matrix and the matrix $X_{-1} = A - A^*$ it is an antisymmetric matrix. In $X_\rho$, the entries above and below the diagonal are correlated, in that if $i \neq j$, 
 $$ \mathrm{Cov}((X_\rho)_{i,j},(X_\rho)_{i,j}) = 2\rho\mathrm{Var}(A_{i,j})  = 2\rho.$$
 It turns out that the eigenvalues of $X_\rho$ asymptotically [follow the elliptic distribution](https://arxiv.org/abs/1201.1639): they tend to be uniformly distributed inside an ellipse, ie the domain defined by
@@ -48,7 +48,7 @@ This is already visible in the picture corresponding to $\rho=0$ above, even tho
 
 ## Notes and References
 
-
+[The original paper of Girko](http://www.mathnet.ru/links/40ad27ac5dfd2c54a41c23e646c480f4/tvp1897.pdf) on the elliptic law... in Russian!
 
 [Elliptic law for real random matrices](https://arxiv.org/abs/1201.1639), Naumov
 
