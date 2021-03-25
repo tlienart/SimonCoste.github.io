@@ -48,9 +48,8 @@ This is already visible in the picture corresponding to $\rho=0$ above, even tho
 
 ## Notes and References
 
-[The original paper of Girko](http://www.mathnet.ru/links/40ad27ac5dfd2c54a41c23e646c480f4/tvp1897.pdf) on the elliptic law... in Russian!
+[The original paper of Girko](http://www.mathnet.ru/links/40ad27ac5dfd2c54a41c23e646c480f4/tvp1897.pdf) on the elliptic law... in Russian.
 
-[Elliptic law for real random matrices](https://arxiv.org/abs/1201.1639), Naumov
 
 [Convergence of the spectral radius of a random matrix through its characteristic polynomial](https://arxiv.org/pdf/2012.05602.pdf), Bordenave, Chafaï, García-Zelada. 
 

@@ -3,6 +3,9 @@
 
 # Notes
 
-More to come. 
+
 
 {{recentblogposts}}
+
+
+More to come. 
