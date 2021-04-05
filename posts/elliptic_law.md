@@ -1,6 +1,6 @@
 +++
 titlepost = "An inverse visualization for the elliptic law"
-date = "March 24, 2020"
+date = "March 24, 2021"
 abstract = "A beautiful colorplot of the characteristic polynomial of random matrices. "
 +++
 
