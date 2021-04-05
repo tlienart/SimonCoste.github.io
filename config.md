@@ -10,6 +10,8 @@ The website_* must be defined for the RSS to work
 @def author = "Simon Coste"
 @def hascode = true
 @def mintoclevel = 2
+@def date_format = "U dd, yyyy"
+@def lastmodif = Dates.format(Dates.today(), "U dd, yyyy")
 
 <!--
 Add here files or directories that should be ignored by Franklin, otherwise
