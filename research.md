@@ -56,15 +56,30 @@ Joint work with [Yizhe Zhu](https://sites.google.com/ucsd.edu/yizhe).
 This is a note on "bulk insider" eigenvalues for the non-backtracking spectrum of SBM. We prove their existence in the $\omega(\log n)$ regime, which partially answers a question of [Dall'Amico et al 2019](https://arxiv.org/abs/1901.09715). The existence is still not proved in the sparse regime (feb. 2021).
 
  
+### The characteristic polynomial of sparse matrices seen from infinity
 
-# Order and fluctuations in point processes
+Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arxiv.org/pdf/2012.05602.pdf), I show that when $A_n$ is a random $n\times n$ matrix with all $n^2$ entries independent random variables with distribution $\mathrm{Bernoulli}(d/n)$ and $d>1$ is fixed while $n \to \infty$, then the random polynomial $q_n(I_n - zA_n)$ converges weakly in distribution towards a random analytic function on $D(0, 1/\sqrt{d})$. 
+
+This entails a short proof for the asymptotics of the high eigenvalues of sparse directed Erdos-Réniy matrices. 
+
+Work in preparation (April 11, 2021).
+
+I'm working on the same thing for random directed regular graphs.
+
+
+
+# Other works
+
+
+### Order and fluctuations in point processes
 
 In parallel, I'm interested in the rigidites of random point processes, such as number-rigidities, fluctuations reductions, hyperuniformity, and the possible links between these notions. There are different ways in which point processes in $\mathbb{R}^d$ can exhibit a stronger order than the totally chaotic Poisson process; *hyperuniformity* is when the (random) number of points $N_r$ falling in a large domain $B_r$ of radius $r$ has a reduced variance, that is, when 
 $$ \lim_{r \to \infty} \frac{\mathrm{Var}(N_r)}{\mathrm{Vol}(B_r)} = 0. $$ 
 In this survey, I try to give a mathematical overview of this rich domain. Topics: the Fourier caracterization of hyperuniformity, the fluctuation scale, the links with number-rigidity and maximal rigidity for stealthy processes, the example of pertubed lattices. 
 
+Here is a version of this survey. It's still work in progress.
 
-# Other works
+[Hyperuniformity survey](/assets/survey_hyperuniformity.pdf) (april 2021)
 
 ### A note on a generalization of the Erdos-Gallai Theorem
 
