@@ -10,6 +10,8 @@
 
 [TD sur les estimateurs](/teaching/TD_Estimateurs.pdf) et [son corrigé partiel](/teaching/Corr_estimateurs.pdf)
 
+[TD de statistiques multivariées](/teaching/TD_stats_mult.pdf)
+
 ### Calendrier 2021 : 
 - mardi 6 avril , 9h-12h : chi-deux, tests ANOVA, rappels sur les régressions linéaires ; coefficients de corrélation, matrices de covariance et de corrélations. 
 - mardi 13 avril, 9h-12h : régressions linéaires et modèle gaussien. 
