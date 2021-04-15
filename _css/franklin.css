@@ -37,11 +37,16 @@ html {
 }
 
 .franklin-content .container img {
-  width: 20rem;
+  width: 3rem;
   padding-left: 0;
   border-radius: 50%;
 }
 
+.franklin-content .container .img-small img {
+  width: 3rem;
+  padding-left: 0;
+  border-radius: 50%;
+}
 
 
 
@@ -250,7 +255,7 @@ td {
 }
 
 .franklin-content .img-small img {
-  width: 50%;
+  width: 10rem;
   text-align: center;
   padding-left: 20%;
 }
@@ -340,6 +345,11 @@ code {
   border-radius: 50%;
 }
 
+.important {
+  background-color: rgb(241, 251, 232);
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
 
 
 /* ==================================================================
