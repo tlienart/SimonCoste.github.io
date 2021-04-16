@@ -123,7 +123,7 @@ This last statement is actually much stronger than the statement of the theorem,
 ### The $L^1$ case 
 
 The last argument of the proof will be less shady if we allow an extra assumption: we can suppose that the $X_n$ are $L^1$. Instead of considering one particular realization of $\tilde{F}$, we can simply average with respect to $\tilde{F}$, which has the same distribution as $f$, so 
-$$\mathbf{E}[\tilde{F}(z)] = \sum \mathbf{E}[X'_n]z^n  = \sum \mathbf{E}[X_n]z^n.$$
+$$\mathbf{E}[\tilde{F}(z)] = \sum \mathbf{E}[\tilde{X}_n]z^n  = \sum \mathbf{E}[X_n]z^n.$$
  The second case of the theorem now reads:
 
 @@important
@@ -136,7 +136,7 @@ I recently stumbled across an example illustrating this: consider the case wher
 $$\sum \mathbf{E}[X^n]z^n = \sum d^n z^n = \frac{1}{1-zd} $$
 so that
 $$f(z) - \frac{1}{1 - zd}= \sum (X_n - d^n)z^n. $$
-By elementary concentration arguments, it is possible to prove that $\limsup|X_n - d^n|^n = \sqrt{d}$, and consequently $f(z) - (1-zd)^{-1}$ has a radius of convergence equal to $1/\sqrt{d}$, and the singularity at $1/d$ was really isolated. It is also possible to show that $f(z) - (1-zd)^{-1}$ has a coupure at $1/\sqrt{d}$, thus giving a full illustration of Ryll-Narzewski's theorem.
+By elementary concentration arguments, it is possible to prove that $\limsup|X_n - d^n|^n = \sqrt{d}$, and consequently $f(z) - (1-zd)^{-1}$ has a radius of convergence equal to $1/\sqrt{d}$, and the singularity at $1/d$ was really isolated. It is also possible to show that $f(z) - (1-zd)^{-1}$ has a coupure at $1/\sqrt{d}$, thus giving a full illustration of Ryll-Nardzewski's theorem.
 
 ## References 
 
