@@ -18,7 +18,7 @@ $$ \mathrm{Cov}((X_\rho)_{i,j},(X_\rho)_{i,j}) = 2\rho\mathrm{Var}(A_{i,j})  = 2
 It turns out that the eigenvalues of $X_\rho$ asymptotically [follow the elliptic distribution](https://arxiv.org/abs/1201.1639): they tend to be uniformly distributed inside an ellipse, ie the domain defined by
 $$ \frac{\mathrm{Real}(z)^2}{(1 + \rho)^2} + \frac{\mathrm{Imag}(z)^2}{(1 - \rho)^2} \leqslant 1. $$
 The animated picture below is an illustration of this phenomenon, as seen from $\infty$. 
-![elliptic law](/posts/elliptic.gif)
+![elliptic law](/posts/img/elliptic.gif)
 
 For several correlation parameters, I represented the [phase portrait](https://en.wikipedia.org/wiki/Domain_coloring) of the reciprocical of the characteristic determinant, 
 $$ q_n(z)=\det(I - zX_\rho / \sqrt{n})$$ as a complex function; the white dots are the inverses of the eigenvalues of $X_\rho/\sqrt{n}$, and the white line is the inverse of the ellipse.
