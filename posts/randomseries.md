@@ -15,21 +15,21 @@ The precise statement is below; it is due to the Polish mathematician Czesław R
 
 ## Hadamard's formula
 
-Let us remind a basic fact on the radius of convergence: if $\sum a_n z^n$ is a power series, its radius of convergence is given by [Hadamard's formula](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Hadamard_theorem), 
+Let us remind a basic fact on the radius of convergence: if $f(z)=\sum a_n z^n$ is a power series, its radius of convergence is given by [Hadamard's formula](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Hadamard_theorem), 
 @@important
 $$ r = \frac{1}{\limsup |a_n|^\frac{1}{n}}. $$
 @@
 
 Inside the disk $D(0,r)$, the power series converges, but this says nothing on what happens on the border of the disk or outside. Does $f(z)$ approach a limit as $z$ approaches the border, for instance if $z\to 1$? Does it erratically diverge? Are there some points on the boudary, such that $f$ can be extended analytically around this point? 
 
-Think about the series $\sum z^n$. Its radius of convergence is 1, but since the sum is equal to $(1-z)^{-1}$, we can extend it at any point of the circle of radius 1; in fact, we can extend this function at every point of $\mathbb{C}\setminus 1$, even if the series representation only holds in the disk $D(0,1)$. 
+Think about the series $\sum z^n$. Its radius of convergence is 1, but since the sum is equal to $(1-z)^{-1}$, we can extend it at any point of the circle of radius 1, except at the point $z=1$; in fact, we can extend this function at every point of $\mathbb{C}\setminus 1$, even if the series representation only holds in the disk $D(0,1)$. 
 
 ## What happens at the border
 
 We say that a complex number $w$ on the circle $C_1 = \{|z|=1\}$ is **regular** if there is a $\delta > 0$ such that $f$ can be extended analytically on $D(w, \delta)$. By the properties of analytic functions, this extension is unique. If a point is not regular, it is called **singular**. 
 
 The set $\mathscr{R}$ of regular points of $f$ is an open subset of $C_1$, and among functions with a radius of convergence equal to 1, it can have very different behaviours:
-- If $f(z) = \sum_{n=0}^\infty = (1-z)^{-1}$, then the only non-regular point is $1$, thus $\mathscr{R} = C_1 \setminus 1$. Building on this example can construct functions with any finite number of singular points. 
+- If $f(z) = \sum_{n=0}^\infty (1-z)^{-1}$, then the only non-regular point is $1$, thus $\mathscr{R} = C_1 \setminus 1$. Building on this example can construct functions with any finite number of singular points. 
 - At the other side of the spectrum is $f(z) = \sum_{n=1}^\infty z^{n!}$. It can be shown using [Hadamard's lacunary series theorem](https://en.wikipedia.org/wiki/Ostrowski%E2%80%93Hadamard_gap_theorem) or any [gap theorem](https://en.wikipedia.org/wiki/Fabry_gap_theorem) that $\mathscr{R}$ is empty, that is, there is no hope of extending $f$ on any open set containing some point in $C_1$. 
 
 This last case where $\mathscr{R}$ is empty might seem pathological; it is actually not. If $\mathscr{R}$ is empty, we say that $C_1$ is a **coupure** for $f$, following Borel's vocabulary.
@@ -82,7 +82,7 @@ If the $X_n$ are symmetric random variables and if $f(z)=\sum X_n z^n$ has a rad
 By *symmetric*, we mean that the law of $X_n$ and the law of $-X_n$ are equal.
 
 *Proof.* Let us suppose that $\mathscr{R}$ is not empty. It contains a small arc interval of the circle, say $\{e^{it} : t \in ]a,b]\}$, and there is an integer $m$ such that the arc length of this interval is bigger than $1/m$.
-Now, if the $X_n$ are symmetric, then for any choice of signs $s_n = \pm 1$, the law of the random analytic functions
+Now, if the $X_n$ are symmetric, then for any deterministic choice of signs $s_n = \pm 1$, the law of the random analytic functions
 $$ \sum s_n X_n z^n $$
 are the same as the law of $f$; in particular, if we set $s_n$ to be $-1$ if $n \equiv k$ modulo $m$ and $1$ otherwise, we obtain a new random series $f_k$ with the same law as $f$. But
 $$ f(z) - f_k(z) = 2\sum_{n=0}^\infty X_{k + mn}z^{k + mn} = 2z^k g(z)$$
@@ -110,7 +110,7 @@ If the $X_n$ are random complex numbers such that $f(z) = \sum X_n z^n$ almost s
 
 @@
 
-This was beforehand a conjecture, and it was proved by the Polish mathematician C. Ryll-Nardzewski; a few simpler proofs appeared afterwise. This one is notably simple and is drawn from J.-P. Kahane's book, *Some random series of functions*. The same statement actually holds on assumptions weaker than independance of the $X_n$'s. 
+This was beforehand a conjecture, and it was proved by the Polish mathematician C. Ryll-Nardzewski; a few simpler proofs appeared afterwise. This one is notably simple and is drawn from J.-P. Kahane's book, *Some random series of functions*. The same statement actually holds on assumptions weaker than independence of the $X_n$'s. 
 
 *Proof*. Let us suppose that we are not in the first case, that is, the set of almost sure regular points $\mathscr{R}$ is not empty. We introduce another sequence of random variables $\tilde{X}_n$, which are independent of the $X_n$'s and have the same law. We note $\tilde{F}(z) = \sum \tilde{X}_n z^n$ their Taylor series: it has the same distribution as $f$. 
 
@@ -132,11 +132,11 @@ $f(z) - \sum_{n=1}^\infty \mathbf{E}[X_n]z^n$ has a coupure at $C_s$ for some  $
 
 ## A Poisson example
 
-I recently stumbled across an example illustrating this: consider the case where $X_n$ are independant Poisson random variables with parameter $d^n$ for some common $d$. Routine arguments show that the radius of convergence of $f$ is $1/d$, but in fact there is no coupure at $1/d$. To see why, note that
+I recently stumbled across an example illustrating this: consider the case where $X_n$ are independent Poisson random variables with parameter $d^n$ for some common $d$. Routine arguments show that the radius of convergence of $f$ is $1/d$, but in fact there is no coupure at $1/d$. To see why, note that
 $$\sum \mathbf{E}[X^n]z^n = \sum d^n z^n = \frac{1}{1-zd} $$
 so that
 $$f(z) - \frac{1}{1 - zd}= \sum (X_n - d^n)z^n. $$
-By elementary concentration arguments, it is possible to prove that $\limsup|X_n - d^n|^n = \sqrt{d}$, and consequently $f(z) - (1-zd)^{-1}$ has a radius of convergence equal to $1/\sqrt{d}$, and the singularity at $1/d$ was really isolated. It is also possible to show that $f(z) - (1-zd)^{-1}$ has a coupure at $1/\sqrt{d}$, thus giving a full illustration of Ryll-Nardzewski's theorem.
+By elementary concentration arguments, it is possible to prove that $\limsup|X_n - d^n|^{1/n} = \sqrt{d}$, and consequently $f(z) - (1-zd)^{-1}$ has a radius of convergence equal to $1/\sqrt{d}$, and the singularity at $1/d$ was really isolated. It is also possible to show that $f(z) - (1-zd)^{-1}$ has a coupure at $1/\sqrt{d}$, thus giving a full illustration of Ryll-Nardzewski's theorem.
 
 ## References 
 
