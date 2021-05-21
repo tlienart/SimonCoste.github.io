@@ -75,7 +75,7 @@ In this survey, I try to give a mathematical overview of this rich domain. Topic
 
 Here is a version of this survey. It's still work in progress.
 
-[Hyperuniformity survey](/assets/survey_hyperuniformity.pdf) (april 2021)
+[Hyperuniformity survey](/assets/survey_hyperuniformity.pdf) (may 2021: added a paragraph on the zeroes of the GEF)
 
 ### A note on a generalization of the Erdos-Gallai Theorem
 
