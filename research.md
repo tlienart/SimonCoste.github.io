@@ -58,10 +58,11 @@ This is a note on "bulk insider" eigenvalues for the non-backtracking spectrum o
  
 ### The characteristic polynomial of sparse matrices seen from infinity
 
+[Arxiv link](https://arxiv.org/abs/2106.00593) -- not submitted yet (June 2).
+
 Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arxiv.org/pdf/2012.05602.pdf), I show that when $A_n$ is a random $n\times n$ matrix with all $n^2$ entries independent random variables with distribution $\mathrm{Bernoulli}(d/n)$ and $d>1$ is fixed while $n \to \infty$, then the random polynomial $q_n(I_n - zA_n)$ converges weakly in distribution towards a random analytic function on $D(0, 1/\sqrt{d})$. This function is a Poisson analog of the *Gaussian Holomorphic Chaos*, see [Najnudel, Paquette, Simm 2020](https://arxiv.org/pdf/2011.01823.pdf). This entails a short proof for the asymptotics of the high eigenvalues of sparse directed Erdos-Réniy matrices, which was proved in  [Arxiv link](https://arxiv.org/abs/2102.03188).
 
-Work in preparation (May 18th, 2021); I'm also working on an extension for random regular graphs.
-
+Work in preparation (June 2021); extension for the $d<1$ case and the $d \to \infty$ case.  
 
 
 # Other works
