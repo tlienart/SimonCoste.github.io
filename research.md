@@ -5,11 +5,11 @@ date = Date(2019, 3, 22)
 +++
 @def tags = ["syntax", "code"]
 
-# Preprints, papers, documents
+# Preprints, papers, work in progress
 
 \toc
 
-# The spectral point of view on large networks
+# Extremal eigenvalues
 
 I study spectral properties of random objects like graphs and matrices, and their application to statistical inference problems. The use of low-dimensional spectral embeddings has proven to be a fruitful method in such problems as matrix completion, community detection, graph alignment, etc. I recently got into spectral convolutions in graph neural networks. 
 
@@ -32,7 +32,7 @@ We confirm the long-standing prediction that $c=e \approx 2.718$ is the threshol
 
 Joint work with [Charles Bordenave](http://www.i2m.univ-amu.fr/perso/charles.bordenave/start) and [Raj Rao Nadakuditi](https://web.eecs.umich.edu/~rajnrao/). 
 
-[Arxiv link](https://arxiv.org/abs/2005.06062) -- in revision. 
+[Arxiv link](https://arxiv.org/abs/2005.06062) -- in revision for [FoCM](https://www.springer.com/journal/10208).  
 
 We completely describe the extremal elements in the eigendecomposition of some very sparse matrices, with a new and efficient point of view regarding the problem of matrix completion in the very hard regime. We show how non-symmetric matrices can sometimes be quite beneficial in such regimes.
 
@@ -58,17 +58,23 @@ This is a note on "bulk insider" eigenvalues for the non-backtracking spectrum o
  
 ### The characteristic polynomial of sparse matrices seen from infinity
 
-[Arxiv link](https://arxiv.org/abs/2106.00593) -- not submitted yet (June 2).
+[Arxiv link](https://arxiv.org/abs/2106.00593).
 
-Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arxiv.org/pdf/2012.05602.pdf), I show that when $A_n$ is a random $n\times n$ matrix with all $n^2$ entries independent random variables with distribution $\mathrm{Bernoulli}(d/n)$ and $d>1$ is fixed while $n \to \infty$, then the random polynomial $q_n(I_n - zA_n)$ converges weakly in distribution towards a random analytic function on $D(0, 1/\sqrt{d})$. This function is a Poisson analog of the *Gaussian Holomorphic Chaos*, see [Najnudel, Paquette, Simm 2020](https://arxiv.org/pdf/2011.01823.pdf). This entails a short proof for the asymptotics of the high eigenvalues of sparse directed Erdos-Réniy matrices, which was proved in  [Arxiv link](https://arxiv.org/abs/2102.03188).
+Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arxiv.org/pdf/2012.05602.pdf), I show that when $A_n$ is a random $n\times n$ matrix with all $n^2$ entries independent random variables with distribution $\mathrm{Bernoulli}(d/n)$ and $d>1$ is fixed while $n \to \infty$, then the random polynomial $q_n(I_n - zA_n)$ converges weakly in distribution towards a random analytic function on $D(0, 1/\sqrt{d})$. This function is a Poisson analog of the *Gaussian Holomorphic Chaos*, see [Najnudel, Paquette, Simm 2020](https://arxiv.org/pdf/2011.01823.pdf).  The result is also proved when $d$ is allowed to grow to infinity with $n$ slowly. In this semi-sparse regime, the limits are more classical Gaussian objects and the statement on the eigenvalues is still valid: in particular, the second eigenvalue sticks to the bulk of the circular distribution. 
 
-Work in preparation (June 2021); extension for the $d<1$ case and the $d \to \infty$ case.  
+Work in progress with Yizhe Zhu and Ludovic Stefan: extension for regular graphs, regular digraphs and non-backtracking matrices. 
 
+### Stability of scattering transforms on sparse graphs
+
+We show that scattering transforms on graphs are continuous with respect to local-weak distance: as a consequences, these graph descriptors are transferable among network models sharing the same local properties and show a remarkable degree of stability, even in very sparse graph models. From an experimental perspective, we examine how these non-learned transforms characterize graph models and graph signals through moment-constrained sampling. 
+
+Work in progress with Bartek B. and Bharatt Chowdhuri. 
 
 # Other works
 
 
 ### Order and fluctuations in point processes
+
 
 In parallel, I'm interested in the rigidites of random point processes, such as number-rigidities, fluctuations reductions, hyperuniformity, and the possible links between these notions. There are different ways in which point processes in $\mathbb{R}^d$ can exhibit a stronger order than the totally chaotic Poisson process; *hyperuniformity* is when the (random) number of points $N_r$ falling in a large domain $B_r$ of radius $r$ has a reduced variance, that is, when 
 $$ \lim_{r \to \infty} \frac{\mathrm{Var}(N_r)}{\mathrm{Vol}(B_r)} = 0. $$ 
@@ -77,6 +83,12 @@ In this survey, I try to give a mathematical overview of this rich domain. Topic
 Here is a version of this survey. It's still work in progress.
 
 [Hyperuniformity survey](/assets/survey_hyperuniformity.pdf) (may 2021: added a paragraph on the zeroes of the GEF)
+
+### Effective rigidity with neural networks
+
+Many stationary point processes have recently been shown to be *rigid*, that is, the number of points of the process inside a disk is a measurable function of the point configuration outside the disk. However, most of these functions are limits of linear statistics of the point process and they frequently have an exponential radius of stabilization, making it nearly impossible to effectively recover the number of points in a small disk by the observation of the configuration in a large window. Can we construct more explicit reconstruction functions ? With a deep learning perspective, one can try to train invariant neural networks to get back this number and evaluate the complexity of the solutions. 
+
+Work in progress with Antoine Brochard. 
 
 ### A note on a generalization of the Erdos-Gallai Theorem
 

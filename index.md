@@ -10,7 +10,11 @@ I am a member of ERC Nemo, led by François Baccelli, and also of the Dyogene t
 
 You can reach me at `firstname.lastname@inria.fr`. 
 
+
 [GitHub](https://github.com/SimonCoste), [GitLab](https://gitlab.inria.fr/scoste), [ArXiv](https://arxiv.org/search/?searchtype=author&query=Coste%2C+S).
+
+**August 2021**: I'll give a talk on random matrices at Journées MAS (online). 
+
 
 
 
