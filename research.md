@@ -60,7 +60,7 @@ This is a note on "bulk insider" eigenvalues for the non-backtracking spectrum o
 
 [Arxiv link](https://arxiv.org/abs/2106.00593).
 
-Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arxiv.org/pdf/2012.05602.pdf), I show that when $A_n$ is a random $n\times n$ matrix with all $n^2$ entries independent random variables with distribution $\mathrm{Bernoulli}(d/n)$ and $d>1$ is fixed while $n \to \infty$, then the random polynomial $q_n(I_n - zA_n)$ converges weakly in distribution towards a random analytic function on $D(0, 1/\sqrt{d})$. This function is a Poisson analog of the *Gaussian Holomorphic Chaos*, see [Najnudel, Paquette, Simm 2020](https://arxiv.org/pdf/2011.01823.pdf).  The result is also proved when $d$ is allowed to grow to infinity with $n$ slowly. In this semi-sparse regime, the limits are more classical Gaussian objects and the statement on the eigenvalues is still valid: in particular, the second eigenvalue sticks to the bulk of the circular distribution. 
+Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arxiv.org/pdf/2012.05602.pdf), I show that when $A_n$ is a random $n\times n$ matrix with all $n^2$ entries independent random variables with distribution $\mathrm{Bernoulli}(d/n)$ and $d>1$ is fixed while $n \to \infty$, then the random polynomial $det(I_n - zA_n)$ converges weakly in distribution towards a random analytic function on $D(0, 1/\sqrt{d})$. This function is a Poisson analog of the *Gaussian Holomorphic Chaos*, see [Najnudel, Paquette, Simm 2020](https://arxiv.org/pdf/2011.01823.pdf).  The result is also proved when $d$ is allowed to grow to infinity with $n$ slowly. In this semi-sparse regime, the limits are more classical Gaussian objects and the statement on the eigenvalues is still valid: in particular, the second eigenvalue sticks to the bulk of the circular distribution. 
 
 Work in progress with Yizhe Zhu and Ludovic Stefan: extension for regular graphs, regular digraphs and non-backtracking matrices. 
 
@@ -82,7 +82,7 @@ In this survey, I try to give a mathematical overview of this rich domain. Topic
 
 Here is a version of this survey. It's still work in progress.
 
-[Hyperuniformity survey](/assets/survey_hyperuniformity.pdf) (may 2021: added a paragraph on the zeroes of the GEF)
+[Hyperuniformity survey](/assets/survey_hyperuniformity.pdf) (june 2021: added a paragraph on JLM laws)
 
 ### Effective rigidity with neural networks
 
