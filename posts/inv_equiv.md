@@ -37,15 +37,14 @@ We say that a function $f$ defined on tensors has symmetries with respect to per
 $$ f(\sigma * X) = \sigma * f(X). $$
 @@
 
-Note that for invariance, we restricted to functions which end in $\mathbb{R}$. This is sufficient: invariant functions from $\mathbb{R}^{n^k \times a }$ to $\mathbb{R}^m$ are just composed of $m$ invariant functions. For equivariance,  it is not the same thing, and we will see that one can very well have an invariant function between tensors of different orders $k \times h$ and which is not made of smaller-dimensional equivariant functions.  
-
-One of the crucial goals of modern (deep) learning is to craft neural architectures which can approximate as well as possible any function with this kind of invariance. One very intuitive way of doing this is to concatenate linear layers and non-linearities, as in \eqref{nn}, but in enforcing the linear layers to be themselves invariant or equivariant. It is easily seen that the resulting whole network will itself be invariant or equivariant. Not all linear operations are permutation-invariant.
+Note that for invariance, we restricted to functions which end in $\mathbb{R}$. This is sufficient: invariant functions from $\mathbb{R}^{n^k \times a }$ to $\mathbb{R}^m$ are just composed of $m$ invariant functions. Also, note that for equivariance, one can have an invariant function between tensors of different orders $k \neq h$.
+One of the crucial goals of modern (deep) learning is to craft neural architectures which can approximate as well as possible any function with this kind of invariance. An intuitive way of doing so is to concatenate linear layers and non-linearities, as in \eqref{nn}, but in enforcing the linear layers to be themselves invariant or equivariant. It is easily seen that the resulting network will itself be invariant or equivariant. That being said, not all linear operations are permutation-invariant: for instance, the following example shows that there is essentially one linear form which is permutation-invariant. 
 
 ## The simplest of examples: invariant linear forms
 
-To fix the ideas, let us try to find all the linear operations $L:\mathbb{R}^\ell \to \mathbb{R}$ that are permutation-invariant. Such operations are simply multiplications by a $\ell \times 1$ matrix, ie 
-$$ L (x) = \sum_{i=1}^\ell a_i x_i $$
-for some numbers $a_i$ that we have to find in such a way that $L(\sigma * x) = L(x)$. Equivalently, we must find the $a_i$ such that for every $x$ and every permutation $\sigma$, the numbers $\sum a_i x_i $ and $\sum a_i x_{\sigma(i)}$ are equal. It is quite easy to see that this can happen only if all the $a_i$ are equal. Indeed, by taking $x$ to be the first elementary vector $e_1 = (1, 0, \dotsc, 0)$ and $\sigma$ to be the transposition $(1,2)$, one sees that $a_1 = L(e_1) = L(\sigma *x) = L(e_2) = a_2$  and so on. Consequently, there is essentially only one permutation-equivariant linear form, and it is $L(x) = \sum x_i$ and its multiples.  
+Let us try to find all the linear operations $L:\mathbb{R}^n \to \mathbb{R}$ that are permutation-invariant. Such operations are simply multiplications by a $n \times 1$ matrix, ie 
+$$ L (x) = \sum_{i=1}^n a_i x_i $$
+for some numbers $a_i$ that we have to find in such a way that $L(\sigma * x) = L(x)$. Equivalently, we must find the $a_i$ such that for every $x$ and every permutation $\sigma$, the numbers $\sum a_i x_i $ and $\sum a_i x_{\sigma(i)}$ are equal. It is quite easy to see that this can happen only if all the $a_i$ are equal. Indeed, by taking $x$ to be the first elementary vector $e_1 = (1, 0, \dotsc, 0)$ and $\sigma$ to be the transposition $(1,2)$, one sees that $a_1 = L(e_1) = L(\sigma *e_1) = L(e_2) = a_2$  and so on. Consequently, there is essentially only one permutation-equivariant linear form, and it is $L(x) = \sum x_i$ and its multiples.  
 
 Our goal is to push further this example, and identify the invariant/equivariant linear operations in all orders and dimensions. 
 
@@ -56,12 +55,36 @@ We begin with the **dimension** of invariant operations, which can be computed q
 
 **Definition.** The $k$-th Bell number $\mathrm{B}_k$ is the number of partitions of $[k]=\{ 1, \dotsc, k\}$. 
  
-To be clear, a partition of $[k]$ is simply a collection of nonempty disjoint sets, say $\pi_1, \dotsc, \pi_r$, such that their union is $[k]$. It is worth mentioning that these numbers are growing extremely fast. The first few numbers are 
+To be clear, a partition of $[k]$ is simply a collection of nonempty disjoint sets, say $\pi_1, \dotsc, \pi_r$, such that their union is $[k]$. It is worth mentioning that these numbers are growing extremely fast. With some Julia code and the `Combinatorics` package, one can list all the partitions of $[n]$ with `collect(partitions(1:n))`:
+```julia:belldef
+using Combinatorics
+BellPart(n) = collect(partitions(1:n))
+```
+ Here is a small picture of all the $\mathrm{B}_4=15$ partitions of $\{1, 2, 3, 4 \}$:
 
+```julia:bell
+using Plots
+
+function plot_partition(p)
+    order = maximum(maximum, p)
+    pl = plot(legend=:none, border=:none, axis=nothing, aspect_ratio=:equal,  
+    xlim=(-2, 2), ylim=(-2,2))
+    for block in p
+        circled = [exp(2im*pi*i/order) for i in block]
+        scatter!(pl, real(circled), imag(circled), markersize=10)
+    end
+    return pl
+end
+
+parplots = [plot_partition(p) for p in BellPart(4)]
+plot(parplots..., layout=(3, 5))
+savefig(joinpath(@OUTPUT, "bell.svg"))#hide
 
 ```
-1, 2, 3, 15, 52, 203, 877, 4140, 21147, 115975, 678570 , 4213597, 27644437...
-```
+\fig{bell}
+
+
+We now state the main result of this note. 
 
 @@important
 
@@ -71,11 +94,11 @@ To be clear, a partition of $[k]$ is simply a collection of nonempty disjoint se
 
 
 
-*Proof*. Let $\mathscr{V}$ be the vector space of all linear operators from $\mathbb{R}^{n^k \times a}$ to $\mathbb{R}$. For any permutation $\sigma$, let $P_\sigma : \mathbb{R}^{n^k \times a} \to \mathbb{R}^{n^k \times a}$ be the matrix of the action of $\sigma$. By the definition, a linear operator $L \in \mathscr{V}$ is invariant iff $LP_\sigma x = Lx$ for every $x$, in other words iff $LP_\sigma = L$. Consequently, the subspace of invariant operators is  $\mathscr{V}_{\mathrm{fix}} = \{ L :  LP_\sigma = L \text{ for all } \sigma \}$ and we want to compute its dimensions. Thanks to a well-known magical trick from group representation theory, it turns out that the projection from $\mathscr{V}$ to $\mathscr{V}_{\mathrm{fix}}$ is given by the *group action average*, 
+*Proof*. Let $\mathscr{V}$ be the vector space of all linear operators from $\mathbb{R}^{n^k \times a}$ to $\mathbb{R}$. For any permutation $\sigma$, let $P_\sigma : \mathbb{R}^{n^k \times a} \to \mathbb{R}^{n^k \times a}$ be the matrix of the action of $\sigma$. By the definition, a linear operator $L \in \mathscr{V}$ is invariant iff $LP_\sigma x = Lx$ for every $x$, in other words iff $LP_\sigma = L$. Consequently, the subspace of invariant operators is  $\mathscr{V}_{\mathrm{fix}} = \{ L :  LP_\sigma = L \text{ for all } \sigma \}$ and we want to compute its dimension. Thanks to a well-known magical trick from group representation theory, it turns out that the projection from $\mathscr{V}$ to $\mathscr{V}_{\mathrm{fix}}$ is given by the *group action average* $\Phi : \mathscr{V} \to \mathscr{V}$ defined by[^1]
 $$ \Phi:L \mapsto  \frac{1}{n!}\sum_\sigma LP_\sigma.$$
 This is easy to prove: first, check that $\Phi \circ \Phi = \Phi$, so $\Phi$ is a projector, then check that its image is $\mathscr{V}_{\mathrm{fix}}$, which is also not very difficult by double inclusion. Now, the dimension of a subspace is nothing but the trace of its projector, so we want to compute $\mathrm{trace}(\Phi)$, which by linearity is given by
 \begin{equation}\label{tr} \frac{1}{n!}\sum_\sigma \mathrm{trace}(L \mapsto LP_\sigma).\end{equation}
-By $ \mathrm{trace}(L \mapsto LP_\sigma)$, we mean the trace of the linear operation from $\mathscr{V}$ to $\mathscr{V}$ defined by $L \mapsto LP_\sigma$. Fortunately, it is a classical exercise to check that for any linear operator $A : \mathbb{R}^{n^k \times a} \to \mathbb{R}^{n^k \times a}$, one has $\mathrm{trace}(L \mapsto LA) = \mathrm{trace}(A)$. 
+By $ \mathrm{trace}(L \mapsto LP_\sigma)$, we mean the trace of the linear operator from $\mathscr{V}$ to $\mathscr{V}$ defined by $L \mapsto LP_\sigma$. Fortunately, it is a classical exercise to check that for any linear operator $A : \mathbb{R}^{n^k \times a} \to \mathbb{R}^{n^k \times a}$, one has $\mathrm{trace}(L \mapsto LA) = \mathrm{trace}(A)$. 
 
 The dimension $\dim(\mathscr{V}_{\mathrm{fix}}) = a \times \mathrm{B}_k$ will follow from two computations, which we state as lemmas because we will use them later for equivariant layers. We recall that the fixed points of a permutation $\sigma$ of $[n]$ are the $i\in [n]$ such that $\sigma(i)=i$. 
 
@@ -152,7 +175,7 @@ The dimension of permutation-equivariant linear layers $\mathbb{R}^{n^k\times a}
 
 *Proof*. The proof follows the same lines as for invariant layers, with the difference that the action is not exactly the same. Let us note $\mathscr{V}$ the set of linear operators from $\mathbb{R}^{n^k\times a} \to \mathbb{R}^{n^h \times b}$. A linear operator $L$ is invariant iff $LP_\sigma = P_\sigma L$, so in fact we are interested in the dimension of the subspace $\mathscr{V}_{\mathrm{eq}} = \{ L : P_\sigma^{-1}LP_{\sigma} = L\}$. Here again, this dimension is the trace of the projection operator:
 $$\dim (\mathscr{V}_{\mathrm{eq}}) = \frac{1}{n!}\sum_\sigma \mathrm{trace}(L \mapsto P^{-1}_\sigma L P_\sigma).$$
-The main difference is that this time, one has $$\mathrm{trace}(L \mapsto P^{-1}_\sigma L P_\sigma) = \mathrm{trace}_{n^k \times a}(P_\sigma)\times \mathrm{trace}_{n^h \times b}(P_\sigma),$$ where the subscripts are here to indicate in which underlying space we're taking the traces. But then, as before, this is equal to 
+The main difference is that this time, one has $$\mathrm{trace}(L \mapsto P^{-1}_\sigma L P_\sigma) = \mathrm{trace}_{n^k \times a}(P_\sigma)\times \mathrm{trace}_{n^h \times b}(P_\sigma),$$ where the subscripts indicate in which underlying space we're taking the traces. But then, as before, this is equal to 
 $$ a\times (\text{number of fixed points of }\sigma)^k \times  b\times (\text{number of fixed points of }\sigma)^h$$
 and we can now finish the proof exactly as in the invariant case. 
 
@@ -176,13 +199,55 @@ where  $\pi$ is a partition of $[k+h]$, $j \in [a], j'\in [b]$ is a basis of the
 
 @@
 
+**Example: basis for graph equivariant layers**. Let us find all linear operators $\mathbb{R}^{n^2} \to \mathbb{R}^{n^2}$ which are permutation-equivariant. By the theorem above, the dimension is $\mathrm{B}_{2+2} = 15$ and we already saw those partitions in the plot above. Using the preceding description, we can try to plot the basis of the $F_\pi$, which requires a bit of reflection. 
+
+```julia:bell2
+isequal(x) = all(y -> y==x[1], x) #checks if all the elements of array x are equal
+is_constant_on_blocks(x, P) = prod([isequal(x[block]) for block in P]) 
+zeros_t(n,k) = zeros(tuple(n*ones(Int, k)...))# creates a tensor with k axes and n dims
+
+function lifting(P, c, tensor_order)
+    out = zeros(Int, tensor_order)
+    for i in 1:length(P) 
+        a = c[i] * ones(length(P[i]))
+        out[P[i]] = a #c[i] * ones(length(P[i]))
+    end
+    return CartesianIndex(Tuple(out))
+end
+
+function create_basic_element(partition,n)
+    tensor_order = maximum(maximum, partition)
+    x = zeros_t(n,tensor_order)
+    for c in CartesianIndices(zeros_t(n,length(partition)))
+        cc = lifting(partition, c, tensor_order)
+        x[cc]=1
+    end
+    return x
+end
+
+function custom_heatmap(mat)
+    #some code for a beautiful heatmap
+    output = heatmap(mat, aspect_ratio = 1, legend = :none, axis = nothing, border = :none, c = :speed)#hide
+    return output #hide
+end
+
+k=2 ; n=4
+basis = [create_basic_element(p, n) for p in BellPart(n)]
+hmaps = [custom_heatmap(reverse(reshape(x, n^k, n^k), dims=1)) for x in basis]
+plot(hmaps..., layout=(3,5))
+savefig(joinpath(@OUTPUT, "basis.svg")) #hide
+```
+\fig{basis}
+
+
+I took $n=4$, so the dimension of $\mathbb{R}^{n^2}$ is $16$, and then I represented each operator $\mathbb{R}^{n^2} \to \mathbb{R}^{n^2}$ as a $16 \times 16$ matrix. What you see above are the heatmap of the 15 basis elements of the space of equivariant operators; in the heatmap, yellow = 1 and black = 0. 
 
 ## But why ?
 
 One of the goals of deep learning is to craft invariant or equivariant neural architectures for approximating invariant/equivariant functions, and the idea presented in this note was to concatenate several layers of linear invariant/equivariant operators and non-linearities. This will surely yield an invariant/equivariant network... **But can *all* continuous invariant/equivariant functions be approximated by these kind of layers?** This problem, known as the expressivity or universality problem, is not an easy one. Here is a small summary of what seems to be the current state of the art (I'll probably write a more detailed note on these topics): 
 - Yes, every continuous invariant function can be approximated by invariants networks as the ones we studied. **But** this might require hidden layers with prohibitive orders: if the original input is $n$-dimensional, one might need tensors of order up to $n(n-1)/2$, which means vectors from a $n^{n(n-1)/2}$-dimensional space... This is obviously not usable for practical purposes. Same thing for equivariant networks. 
-- For graphs (order-2 tensors), the most expressive architectures with low-order tensors seem to be the so-called Folklore Graph Neural Networks (FGNN), who incorporate message-passing-like layers. 
-- Deep Sets for Symmetric elements (DSS) are also universal and really easy to implement. 
+- For graphs (order-2 tensors), the most expressive architectures with low-order tensors seem to be the so-called Folklore Graph Neural Networks (FGNN), who incorporate message-passing-like layers (but they are not message-passing networks). 
+- There are alternative architectures that are easy to implement, usable, and universal, such as PointNetST or DeepSets. They are often used for ML tasks on 3d point clouds.  
 
 
 
@@ -196,8 +261,11 @@ I guess that the dimension of permutation invariant or equivariant linear operat
 
 - [On the universality of invariant networks](https://arxiv.org/pdf/1901.09342.pdf) by Maron, Fetaya, Segol and Lipman.
 
+- [On universal equivariant set networks](https://arxiv.org/abs/1910.02421) by Segol and Lipman.
+
 - [Universal Invariant and Equivariant GNN](https://proceedings.neurips.cc/paper/2019/file/ea9268cb43f55d1d12380fb6ea5bf572-Paper.pdf) by Keriven and Peyré.
 
 - [Expressive power of invariant and equivariant GNN](https://arxiv.org/pdf/2006.15646.pdf), by Azizian and Lelarge. 
 
+[^1]: $\Phi$ is a linear operator, itself defined on the space of linear operators from $\mathbb{R}^{n^k \times a} $ to $\mathbb{R}$. Sometimes it's called a *functor*.
 
