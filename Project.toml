@@ -1,6 +1,8 @@
 [deps]
 AbstractAlgebra = "c3fe647b-3220-5bb0-a1ea-a7954cac585d"
 Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
+FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 Franklin = "713c75ef-9fc9-4b05-94a9-213340da978e"
+GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
 NodeJS = "2bd173c7-0d6d-553b-b6af-13a54713934c"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"

@@ -4,8 +4,8 @@ website.
 The website_* must be defined for the RSS to work
 -->
 @def website_title = "Simon Coste"
-@def website_descr = "Mathematics"
 @def website_url   = "https://scoste.fr"
+@def site_synopsis = "Mathematics"
 
 @def author = "Simon Coste"
 @def hascode = true
