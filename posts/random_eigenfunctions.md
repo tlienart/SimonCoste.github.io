@@ -138,8 +138,8 @@ save(joinpath(@OUTPUT, "raw.png"), fig) #hide
 ```
 \fig{raw}
 
-Instead of plotting each color, we can only plot the sign of $f_n$, X if positive and Y if negative. 
-The set of points of the torus where $f_n$ is zero is called the **nodal set**. In the following, we colored in Z all the points with $ f_n(x) $ between -0.1 and 0.1, which gives an overview of the nodal set. 
+Instead of plotting each color, we can only plot the sign of $f_n$, black if positive and white if negative. 
+The set of points of the torus where $f_n$ is zero is called the **nodal line** while the sets $\{f_n >0\}$ and $\{f_n < 0 \}$ are called **nodal sets**. 
 
 ```julia:raw2
 signs = [x > 0 ? 0 : 1 for x in field]
@@ -157,7 +157,9 @@ With a few processing and computational power, one can get much detailed picture
 
 ## Gallery
 
-Here are some pictures of realizations of various arithmetic waves associated with different values of $n$. The left picture is the nodal set, while the right one is a heatmap: white is close to zero, red is negative and green is positive. You can use these pictures if you want, but if so please mention this page.  
+Here are some pictures of realizations of various arithmetic waves associated with different values of $n$. The left picture is the nodal set ($\{ f > 0 \}$ is dark), while the right one is a heatmap: white is close to zero, red is negative and green is positive. Note that the left and right picture do not correspond to the same realization of the wave (I'll update this soon to see the same realization). 
+
+You can use these pictures if you want, but if so please mention this page.  
 
 @@twopic
 ![](/posts/img/donuts/41.png)
