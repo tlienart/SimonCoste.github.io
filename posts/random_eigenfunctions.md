@@ -10,7 +10,7 @@ reeval=true
 The Laplace eigenequation on a sphere, a torus, or any Riemannian manifold is 
 \begin{equation}\label{0}\Delta f + \lambda f = 0\end{equation}
 where $\Delta = \partial^2_x + \partial^2_y$ is the [Laplace operator](https://en.wikipedia.org/wiki/Laplace%E2%80%93Beltrami_operator) on the manifold. 
-On the torus $\mathbb{T} = \mathbb{R}^2/\mathbb{Z}^2$, this equation is well understood and the goal of this note is simplyt to plot typical solutions --- they look like the donut above. 
+On the torus $\mathbb{T} = \mathbb{R}^2/\mathbb{Z}^2$, this equation is well understood and the goal of this note is simply to plot the typical solutions -- they look like the donut above. 
 
 The only values $\lambda$ for which there are solutions to \eqref{0} are multiples of $4\pi^2$,  
 $$\lambda_n = 4\pi^2 n$$
