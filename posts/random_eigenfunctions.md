@@ -118,7 +118,7 @@ z = [Z(θ, φ) for θ in t, φ in u]
 
 For each mesh point $(\theta, \varphi)$, we'll color the corresponding point of the torus, $(X(\theta, \varphi), Y(\theta, \varphi), Z(\theta, \varphi))$, with a color representing the field $f_n(\theta, \varphi)$. 
 
-```julia:raw
+```
 using GLMakie
 
 field = [f(θ, φ) for θ in t, φ in u]
@@ -134,14 +134,13 @@ cbar = Colorbar(fig, pltobj,
 
 fig[1,2] = cbar #hide
 set_theme!(figure_padding = 0)#hide
-save(joinpath(@OUTPUT, "raw.png"), fig) #hide
 ```
-\fig{raw}
+![](/posts/img/donuts/raw.png)
 
 Instead of plotting each color, we can only plot the sign of $f_n$, black if positive and white if negative. 
 The set of points of the torus where $f_n$ is zero is called the **nodal line** while the sets $\{f_n >0\}$ and $\{f_n < 0 \}$ are called **nodal sets**. 
 
-```julia:raw2
+```
 signs = [x > 0 ? 0 : 1 for x in field]
 fig2, ax2, pltobj2 = surface(x, y, z, color = signs, 
         colormap = :ice,
@@ -149,9 +148,8 @@ fig2, ax2, pltobj2 = surface(x, y, z, color = signs,
         ambient = Vec3f0(0.6, 0.6, 0.6),
         backlight = 5f0, 
         show_axis = false) 
-save(joinpath(@OUTPUT, "raw2.png"), fig2) #hide
 ```
-\fig{raw2}
+![](/posts/img/donuts/raw2.png)
 
 With a few processing and computational power, one can get much detailed pictures ! 
 
