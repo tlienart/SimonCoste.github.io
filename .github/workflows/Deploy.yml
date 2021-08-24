@@ -20,12 +20,6 @@ jobs:
     # NOTE: Here you can install dependencies such as matplotlib if you use
     # packages such as PyPlot.
     # - run: pip install matplotlib
-    # Set up OpenGL ? 
-    - name: Set up OpenGL
-      uses: openrndr/setup-opengl@v1.1
-    #
-    - name: Install binary dependencies
-      run: sudo apt-get update && sudo apt-get install -y xorg-dev mesa-utils xvfb libgl1 freeglut3-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev
     - name: Install Julia
       uses: julia-actions/setup-julia@v1
       with:
