@@ -13,7 +13,8 @@ You can reach me at `firstname.lastname@inria.fr`.
 
 [GitHub](https://github.com/SimonCoste), [GitLab](https://gitlab.inria.fr/scoste), [ArXiv](https://arxiv.org/search/?searchtype=author&query=Coste%2C+S).
 
-**August 2021**: I'll give a talk on random matrices at Journées MAS (online). [See the slides](/mas/).
+**August 2021**: I'll give a talk on random matrices at Journées MAS (online). [See the slides](/mas2020/).
+
 
 
 
