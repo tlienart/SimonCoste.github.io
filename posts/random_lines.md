@@ -1,6 +1,6 @@
 +++
 titlepost = "Random line processes"
-date = "April 2021"
+date = "August 2021"
 abstract = "How to draw random lines on the plane.  "
 +++
 
@@ -36,7 +36,7 @@ where $r' = r + |x|\cos(\theta - \rho)$, and $\theta' = \theta$ if $r>0$, otherw
 Hence, if we note $T_x : \mathscr{A} \to \mathscr{A}$ the group of transformations described above, we obtain the simple caracterization: **a line process is shift-invariant if its representation in $\mathscr{A}$ is $T_x$-invariant for all $x$**. While this can be checked for what I described above as the Poisson line process, it also prevents other naive constructions from being stationary. For instance, sampling a Ginibre point process on $\mathbb{C}$, then taking its restriction in the strip $\mathscr{A}$ *does not yield a stationary line process*. 
 
 
-![](/posts/shift.gif)
+![](/posts/img/shift.gif)
 
 The animated picture shows the effect of such transformations: on the right, the lines are slowly shifted by $(t,0)$ for $t$ between $-2$ and $2$, and on the left, we see the corresponding $\mathscr{A}$-representation being transformed by $T_{(t,0)}$. Since the shift is horizontal, horizontal lines merely move: this corresponds to the points on the lines $\theta = \pi/2, -\pi/2$ being invariant. 
 
@@ -44,7 +44,7 @@ The animated picture shows the effect of such transformations: on the right, the
 
 The same question can be asked with isotropy, that is: *rotation invariance*. When a line $\ell$ is represented by $(\theta, r)$ in $\mathscr{A}$, rotating around the origin by an angle $\tau$ is the same thing as replacing $\theta$ by $\theta + \tau$ (modulo $2\pi$). Consequently, **a line process is isotropic if and only if its representation in $\mathscr{A}$ is invariant with respect to the transformations $R_\tau : (\theta, r) \to (\theta + \tau, r)$ ** where the angle addition is taken modulo $2\pi$. 
 
-![](/posts/rotate.gif)
+![](/posts/img/rotate.gif)
 
 A typical example of non-isotropic point process is obtained by choosing a finite set of directions, say $(\theta_1, \dotsc, \theta_k)$, and for each of them to sample a translation-invariant point process $\Phi_j$ on $\mathbb{R}$. The union
 $$\{ (\theta_i, x) : i \in [k], x \in \Phi_i \}$$
@@ -54,7 +54,7 @@ is translation-invariant, but certainly not isotropic.
 
 - [Stochastic geometry and its applications](https://www.wiley.com/en-us/Stochastic+Geometry+and+Its+Applications%2C+3rd+Edition-p-9780470664810), by Chiu, Stoyan, Kendall and Mecke. 
 
-- [LineIntersections](https://github.com/SimonCoste/LineIntersections), some Julia code I'm working on to generate nice line processes. 
+- [LineIntersections](https://github.com/SimonCoste/LineIntersections), some Julia code. 
 
 
 
