@@ -11,7 +11,7 @@ date = Date(2019, 3, 22)
 
 # Extremal eigenvalues
 
-I study spectral properties of random objects like graphs and matrices, and their application to statistical inference problems. The use of low-dimensional spectral embeddings has proven to be a fruitful method in such problems as matrix completion, community detection, graph alignment, etc. I recently got into spectral convolutions in graph neural networks. 
+I study spectral properties of random objects like graphs and matrices, and their application to statistical inference problems. The use of low-dimensional spectral embeddings has proven to be a fruitful method in many problems such as matrix completion, community detection, graph alignment, etc. I recently got into spectral convolutions in graph neural networks. 
 
 
 ### The spectral gap of sparse random digraphs 
