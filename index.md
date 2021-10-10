@@ -16,13 +16,12 @@ You can reach me at `firstname.lastname@ens.fr`.
 
 ## Events
 
-**August 2021**: talk on random matrices at Journées MAS (online). [See the slides](/mas2020/).
 
-**September 1, 2021**: the call for projects for the 2022 season of Challenge data just opened. It will end on October, 10.
-
-**October 11, 2021**: talk on spectral clustering at LAREMA (Angers, IRL)
+**October 11, 2021**: talk on spectral clustering at LAREMA (Angers, IRL), [see the slides](/talks/)
 
 **October 22, 2021**: talk on random matrices at MEGA (Toulouse, IRL). 
+
+**November, 2021**: talk at Université de Versailles (IRL)
 
 
 
