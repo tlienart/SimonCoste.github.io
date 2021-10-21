@@ -17,11 +17,10 @@ You can reach me at `firstname.lastname@ens.fr`.
 ## Events
 
 
-**October 11, 2021**: talk on spectral clustering at LAREMA (Angers, IRL), [see the slides](/talks/)
 
-**October 22, 2021**: talk on random matrices at MEGA (Toulouse, IRL). 
+**October 22, 2021**: talk on random matrices at MEGA (Toulouse, IRL + [visio](https://www.ceremade.dauphine.fr/dokuwiki/mega:seminaire)), [see the slides](/talks/mega21/) 
 
-**November, 2021**: talk at Université de Versailles (IRL)
+**November 9, 2021**: talk at Université de Versailles (IRL), on spectra of unimodular trees.
 
 
 

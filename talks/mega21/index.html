@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Simon Coste - ENS">
+  <title>The characteristic polynomial of sparse zero-one matrices</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="img/style.css"/>
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+    var mathElements = document.getElementsByClassName("math");
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") { katex.render(texText.data, mathElements[i], { displayMode: mathElements[i].classList.contains("display"), throwOnError: false } );
+    }}});</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">The characteristic polynomial of sparse zero-one matrices</h1>
+  <p class="author">Simon Coste - ENS</p>
+  <p class="date">MEGA seminar - Toulouse, 21th oct.</p>
+</section>
+
+<section id="eigenvalues-of-non-hermitian-matrices" class="slide level1">
+<h1>Eigenvalues of non-Hermitian matrices</h1>
+<pre><code>&gt; using LinearAlgebra
+&gt; eigvals(randn(500,500))</code></pre>
+<p><img data-src="./img/circle.svg" /></p>
+</section>
+<section id="eigenvalues-of-random-regular-digraphs" class="slide level1">
+<h1>Eigenvalues of random regular digraphs</h1>
+<pre><code>&gt; using LinearAlgebra, Erdos
+&gt; eigvals(random_regular_digraph(500, 3))</code></pre>
+<p><img data-src="./img/rrd.svg" /></p>
+</section>
+<section id="my-favourite-eigenvalues-bernoulli-sparse-matrices" class="slide level1">
+<h1>My favourite eigenvalues: Bernoulli sparse matrices</h1>
+<pre><code>&gt; using LinearAlgebra
+&gt; eigvals(rand(500,500).&lt;0.01)</code></pre>
+<p><img data-src="./img/bernoulli.svg" /></p>
+<p><span class="math inline">A_n</span> = an <span class="math inline">n \times n</span> matrix whose entries are iid <span class="math inline">\mathrm{Bernoulli}(d/n)</span> entries.</p>
+</section>
+<section id="reverse-characteristic-polynomial" class="slide level1">
+<h1>Reverse characteristic polynomial</h1>
+<p><span class="math display">q_n (z) = \det(I_n - zA_n)</span></p>
+<p>The coefficients of <span class="math inline">q_n(z)=1+\Delta_1z+\Delta_2z^2+...+\Delta_{n}z^{n}</span> are <span class="math display">\Delta_k = (-1)^k \frac{P_k(\mathrm{trace}(A_n^1), ..., \mathrm{trace}(A_n^k))}{k!},</span></p>
+<p>where the <span class="math inline">P_k</span> are polynomials.</p>
+</section>
+<section id="the-simplest-method-traces-tightness" class="slide level1">
+<h1>The simplest method: traces + tightness</h1>
+<p><a href="https://arxiv.org/pdf/2106.00593.pdf"><img data-src="./img/article_simon.png" /></a></p>
+<p><a href="https://arxiv.org/abs/2012.05602"><img data-src="./img/article_charles.png" /></a></p>
+<p><a href="https://arxiv.org/abs/1905.10244"><img data-src="./img/article_basak.png" /></a></p>
+</section>
+<section id="the-limits-of-the-traces-of-ak_n" class="slide level1">
+<h1>The limits of the traces of <span class="math inline">A^k_n</span></h1>
+<div class="theorem">
+<p>For every <span class="math inline">k</span>, <span class="math display">(\mathrm{tr}(A_n^1), ..., \mathrm{tr}(A_n^k)) \xrightarrow[n \to \infty]{\mathrm{law}} (X_1, ... , X_k).</span> where <span class="math display">X_k := \sum_{\ell|k} \ell Y_\ell</span> <span class="math inline">(Y_\ell : \ell \in \mathbb{N}^*)</span> = family of independent r.v., <span class="math inline">Y_\ell \sim \mathrm{Poi}(d^\ell / \ell)</span>.</p>
+</div>
+</section>
+<section id="the-limits-of-the-coefficients-of-q_n" class="slide level1">
+<h1>The limits of the coefficients of <span class="math inline">q_n</span></h1>
+<p><span class="math display">\Delta_k \to a_k =  (-1)^k \frac{P_k(X_1, ... , X_k)}{k!}</span> Let <span class="math inline">F</span> be the log-generating function of these random variables: <span class="math display">F(z) = 1 + \sum_{k=1}^\infty a_k z^k </span></p>
+<div class="theorem">
+<p>Coefficients of <span class="math inline">q_n</span> <span class="math inline">\to</span> Coefficients of <span class="math inline">F</span></p>
+</div>
+<p>Do we have stronger convergence than that?</p>
+</section>
+<section id="weak-convergence-of-analytic-functions" class="slide level1">
+<h1>Weak convergence of analytic functions</h1>
+<div class="theorem">
+<p><a href="https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/198072/1/B34_020.pdf">Shirai 2012</a></p>
+<p>If <span class="math inline">f_n</span> is a sequence of <strong>random</strong> analytic functions in an open set <span class="math inline">D</span> and if</p>
+<ol type="1">
+<li><p>The coeffs of <span class="math inline">f_n</span> converge towards <span class="math inline">(a_k)</span></p></li>
+<li><p><strong><span class="math inline">f_n</span> is tight in <span class="math inline">D</span></strong></p></li>
+</ol>
+<p>Then <span class="math inline">f_n \to f</span> where <span class="math inline">f(z) = \sum a_k z^k</span>.</p>
+</div>
+</section>
+<section id="tightness-in-holomorphic-spaces" class="slide level1">
+<h1>Tightness in holomorphic spaces</h1>
+<p>Let <span class="math inline">f_n</span> be a sequence of random analytic functions: <span class="math display">f_n(z) = \sum_{k=0}^\infty a_{n,k}z^k.</span></p>
+<div class="theorem">
+<p>If there is a <span class="math inline">c</span> such that <span class="math display"> \sup_n \mathbf{E}[|a_{n,k}|^2] \leqslant c r^k </span> then <span class="math inline">(f_n)</span> is tight on <span class="math inline">D(0,\sqrt{r})</span>.</p>
+</div>
+</section>
+<section id="tightness-of-q_n" class="slide level1">
+<h1>Tightness of <span class="math inline">(q_n)</span></h1>
+<div class="theorem">
+<p>The sequence <span class="math inline">q_n</span> is tight in <span class="math inline">D(0,\sqrt{1/d})</span>.</p>
+</div>
+<div class="proof">
+<p><strong>Proof</strong>. We must bound the 2-norm of the coefficients of <span class="math inline">q_n</span>, the <span class="math inline">\Delta_k</span>.</p>
+<p>We use <span class="math inline">\Delta_k = \sum_{I \subset [n], |I|=k}\det(A(I))</span> then develop <span class="math inline">|\Delta_k|^2</span>.</p>
+<p>We get a double sum of <span class="math inline">\mathbf{E}[\det(A(I))\det(A(J))]</span> with <span class="math inline">I,J</span> subsets of <span class="math inline">[n]</span>.</p>
+<p>The value of each summand depends on the size of <span class="math inline">I\cap J</span>.</p>
+<p><span class="math display">\mathbf{E}[|\Delta_k|^2] = (n)_k (d/n)^k (1-d/n)^{k-1}(1 - kd/n -p + kd - k^2d/n) =O(d^k)</span></p>
+</div>
+</section>
+<section id="section" class="slide level1">
+<h1></h1>
+<div class="theorem">
+<p><span class="math inline">q_n \to F</span> as holomorphic functions on <span class="math inline">D(0,d^{-1/2})</span>.</p>
+</div>
+<p><img data-src="./img/comparison3.png" /></p>
+</section>
+<section id="elementary-properties-of-f" class="slide level1">
+<h1>Elementary properties of <span class="math inline">F</span></h1>
+<p><span class="math display">F(z) = \exp \left( -\sum_{k=1}^\infty X_k \frac{z^k}{k} \right) = \prod_{k=1}^\infty (1 - z^k)^{Y_k}</span></p>
+<ul>
+<li><p>The radius of convergence <strong>inside the exp</strong> is <span class="math inline">1/d</span>.</p></li>
+<li><p>The radius of convergence of <span class="math inline">F</span> is <span class="math inline">1/\sqrt{d}</span> and <span class="math inline">F</span> has one zero at <span class="math inline">1/d</span>.</p></li>
+<li><p><span class="math inline">F</span> has no other zeroes inside <span class="math inline">D(0,1/\sqrt{d})</span>.</p></li>
+</ul>
+</section>
+<section id="zeroes-of-q_n-zeroes-of-f" class="slide level1">
+<h1>Zeroes of <span class="math inline">q_n</span> =&gt; zeroes of <span class="math inline">F</span></h1>
+<div class="theorem">
+<p>The zeroes are continuous wrt weak convergence on <span class="math inline">\mathbb{H}</span>.</p>
+</div>
+<p>Zeroes of <span class="math inline">q_n</span> inside <span class="math inline">D(0,1/\sqrt{d})</span> = inverse of eigenvalues of <span class="math inline">A_n</span> outside <span class="math inline">D(0,\sqrt{d})</span>.</p>
+<p>Asymptotically, <span class="math inline">A_n</span> has one eigenvalue close to <span class="math inline">d</span>.</p>
+<p>The other ones are smaller than <span class="math inline">\sqrt{d}</span>.</p>
+</section>
+<section id="the-gaussian-holomorphic-chaos" class="slide level1">
+<h1>The Gaussian Holomorphic Chaos</h1>
+<p><span class="math display">G(z) = e^{-g(z)} \quad \text{where}\quad g(z) =\sum_{n=0}^\infty \red{\mathscr{N}_\mathbb{C}(0,1)}\frac{z^n}{\sqrt{n}} </span> <span class="math display">F(z) = e^{-f(z)} \quad \text{where}\quad f(z) = \sum_{n=0}^\infty \red{X_n} \frac{z^n}{n}</span> Covariances: <span class="math display">\mathrm{Cov}(g(z), g(w)) = -\log(1 - z\bar{w})</span> <span class="math display">\mathrm{Cov}(f(z), f(w)) = -\sum_{n,m \geq 1} \frac{\log(1 - d z^n \bar{w}^m)}{nm}</span></p>
+</section>
+<section id="generating-function-for-g" class="slide level1">
+<h1>Generating function for <span class="math inline">G</span></h1>
+<p><a href="https://arxiv.org/abs/2011.01823">Najnudel, Paquette, Simm, 2020</a> + <a href="https://www.combinatorics.org/ojs/index.php/eljc/article/view/v11i2r2">Diaconis, Gamburd, 2004</a></p>
+<p><span class="math display"> \mathbf{E} G(z_1)...G(z_k)\overline{G(w_1)...G(w_k)} = \prod_{i,j = 1}^k \frac{1}{1 - z_i w_j} </span></p>
+<p>This is the Generating function of Magic Squares!</p>
+<div class="theorem">
+<p>Note <span class="math inline">c_n</span> the <span class="math inline">n</span>-th coef of <span class="math inline">G</span>.</p>
+<p><span class="math inline">\mathbf{E}[|c_n|^{2k}]</span> = number of <span class="math inline">k\times k</span> integer matrices whose rows/columns sum to <span class="math inline">n</span></p>
+</div>
+</section>
+<section id="generating-function-for-f" class="slide level1">
+<h1>Generating function for <span class="math inline">F</span></h1>
+<p><span class="math display"> \mathbb{E} F(z_1)...F(z_k) = \frac{\prod_{S \subset [k] \text{ odd}} (1 - d\prod_{s \in S}z_s)}{ \prod_{S \subset [k], \text{ even}} (1 - d\prod_{s \in S}z_s)} </span></p>
+<p>This is the generating function of… ?</p>
+</section>
+<section id="section-1" class="slide level1">
+<h1></h1>
+<p>Merci pour l’invitation !</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
