@@ -20,7 +20,7 @@ You can reach me at `firstname.lastname@ens.fr`.
 
 **October 22, 2021**: talk on random matrices at MEGA (Toulouse, IRL + [visio](https://www.ceremade.dauphine.fr/dokuwiki/mega:seminaire)), [see the slides](/talks/mega21/) 
 
-**November 9, 2021**: talk at Université de Versailles (IRL), on spectra of unimodular trees.
+**November 9, 2021**: talk at Université de Versailles (IRL), on spectra of unimodular trees. [Slides](/assets/extended.pdf)
 
 
 
