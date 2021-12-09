@@ -32,7 +32,7 @@ We confirm the long-standing prediction that $c=e \approx 2.718$ is the threshol
 
 Joint work with [Charles Bordenave](http://www.i2m.univ-amu.fr/perso/charles.bordenave/start) and [Raj Rao Nadakuditi](https://web.eecs.umich.edu/~rajnrao/). 
 
-[Arxiv link](https://arxiv.org/abs/2005.06062) -- in revision for [FoCM](https://www.springer.com/journal/10208).  
+[Arxiv link](https://arxiv.org/abs/2005.06062) -- to be published in [JoFoCM](https://www.springer.com/journal/10208).  
 
 We completely describe the extremal elements in the eigendecomposition of some very sparse matrices, with a new and efficient point of view regarding the problem of matrix completion in the very hard regime. We show how non-symmetric matrices can sometimes be quite beneficial in such regimes.
 
@@ -62,7 +62,7 @@ This is a note on "bulk insider" eigenvalues for the non-backtracking spectrum o
 
 Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arxiv.org/pdf/2012.05602.pdf), I show that when $A_n$ is a random $n\times n$ matrix with all $n^2$ entries independent random variables with distribution $\mathrm{Bernoulli}(d/n)$ and $d>1$ is fixed while $n \to \infty$, then the random polynomial $det(I_n - zA_n)$ converges weakly in distribution towards a random analytic function on $D(0, 1/\sqrt{d})$. This function is a Poisson analog of the *Gaussian Holomorphic Chaos*, see [Najnudel, Paquette, Simm 2020](https://arxiv.org/pdf/2011.01823.pdf).  The result is also proved when $d$ is allowed to grow to infinity with $n$ slowly. In this semi-sparse regime, the limits are more classical Gaussian objects and the statement on the eigenvalues is still valid: in particular, the second eigenvalue sticks to the bulk of the circular distribution. 
 
-Work in progress with Yizhe Zhu and Ludovic Stefan: extension for regular graphs, regular digraphs and non-backtracking matrices. 
+Work in progress with Yizhe Zhu and Gaultier Lambert: extension for regular graphs, regular digraphs (sums of Ewens permutations) and non-backtracking matrices. 
 
 ### Stability of scattering transforms on sparse graphs
 
