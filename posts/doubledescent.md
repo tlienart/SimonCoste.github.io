@@ -6,7 +6,7 @@ abstract = "Why do overparametrized networks do well?"
 
 ## Machine learning, the summary
 
-**Neural networks** are a class of functions $f_\theta$ built by combining linear and non-linear functions; they depend on a certain number of parameters $\theta= (\theta_1, \dotsc, \theta_P)$. *Learning* consists in finding the best set of parameters $\theta_{\mathrm{opt}}$ for performing a precise task - for instance translating text or telling if it's a cat or a dog in the photo. 
+**Neural networks** are functions $f_\theta$ built by combining linear and non-linear functions; they depend on a certain number of parameters $\theta= (\theta_1, \dotsc, \theta_P)$. *Learning* consists in finding the best set of parameters $\theta_{\mathrm{opt}}$ for performing a precise task - for instance translating text or telling if it's a cat or a dog in the photo. 
 
 ![](/posts/img/catsanddogs.svg)
 
