@@ -6,11 +6,11 @@ abstract = "Why do overparametrized networks do well?"
 
 ## Machine learning, the summary
 
-A **neural network** is a function $f_\theta$ which depends on a certain number $N$ of parameters $\theta= (\theta_1, \dotsc, \theta_N)$. *Learning* consists in finding the best set of parameters $\theta_{\mathrm{opt}}$ for performing a precise task - for instance translating text or telling if it's a cat or a dog in the photo. 
+**Neural networks** are a class of functions $f_\theta$ built by combining linear and non-linear functions; they depend on a certain number of parameters $\theta= (\theta_1, \dotsc, \theta_P)$. *Learning* consists in finding the best set of parameters $\theta_{\mathrm{opt}}$ for performing a precise task - for instance translating text or telling if it's a cat or a dog in the photo. 
 
 ![](/posts/img/catsanddogs.svg)
 
-In *supervised learning*, this is done by learning this task on a set of examples $(x_i, y_i)$ where $x_i$ is an input and $y_i$ an output. We try to find $\theta$ such that $f_\theta(x_i) \approx y_i$ for all the examples at our dispositions: this is called **interpolation**. Once this is done, we hope that $f_\theta$ did not only learn the examples, but that when confronted to unseen examples $(x,y)$, the predicted output $\hat{y}=f_\theta(x)$ will be very close to the real output $y = f(x)$. This is called **generalization**. 
+In *supervised learning*, this is done by learning this task, say $f$, on a set of examples $(x_i, y_i)$ where $x_i$ is an input and $y_i = f(x_i)$ the output related to the input. We try to find $\theta$ such that $f_\theta(x_i) \approx y_i$ for all the examples at our dispositions: this is called **interpolation**. Once this is done, we hope that $f_\theta$ did not only learn the examples, but that when confronted to unseen examples $(x,y)$, the predicted output $\hat{y}=f_\theta(x)$ will be very close to the real output $y = f(x)$. This is called **generalization**. 
 
 
 ## The tradeoff between learning and understanding 
@@ -66,22 +66,22 @@ where $\sigma$ is a nonlinearity (typically, a ReLu), the $a_i$ are $P$ elements
 
 In theory, we should learn the best possible $a_i$ and $\theta_i$, but this is mathematically too hard to analyze, so we simplify the problem: we will only learn $\theta = (\theta_1, \dotsc, \theta_P)$; the $a_i$ will be chosen at random and fixed forever. This is called the **random feature regression**.  
 
-In order to regularize the problem, we also use a ridge penalty of strength $\lambda$, so that our learning process consists in minimizing the function
+In order to see how regularization affects the problem, we also use a ridge penalty of strength $\lambda$, so that our learning process consists in minimizing the function
 $$ \ell(\theta) = \sum_{i=1}^n (f_\theta(x_i) - y_i)^2 + \lambda |\theta|^2.$$ 
 This problem has a unique minimizer given by $$θ_{\text{opt}} = y^\top Z^\top (ZZ^\top + \lambda I)^{-1}$$ where $Z = (\sigma(\langle a_i, x_j\rangle) \in \mathbb{R}^{P \times n}$. 
 
 Now, if we choose a number of parameters $p$, we immediately have our optimal parameters $\theta_{\text{opt}}$ for learning the task given above through the examples `x,y`. 
 Once we have this solution, we can compare $f_{\theta_{\text{opt}}}$ with the real model $f$. What we want to compute is nothing else than the error done on a new realization of $x$, that is, 
 $$\mathbf{E}_x[(f_{\theta_\star}(x) - f(x))^2]$$
-where $x$ is drawn at random. What Mei and Montanari did is to compute this quantity --- or rather, its limit in the large-dimensional regime. The formula is really involved, but we can estimate the error by drawing many realizations of $X$ and averaging over (say) 10000 realizations. For simplicity we fix the regularization parameter to $\lambda=1$. 
+where $x$ is drawn at random. What Mei and Montanari did is to compute this quantity --- or rather, its limit in the large-dimensional regime. The formula is really involved, but we can estimate the error by drawing many realizations of $X$ and averaging over (say) 10000 realizations. We also try several ridge parameters $\lambda$. 
 
 ```julia
-function compute_test_error(x, y, p)
+function compute_test_error(x, y, p, λ)
 
     RF = randn(p,d) #random feature matrix with p features
 
     Z = relu.(RF*x)
-    θ_opt = y * transpose(Z) * inv( (Z*transpose(Z)) + I) ./ n
+    θ_opt = y * transpose(Z) * inv( (Z*transpose(Z)) + (λ*n/d).*I) ./ n
 
     x_test = randn(d, 10000)
     y_test = sum(β.*x_test, dims=1) + 0.01 .* randn(1, 10000)
@@ -113,7 +113,7 @@ The double descent curve might come from the fact that the complexity of our mod
 
 - The first motivated studies of the double descent phenomenon are due to Belkin and his team, notably in [this paper](https://arxiv.org/abs/1903.07571) and [this one](https://arxiv.org/abs/1812.11118) where they empirically show double descents in a variety of contexts, and give a theoretical tractable model where a similar phenomenon happens (linear random regression and random Fourier features). 
 
-- From the experimental point of view, the reference seems to be the [Deep double descent paper](https://arxiv.org/pdf/1912.02292.pdf) by an OpenAI team - Fig2 therein is probably the more expensive picture ever done in machine learning, both in \$\$\$ and in CO2. 
+- From the experimental point of view, the reference seems to be the [Deep double descent paper](https://arxiv.org/pdf/1912.02292.pdf) by an OpenAI team - some figures therein were probably among the most expensive experimentns ever done in machine learning, both in \$\$\$ and in CO2. 
 
 - A physicist approach on the double descent: [double trouble in double descent](https://arxiv.org/abs/2003.01054) and the [triple descent phenomenon](Triple descent : https://arxiv.org/pdf/2006.03509.pdf). 
 
