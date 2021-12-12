@@ -14,18 +14,5 @@ You can reach me at `firstname.lastname@ens.fr`.
 [GitHub](https://github.com/SimonCoste), [GitLab](https://gitlab.inria.fr/scoste), [ArXiv](https://arxiv.org/search/?searchtype=author&query=Coste%2C+S), [LinkedIn](https://fr.linkedin.com/in/simon-coste-48540b220?trk=people-guest_people_search-card)
 
 
-## Events
-
-
-
-**October 22, 2021**: talk on random matrices at MEGA (Toulouse, IRL + [visio](https://www.ceremade.dauphine.fr/dokuwiki/mega:seminaire)), [see the slides](/talks/mega21/) 
-
-**November 9, 2021**: talk at Université de Versailles (IRL), on spectra of unimodular trees. [Slides](/assets/extended.pdf)
-
-
-
-
-
-
 
 
