@@ -11,7 +11,7 @@ Between 2016 and 2019, I was a PhD student under the supervision of [Charles Bor
 You can reach me at `firstname.lastname@ens.fr`. 
 
 
-[GitHub](https://github.com/SimonCoste), [GitLab](https://gitlab.inria.fr/scoste), [ArXiv](https://arxiv.org/search/?searchtype=author&query=Coste%2C+S), [LinkedIn](https://fr.linkedin.com/in/simon-coste-48540b220?trk=people-guest_people_search-card)
+[GitHub](https://github.com/SimonCoste), [GitLab](https://gitlab.inria.fr/scoste), [ArXiv](https://arxiv.org/search/?searchtype=author&query=Coste%2C+S), [LinkedIn](https://fr.linkedin.com/in/simon-coste-48540b220?trk=people-guest_people_search-card), [Twitter](https://twitter.com/__SimonCoste__)
 
 
 
