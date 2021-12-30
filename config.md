@@ -10,6 +10,7 @@ The website_* must be defined for the RSS to work
 @def author = "Simon Coste"
 @def hascode = true
 @def mintoclevel = 2
+@def maxtoclevel = 2
 @def date_format = "U dd, yyyy"
 @def lastmodif = Dates.format(Dates.today(), "U dd, yyyy")
 
