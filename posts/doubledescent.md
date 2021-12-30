@@ -8,7 +8,7 @@ abstract = "Why do overparametrized networks do well?"
 
 **Neural networks** are functions $f_\theta$ built by combining linear and non-linear functions; they depend on a certain number of parameters $\theta= (\theta_1, \dotsc, \theta_P)$. *Learning* consists in finding the best set of parameters $\theta_{\mathrm{opt}}$ for performing a precise task - for instance translating text or telling if it's a cat or a dog in the photo. 
 
-![](/posts/img/catsanddogs.svg)
+![](/posts/img/catsanddogs.png)
 
 In *supervised learning*, this is done by learning this task, say $f$, on a set of examples $(x_i, y_i)$ where $x_i$ is an input and $y_i = f(x_i)$ the output related to the input. We try to find $\theta$ such that $f_\theta(x_i) \approx y_i$ for all the examples at our dispositions: this is called **interpolation**. Once this is done, we hope that $f_\theta$ did not only learn the examples, but that when confronted to unseen examples $(x,y)$, the predicted output $\hat{y}=f_\theta(x)$ will be very close to the real output $y = f(x)$. This is called **generalization**. 
 
