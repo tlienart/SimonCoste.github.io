@@ -6,7 +6,8 @@
   {{if hasmath}} {{insert head_katex.html }}     {{end}}
   {{if hascode}} {{insert head_highlight.html }}   {{end}}
   {{insert style.html}}
-  {{isdef title}} <title>{{fill title}}</title>  {{end}}
+  {{isdef titlepost}} <title>{{fill titlepost}}</title> {{else}} <title>{{fill title}}</title> {{end}}
+
 </head>
 <body>
 {{insert sidebar.html}}
