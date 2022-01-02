@@ -281,7 +281,7 @@ The authors of the ConvMixer paper argue that their architecture is as powerful 
 
 This implies a little bit of [code golf](https://en.wikipedia.org/wiki/Code_golf) cheating. In Julia, you can fit everything in a single tweet, `using Flux` included, in 272 characters without even needing to golf your functions names: 
 
-![even better](/posts/img/convmixr.png )
+![even better](/posts/img/carbon.png )
 
 The code is here (with spaces):
 > `ConvMixer(k,p,h,N) = Chain(Conv((p,p), 3=>h, gelu;stride=p), BatchNorm(h), [Chain(SkipConnection(Chain(Conv((k,k),h=>h,gelu;pad=SamePad(),groups=1), Batchnorm(h)),+), Chain(Conv((1,1),h=>h,gelu), BatchNorm(h))) for i in 1:D]..., AdaptiveMeanPool((1,1)), flatten, Dense(h,N))`
