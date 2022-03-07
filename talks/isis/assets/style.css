@@ -1,0 +1,75 @@
+
+* {
+    border: 2px red;
+}
+
+
+body {
+    text-align: center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 17px;
+}
+
+.reveal {
+    font-size: 30px;
+}
+.reveal section h1 {
+    color: rgb(42, 80, 38); font-size: 1.5em;
+    padding-bottom: 20px;
+}
+
+.math {
+    color:rgb(153, 31, 122)
+}
+
+img {
+    max-width: 400px;
+}
+
+.theorem {
+    background-color: rgb(204, 180, 180);
+    padding: 10px 40px;
+    text-align: left;
+    margin: 5px 0;
+}
+
+.important {
+    background-color: rgb(183, 204, 180);
+    padding: 10px 40px;
+    text-align: left;
+    margin: 5px 0;
+}
+
+.theorem h2 {
+    text-align: center;
+}
+
+.proof {
+    text-align: left;
+    padding: 5px 20px;
+    margin: 5px 0;
+    font-size: 0.8em;
+    background-color: rgb(197, 192, 228);
+}
+
+.refs img {
+    width: 500px;
+}
+
+.pan img {
+    height: 140px;
+    padding: 0px 30px;
+}
+
+.pan p {
+    padding: 0px 15px;
+    margin: 0; 
+}
+
+.pan {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}

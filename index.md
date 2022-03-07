@@ -14,5 +14,5 @@ You can reach me at `firstname.lastname@ens.fr`.
 [GitHub](https://github.com/SimonCoste), [GitLab](https://gitlab.inria.fr/scoste), [ArXiv](https://arxiv.org/search/?searchtype=author&query=Coste%2C+S), [LinkedIn](https://fr.linkedin.com/in/simon-coste-48540b220?trk=people-guest_people_search-card), [Twitter](https://twitter.com/__SimonCoste__).
 
 
-
+Talk at the GDR isis (march 2022): [slides are here](/talks/isis/)
 
