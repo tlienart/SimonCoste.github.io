@@ -1,6 +1,6 @@
 +++
 titlepost = "The Jarzynski estimator"
-date = "April 2021"
+date = "March 2022"
 abstract = "An elegant estimator for free energies "
 +++
 
