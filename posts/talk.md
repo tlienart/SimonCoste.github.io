@@ -1,6 +1,6 @@
 +++
 titlepost = "Characteristic polynomial of random matrices: slides"
-date = "2021"
+date = "February 2021"
 abstract = "Html slides of several presentations I made in 2021. "
 +++
 

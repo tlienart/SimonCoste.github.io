@@ -1,7 +1,7 @@
 +++
 titlepost = "The Jarzynski estimator"
 date = "March 2022"
-abstract = "An elegant estimator for free energies "
+abstract = "An elegant estimator for free energies."
 +++
 
 We have a family of potentials $V_t$ on $\mathbb{R}^n$, evolving with time, and their associated Gibbs measures $p_t$, ie 

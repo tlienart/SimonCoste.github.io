@@ -17,6 +17,7 @@ end
 
 
 function hfun_recentblogposts()
+
   list = readdir("posts")
   filter!(f -> endswith(f, ".md"), list)
   dates = [stat(joinpath("blog", f)).mtime for f in list]
