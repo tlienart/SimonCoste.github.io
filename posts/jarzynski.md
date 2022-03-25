@@ -67,4 +67,4 @@ $$\dot{a}_t =  - (\nabla \cdot \nabla U_t) a_t + \dot{U}_t a_t + \nabla U_t \cdo
 
  ## References
 
- - [Jarczynski's paper](https://arxiv.org/abs/cond-mat/9610209), written in 1996.
+ - [Jarzynski's paper](https://arxiv.org/abs/cond-mat/9610209), written in 1996.

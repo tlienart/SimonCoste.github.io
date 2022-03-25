@@ -1,6 +1,6 @@
 +++
 titlepost = "Super-Catalan"
-date = "Janvier 2021"
+date = "Janvier 2022"
 abstract = "Une question non-résolue, vieille de 150 ans, et probablement très inutile. "
 +++
 
