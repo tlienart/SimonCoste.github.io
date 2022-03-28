@@ -5,21 +5,22 @@ abstract = "An elegant estimator for free energies."
 +++
 
 We have a family of potentials $V_t$ on $\mathbb{R}^n$, evolving with time, and their associated Gibbs measures $p_t$, ie 
-\begin{align*} &p_t(x) = \frac{e^{-V_t(x)}}{Z_t}&& \text{where}&& Z_t = \int e^{-U_t(x)}dx.\end{align*}
+\begin{align*} &p_t(x) = \frac{e^{-V_t(x)}}{Z_t}&& \text{where}&& Z_t = \int_{\mathbb{R}^n} e^{-V_t(x)}dx.\end{align*}
 The goal is to compute, at least numerically, the partition functions $Z_t$ or equivalently the free energy $F_t = - \log Z_t$. In many problems, the family of potentials  $(V_t)$ connects an unknown potential $V_0$, for which we would like to compute $F_0$, and another potential $V_1$ for which $F_1$ is known.   
 
 An elegant way of estimating these free energies uses the *Jarzynski identity*, discovered in 1996. It is based on the Langevin dynamics associated with the evolving potential $V_t$:
-\begin{equation}\label{sde}dX_t = - \nabla V_t(X_t)dt + \sqrt{2}dW_t. \end{equation}
+\begin{equation}\label{sde}dX_t = - \nabla V_t(X_t)dt + \sqrt{2}dW_t \end{equation}
+with $(W_t)$ a Brownian motion. 
 Upon standard conditions on $V_t$, this system -- a standard Stochastic Differential Equation -- has a solution. Note that the distribution of $X_t$ is *not* $p_t$ in general. However, there is a remarkable identity relating the distribution of $X_t$ with $p_t$.   
 @@important
 **Jarzynski's identity** states that 
 $$\mathbf{E}[e^{-\int_0^t \dot{V}_s(X_s) - \dot{F}_sds}] = 1. $$
 @@
-Here and after, the dot in $\dot{U}_t$ or $\dot{F}_t$ always represents a derivative with respect to time. 
+Here and after, the dot in $\dot{V}_t$ or $\dot{F}_t$ always represents a derivative with respect to time. 
 
 The consequence  of this identity is that 
 $$ \log \mathbf{E}[e^{-\int_0^t \dot{V}_s(X_s)ds}] = F_t - F_0, $$
-giving rise to a natural estimator for the *free energy difference* $F_t-F_0$: one samples many paths from the dynamics \eqref{sde}, then computes the path integral $w_t = \int_0^t \dot{U}_s(X_s)ds$ along each path, and then average the values of $e^{-w_t}$ and take the log. 
+giving rise to a natural estimator for the *free energy difference* $F_t-F_0$: one samples many paths from the dynamics \eqref{sde}, then computes the path integral $w_t = \int_0^t \dot{V}_s(X_s)ds$ along each path, and then average the values of $e^{-w_t}$ and take the log. 
 
 
 
