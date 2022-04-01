@@ -49,7 +49,7 @@ Joint work with [Ludovic Stephan](https://www.lstephan.fr/).
 
 ### Eigenvalues of the non-backtracking operator detached from the bulk
 
-Joint work with [Yizhe Zhu](https://sites.google.com/ucsd.edu/yizhe). 
+Joint work with [Yizhe Zhu](https://sites.google.com/uci.edu/yizhezhu). 
 
 [Arxiv link](https://arxiv.org/abs/1907.05603) -- Published in *Random Matrix Theory and Applications*.
 
@@ -62,7 +62,13 @@ This is a note on "bulk insider" eigenvalues for the non-backtracking spectrum o
 
 Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arxiv.org/pdf/2012.05602.pdf), I show that when $A_n$ is a random $n\times n$ matrix with all $n^2$ entries independent random variables with distribution $\mathrm{Bernoulli}(d/n)$ and $d>1$ is fixed while $n \to \infty$, then the random polynomial $det(I_n - zA_n)$ converges weakly in distribution towards a random analytic function on $D(0, 1/\sqrt{d})$. This function is a Poisson analog of the *Gaussian Holomorphic Chaos*, see [Najnudel, Paquette, Simm 2020](https://arxiv.org/pdf/2011.01823.pdf).  The result is also proved when $d$ is allowed to grow to infinity with $n$ slowly. In this semi-sparse regime, the limits are more classical Gaussian objects and the statement on the eigenvalues is still valid: in particular, the second eigenvalue sticks to the bulk of the circular distribution. 
 
-Work in progress with Yizhe Zhu and Gaultier Lambert: extension for sums of independent permutation matrices drawn from the Ewens distribution. When the Ewens parameter is 1, we recover the directed Alon-Friedman theorem with a much simpler proof.  
+### The characteristic polynomial of sums of permutations
+
+Joint work with [Yizhe Zhu](https://sites.google.com/uci.edu/yizhezhu) and [Gaultier Lambert](http://user.math.uzh.ch/gaultier/) 
+
+[Arxiv link]() - to appear on monday April 4th
+
+Following the preceding item, we proved a similar result for the characteristic polynomial of sums of random uniform permutation matrices. The paper contains an appendix on sums of Ewens-distributed permutations. 
 
 ### Stability of scattering transforms on sparse graphs
 
