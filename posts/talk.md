@@ -14,3 +14,7 @@ It's written in markdown then converted to HTML with pandoc. Then I use CSS styl
 ## Talk on spectral clustering on directed graphs
 
 Slideshow for my GDR talk is [here](/talks/isis/).
+
+## Audition
+
+[cnrs](/assets/audition.pdf)
