@@ -6,7 +6,7 @@
 
 Postdoc researcher at [ENS](http://csd.ens.psl.eu/) in Stéphane Mallat's team, interested in the mathematics of machine learning. Co-organizer of the 2022 season of [Challenge data](http://challengedata.ens.fr) - ongoing now! 
 
-Starting from September 2023 I'll be a permanent researcher (MCF) in [Université de Paris](https://u-paris.fr/en/) (P7, LPSM). 
+Starting from September 2022 I'll be a permanent researcher (MCF) in [Université de Paris](https://u-paris.fr/en/) (P7, LPSM). 
 
 Between 2016 and 2019, I was a PhD student under the supervision of [Charles Bordenave](http://www.i2m.univ-amu.fr/perso/charles.bordenave/start) and [Justin Salez](https://www.ceremade.dauphine.fr/~salez/). In 2019-2021 I was a postdoc student in the Dyogene team at [INRIA Paris](https://www.inria.fr/en/centre-inria-de-paris), under the supervision of François Baccelli. 
 

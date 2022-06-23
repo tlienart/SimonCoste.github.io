@@ -66,7 +66,7 @@ Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arx
 
 Joint work with [Yizhe Zhu](https://sites.google.com/uci.edu/yizhezhu) and [Gaultier Lambert](http://user.math.uzh.ch/gaultier/) 
 
-[Arxiv link]() - to appear on monday April 4th
+[Arxiv link](https://arxiv.org/abs/2204.00524) 
 
 Following the preceding item, we proved a similar result for the characteristic polynomial of sums of random uniform permutation matrices. The paper contains an appendix on sums of Ewens-distributed permutations. 
 
