@@ -9,6 +9,8 @@ date = Date(2019, 3, 22)
 
 \toc
 
+
+
 # Extremal eigenvalues
 
 I study spectral properties of random objects like graphs and matrices, and their application to statistical inference problems. The use of low-dimensional spectral embeddings has proven to be a fruitful method in many problems such as matrix completion, community detection, graph alignment, etc. I recently got into spectral convolutions in graph neural networks. 
@@ -76,11 +78,17 @@ We show that scattering transforms on graphs are continuous with respect to loca
 
 Work in progress with Bartek B. and Bharatt Chowdhuri. 
 
-# Other works
+
+# Generative models
+
+[Wavlet Score-Based Generative Modeling](https://arxiv.org/abs/2208.05003)
+
+In deep learning, score-based diffusion models recently achieved very impressive results in generating samples from unknown distributions, especially in images. However, training these models and sampling from them is very costly. In this collaboration with Florentin Guth, Valentin de Bortoli and Stéphane Mallat, we propose a multi-scale approach and show why sampling high frequencies conditionnaly on lower scales can considerably accelerate everything; we provide a theoretic analysis of this and show how separating scales is similar to preconditioning the data distribution. 
 
 
-### Order and fluctuations in point processes
+# Order and fluctuations in point processes
 
+### Hyperuniformity survey
 
 In parallel, I'm interested in the rigidites of random point processes, such as number-rigidities, fluctuations reductions, hyperuniformity, and the possible links between these notions. There are different ways in which point processes in $\mathbb{R}^d$ can exhibit a stronger order than the totally chaotic Poisson process; *hyperuniformity* is when the (random) number of points $N_r$ falling in a large domain $B_r$ of radius $r$ has a reduced variance, that is, when 
 $$ \lim_{r \to \infty} \frac{\mathrm{Var}(N_r)}{\mathrm{Vol}(B_r)} = 0. $$ 
@@ -90,11 +98,20 @@ Here is a version of this survey. It's still work in progress.
 
 [Hyperuniformity survey](/assets/survey_hyperuniformity.pdf) (june 2021: added a paragraph on JLM laws)
 
+
+
 ### Effective rigidity with neural networks
 
 Many stationary point processes have recently been shown to be *rigid*, that is, the number of points of the process inside a disk is a measurable function of the point configuration outside the disk. However, most of these functions are limits of linear statistics of the point process and they frequently have an exponential radius of stabilization, making it nearly impossible to effectively recover the number of points in a small disk by the observation of the configuration in a large window. Can we construct more explicit reconstruction functions ? With a deep learning perspective, one can try to train invariant neural networks to get back this number and evaluate the complexity of the solutions. 
 
 Work in progress with Antoine Brochard. 
+
+
+
+# Other works
+
+
+
 
 ### A note on a generalization of the Erdos-Gallai Theorem
 
