@@ -53,13 +53,6 @@
 &gt; eigvals(randn(500,500))</code></pre>
 <p><img data-src="./img/circle.svg" /></p>
 </section>
-<section id="eigenvalues-of-random-regular-digraphs" class="slide level1">
-<h1>Eigenvalues of random regular digraphs</h1>
-<pre><code>&gt; using LinearAlgebra, Erdos
-&gt; eigvals(random_regular_digraph(500, 3))</code></pre>
-<p><img data-src="./img/rrd.svg" /></p>
-<p>same with <span class="math inline">A_n =</span> sum of <span class="math inline">d</span> uniform <span class="math inline">n\times n</span> permutation matrices</p>
-</section>
 <section id="eigenvalues-of-01-sparse-matrices" class="slide level1">
 <h1>Eigenvalues of 0/1 sparse matrices</h1>
 <pre><code>&gt; using LinearAlgebra
@@ -67,6 +60,13 @@
 <p><img data-src="./img/bernoulli.svg" /></p>
 <p><span class="math inline">A_n</span> = an <span class="math inline">n \times n</span> matrix whose entries are iid <span class="math inline">\mathrm{Bernoulli}(d/n)</span> entries.</p>
 </section>
+<section id="eigenvalues-of-random-regular-digraphs" class="slide level1">
+  <h1>Eigenvalues of random regular digraphs</h1>
+  <pre><code>&gt; using LinearAlgebra, Erdos
+  &gt; eigvals(random_regular_digraph(500, 3))</code></pre>
+  <p><img data-src="./img/rrd.svg" /></p>
+  <p>same with <span class="math inline">A_n =</span> sum of <span class="math inline">d</span> uniform <span class="math inline">n\times n</span> permutation matrices</p>
+  </section>
 <section id="reverse-characteristic-polynomial" class="slide level1">
 <h1>Reverse characteristic polynomial</h1>
 <p><span class="math display">q_n (z) = \det(I_n - zA_n)</span></p>
@@ -90,7 +90,7 @@
 </section>
 <section id="the-limits-of-the-coefficients-of-q_n" class="slide level1">
 <h1>The limits of the coefficients of <span class="math inline">q_n</span></h1>
-<p><span class="math display">\Delta_k \to a_k =  (-1)^k \frac{P_k(X_1, ... , X_k)}{k!}</span> Let <span class="math inline">f</span> be the log-generating function of these random variables: <span class="math display">F(z) = 1 + \sum_{k=1}^\infty a_k z^k </span></p>
+<p><span class="math display">\Delta_k \to a_k =  (-1)^k \frac{P_k(X_1, ... , X_k)}{k!}</span> Let <span class="math inline">F</span> be the generating function of these random variables: <span class="math display">F(z) = 1 + \sum_{k=1}^\infty a_k z^k </span></p>
 <div class="theorem">
 <p>Coefficients of <span class="math inline">q_n</span> <span class="math inline">\to</span> coefficients of <span class="math inline">F</span></p>
 </div>
@@ -99,11 +99,11 @@
 <section id="weak-convergence-of-analytic-functions" class="slide level1">
 <h1>Weak convergence of analytic functions</h1>
 <div class="theorem">
-<p><a href="https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/198072/1/b34_020.pdf">shirai 2012</a></p>
-<p>If <span class="math inline">f_n</span> is a sequence of <strong>random</strong> analytic functions in an open set <span class="math inline">d</span> and if</p>
+<p><a href="https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/198072/1/b34_020.pdf">Shirai 2012</a></p>
+<p>If <span class="math inline">f_n</span> is a sequence of <strong>random</strong> analytic functions in an open set <span class="math inline">D</span> and if</p>
 <ol type="1">
 <li><p>the coeffs of <span class="math inline">f_n</span> converge towards <span class="math inline">(a_k)</span></p></li>
-<li><p><strong><span class="math inline">f_n</span> is tight in <span class="math inline">d</span></strong></p></li>
+<li><p><strong><span class="math inline">f_n</span> is tight in <span class="math inline">D</span></strong></p></li>
 </ol>
 <p>then <span class="math inline">f_n \to f</span> where <span class="math inline">f(z) = \sum a_k z^k</span>.</p>
 </div>
@@ -121,8 +121,8 @@
 <p>The sequence <span class="math inline">q_n</span> is tight in <span class="math inline">D(0,\sqrt{1/d})</span>.</p>
 </div>
 <ul>
-<li><p>easy for dense matrix ensembles (eg ginibre)</p></li>
-<li><p>not easy for the sparse bernoulli model</p></li>
+<li><p>easy for dense matrix ensembles (eg Ginibre)</p></li>
+<li><p>not easy for the sparse Bernoulli model</p></li>
 <li><p>difficult for the sum-of-permutations model</p></li>
 </ul>
 </section>
@@ -134,11 +134,11 @@
 <p><img data-src="./img/comparison3.png" /></p>
 </section>
 <section id="elementary-properties-of-f" class="slide level1">
-<h1>Elementary properties of <span class="math inline">f</span></h1>
+<h1>Elementary properties of <span class="math inline">F</span></h1>
 <p><span class="math display">F(z) = \exp \left( -\sum_{k=1}^\infty X_k \frac{z^k}{k} \right) = \prod_{k=1}^\infty (1 - z^k)^{Y_k}</span></p>
 <ul>
 <li><p>the radius of convergence <strong>inside the exp</strong> is <span class="math inline">1/d</span>.</p></li>
-<li><p>the radius of convergence of <span class="math inline">f</span> is <span class="math inline">1/\sqrt{d}</span> and <span class="math inline">f</span> has one zero at <span class="math inline">1/d</span>.</p></li>
+<li><p>the radius of convergence of <span class="math inline">F</span> is <span class="math inline">1/\sqrt{d}</span> and <span class="math inline">F</span> has one zero at <span class="math inline">1/d</span>.</p></li>
 <li><p><span class="math inline">F</span> has no other zeroes inside <span class="math inline">D(0,1/\sqrt{d})</span>.</p></li>
 </ul>
 </section>
@@ -157,8 +157,8 @@
 </section>
 <section id="generating-function-for-g" class="slide level1">
 <h1>Generating function for <span class="math inline">G</span></h1>
-<p><a href="https://arxiv.org/abs/2011.01823">najnudel, paquette, simm, 2020</a> + <a href="https://www.combinatorics.org/ojs/index.php/eljc/article/view/v11i2r2">diaconis, gamburd, 2004</a></p>
-<p><span class="math display"> \mathbf{E} G(z_1)...G(z_k)\overline{g(w_1)...g(w_k)} = \prod_{i,j = 1}^k \frac{1}{1 - z_i w_j} </span></p>
+<p><a href="https://arxiv.org/abs/2011.01823">Najnudel, Paquette, Simm, 2020</a> + <a href="https://www.combinatorics.org/ojs/index.php/eljc/article/view/v11i2r2">Diaconis, Gamburd, 2004</a></p>
+<p><span class="math display"> \mathbf{E} G(z_1)...G(z_k)\overline{G(w_1)...G(w_k)} = \prod_{i,j = 1}^k \frac{1}{1 - z_i w_j} </span></p>
 <p>this is the generating function of magic squares!</p>
 <div class="theorem">
 <p>Note <span class="math inline">c_n</span> the <span class="math inline">n</span>-th coef of <span class="math inline">G</span>.</p>
@@ -167,20 +167,21 @@
 </section>
 <section id="generating-function-for-f" class="slide level1">
 <h1>Generating function for <span class="math inline">F</span></h1>
-<p><span class="math display"> \mathbb{E} F(z_1)...F(z_k) = \frac{\prod_{S \subset [k] \text{ odd}} (1 - d\prod_{s \in S}z_s)}{ \prod_{S \subset [k], \text{ even}} (1 - d\prod_{s \in S}z_s)} </span></p>
+<p><span class="math display"> \mathbf{E} F(z_1)...F(z_k) = \frac{\prod_{S \subset [k] \text{ odd}} (1 - d\prod_{s \in S}z_s)}{ \prod_{S \subset [k], \text{ even}} (1 - d\prod_{s \in S}z_s)} </span></p>
 <p>This is the generating function of… ?</p>
 </section>
 <section id="the-oriented-kesten-mckay-law" class="slide level1">
 <h1>The Oriented Kesten-McKay law</h1>
+<p>For random d-regular digraphs</p>
 <div class="theorem">
 <p><strong>Conjecture</strong>. If <span class="math inline">\varrho_d =</span> the OKMC density (<a href="https://arxiv.org/pdf/2204.00524.pdf">[CLZ eq(2.5)]</a> ):</p>
-<p><span class="math display">\frac{1}{n}\log | \det( z - a)| \to \int \log | z - w| \varrho_d(w)\mathrm{d}w =: U_d(z) </span></p>
+<p><span class="math display">\frac{1}{n}\log | \det( z - A)| \to \int \log | z - w| \varrho_d(w)\mathrm{d}w =: U_d(z) </span></p>
 </div>
 <p>Can we study the fluctuations ?</p>
-<p><span class="math display">\Phi_n(z) = \log | \det (z - a) | - n U_d(z) </span></p>
+<p><span class="math display">\Phi_n(z) = \log | \det (z - A) | - n U_d(z) </span></p>
 </section>
 <section id="phi_n-look-like-this" class="slide level1">
-<h1><span class="math inline">\Phi_n</span> look like this:</h1>
+<h1><span class="math inline">\Phi_n</span> looks like this:</h1>
 <div style="display: inline-block;">
 <p><img src="./img/f1.png" alt="from far away" title="fluctuations 1" width="55%" /> <img src="./img/f2.png" alt="from the above" title="fluctuations 2" width="30%" /></p>
 </div>
