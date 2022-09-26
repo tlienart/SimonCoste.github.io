@@ -40,3 +40,20 @@ Par conséquent, l'ensemble $E$ ne peut pas avoir de mesure de Lebesgue. Il n'es
 ---
 
 Max Fathi me dit qu'il y a un théorème disant essentiellement que toute construction d'un ensemble non-Lebesgue-mesurable nécessite l'axiome du choix (que nous avons utilisé ici). Je ne connais pas ce théorème. 
+
+## Un ensemble équilibré
+
+Le résultat suivant donne l'existence d'ensembles boréliens qui sont un peu partout dans $[0,1]$, mais pas *vraiment* partout. Ils seraient parfois appelés « ensembles bien équilibrés ». 
+@@important
+Il existe un ensemble $A \subset [0,1]$, borélien, qui vérifie la propriété suivante : pour tout intervalle $I\subset ]0,1[$, 
+$$ 0 < \lambda(A \cap I) < \lambda(I), $$
+où $\lambda$ est la mesure de Lebesgue. 
+@@
+
+L'existence de cet ensemble n'est pas évidente et je propose une construction facile. D'abord, chaque $x\in[0,1]$ peut s'écrire en binaire $0,x_1x_2x_3\dotsc$ où $x_i \in \{0,1\}$. On pose
+$$ S(x) = \sum_{n=1}^\infty \frac{(-1)^{x_n}}{n}.$$
+Il se trouve que
+1. cette fonction est mesurable, 
+2. pour $\lambda$-presque tout $x$, cette somme est finie, 
+3. les ensembles $\{S>a\}$ ont bien la propriété demandée, quel que soit $a$. 
+Évidemment, c'est surtout le point 3 qui est difficile à démontrer, ce qu'on considérera donc comme un bon exercice (difficile). Accessoirement, le point 2 peut être vérifié de façon probabiliste : en effet, si $x$ est une variable aléatoire uniforme sur $[0,1]$, alors il est facile de voir que $x_n$ est une variable de Rademacher (elle prend les valeurs $\pm 1$ avec probabilité $1/2$). Il n'est alors plus très difficile de vérifier, par exemple, que $S$ est une variable aléatoire $L^2$, donc finie presque sûrement.
