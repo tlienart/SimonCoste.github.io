@@ -9,7 +9,7 @@
 
 Je mettrai régulièrement quelques compléments sur [cette page](/teaching/proba). 
 
-Feuilles d'exercice : [TD1](/teaching/TD1.pdf), [TD2](/teaching/TD2.pdf), [TD3](/teaching/TD3.pdf)
+Feuilles d'exercice : [TD1](/teaching/TD1.pdf), [TD2](/teaching/TD2.pdf), [TD3](/teaching/TD3.pdf), [TD4](/teaching/TD4.pdf)
 
 # Statistique pour l'agrégation
 
