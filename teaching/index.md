@@ -11,6 +11,8 @@ Je mettrai régulièrement quelques compléments sur [cette page](/teaching/prob
 
 Feuilles d'exercice : [TD1](/teaching/TD1.pdf), [TD2](/teaching/TD2.pdf), [TD3](/teaching/TD3.pdf), [TD4](/teaching/TD4.pdf)
 
+Devoir 1 : [D1](/teaching/DM1.pdf), [correction](/teaching/DM1_corr.pdf)
+
 # Statistique pour l'agrégation
 
 2020 - 2021 : cours et TD de statistiques pour la préparation à l'agrégation de SES (ENS Paris et Paris-Saclay), avec Rafael Grompone von Gioi. Toutes les informations sur [cette page](/teaching/statagreg).
