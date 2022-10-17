@@ -101,3 +101,13 @@ $$A_{p_1, \dotsc, p_n} = \{x \in \mathbb{R}^n, \sum_{i=1}^n |x_i|^p_i \leqslant 
 alors 
 $$\lambda(A_{p_1, \dotsc, p_n}) = \frac{2^n \prod_{i=1}^n\Gamma\left(\frac{1}{p_i} + 1\right)}{\Gamma\left(\frac{1}{p_1} + \dotsb + \frac{1}{p_n}+1\right)}.$$
 C'est un calcul qui est parfaitement faisable et qui pourra, par exemple, faire l'objet d'une interrogation. 
+
+
+## Petit point de notation
+
+La fonction de répartition d'une variable aléatoire réelle $X$ est la fonction croissante $F$ définie par
+$$ F(t) = \mathbb{P}(X \leqslant t).$$
+Attention : si l'on voulait étudier la variable aléatoire $F(X)$, on pourrait être tenté d'écrire
+$$F(X) = \mathbb{P}(X \leqslant X) = 1$$
+ce qui est évidemment très faux. Pour que les choses soient claires, il vaut mieux noter $\mu$ la loi de probabilité de $X$ et écrire $F(t) = \mu(]-\infty, t])$ et ainsi, 
+$$F(X)(\omega) = \mu(]-\infty, X(\omega)]).$$
