@@ -109,5 +109,7 @@ La fonction de répartition d'une variable aléatoire réelle $X$ est la fonctio
 $$ F(t) = \mathbb{P}(X \leqslant t).$$
 Attention : si l'on voulait étudier la variable aléatoire $F(X)$, on pourrait être tenté d'écrire
 $$F(X) = \mathbb{P}(X \leqslant X) = 1$$
-ce qui est évidemment très faux. Pour que les choses soient claires, il vaut mieux noter $\mu$ la loi de probabilité de $X$ et écrire $F(t) = \mu(]-\infty, t])$ et ainsi, 
+ce qui est évidemment très faux -- c'est un abus de notation. 
+
+Pour que les choses soient claires et justes, il vaut mieux noter $\mu$ la loi de probabilité de $X$ et écrire $F(t) = \mu(]-\infty, t])$ et ainsi, 
 $$F(X)(\omega) = \mu(]-\infty, X(\omega)]).$$
