@@ -113,3 +113,12 @@ ce qui est évidemment très faux -- c'est un abus de notation.
 
 Pour que les choses soient claires et justes, il vaut mieux noter $\mu$ la loi de probabilité de $X$ et écrire $F(t) = \mu(]-\infty, t])$ et ainsi, 
 $$F(X)(\omega) = \mu(]-\infty, X(\omega)]).$$
+
+
+## Exercice sur les lois conditionnelles
+
+Nous avons vu en exercice de nombreux exemples de variables aléatoires $X,Y$, positives, indépendantes, $L^1$, pour lesquelles 
+$$ \mathbb{E}[X | X+Y] = \frac{\alpha}{\alpha + \beta}(X+Y)$$
+où $\alpha = \mathbb{E}[X], \beta = \mathbb{E}[Y]$. Par exemple, lorsque $X,Y$ sont des lois de Poisson, ou des lois Gammas avec même paramètre de taux $\lambda$, etc. 
+
+Est-ce toujours vrai ? Existe-t-il des variables aléatoires $X,Y$ telles que la relation ci-dessus n'est pas valable ?
