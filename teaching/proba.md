@@ -1,9 +1,11 @@
 @def title = "Probabilités mathématiques"
 @def hascode = true
 
+\toc
+
 # Quelques compléments au cours
 
-## Ensemble non mesurable
+## Un ensemble non mesurable
 
 Un étudiant m'a fait remarquer, ce lundi 12 septembre, que la tribu borélienne de $\mathbb{R}$ n'est pas égale à l'ensemble des parties de $\mathbb{R}$. C'est vrai, et cela implique qu'il y a des parties de $\mathbb{R}$ qui ne sont pas boréliennes. En fait, il existe même des parties qui ne sont pas dans la tribu de Lebesgue. C'est un grand classique et je ne connais pas d'autre exemple que celui que je vais exposer maintenant. 
 
@@ -59,7 +61,7 @@ Il se trouve que
 Évidemment, c'est surtout le point 3 qui est difficile à démontrer, ce qu'on considérera donc comme un bon exercice (difficile). Accessoirement, le point 2 peut être vérifié de façon probabiliste : en effet, si $x$ est une variable aléatoire uniforme sur $[0,1]$, alors il est facile de voir que $x_n$ est une variable de Rademacher (elle prend les valeurs $\pm 1$ avec probabilité $1/2$). Il n'est alors plus très difficile de vérifier, par exemple, que $S$ est une variable aléatoire $L^2$, donc finie presque sûrement.
 
 
-## Sur le volume des sphères
+## Sur le volume des sphères (on refait les calculs vus en TD)
 
 Aujourd'hui, lundi 3 octobre, nous avons utilisé le théorème de Fubini à de multiples reprises pour calculer le volume (= la mesure de Lebesgue) de la boule unité en toute dimension : 
 $$ B_n(r) = \{(x_1, \dotsc, x_n) : \sqrt{\sum_{i=1}^n |x_i|^n} \leqslant r\}.$$
@@ -89,7 +91,7 @@ Il existe d'autres démonstrations.
 
 Il y a plusieurs choses à dire sur cet exercice. 
 
-*Premièrement*, le volume de la sphère unité tend très vite vers zéro (utiliser la formule de Stirling). Son maximum est atteint en $n=5$ ; le volume de la boule unité en dimension 5 est égal à $8\pi^2 / 15 \approx 5,624$, c'est un peu étonnant (je ne sais pas ce que la dimension 5 a de particulier), mais c'est comme ça. Un très bon exercice consiste à essayer de démontrer que ce volume tend vers zéro lorsque la dimension tend vers l'infini, sans passer par le calcul exact. 
+*Premièrement*, le volume de la sphère unité tend très vite vers zéro (utiliser la formule de Stirling). Son maximum est atteint en $n=5$ ; le volume de la boule unité en dimension 5 est égal à $8\pi^2 / 15 \approx 5,624$, c'est un peu étonnant (je ne sais pas ce que la dimension 5 a de particulier), mais c'est comme ça. Un très bon exercice consiste à essayer de démontrer que ce volume tend vers zéro lorsque la dimension tend vers l'infini, sans passer par le calcul exact. Mon ami Mi-Song m'indique d'ailleurs une bonne intuition sur ce phénomène : le volume du cube unité en dimension $n$ (c'est-à-dire les points dont toutes les coordonnées sont comprisese ntre 0 et 1) est égale à 1, c'est évident; or, son diamètre (la plus grande longueur séparant deux points contenus dans le cube)  est égal à $\sqrt{n}$, qui tend vers l'infini. La boule unité possède un diamètre constant, pas étonnant que son volume tende vers zéro (attention, ceci n'est pas une preuve). 
 
 *Deuxièmement*, un calcul parfaitement équivalent à celui fait plus haut permet de calculer le volume de la boule $L^p$, c'est-à-dire
 $$ B_n^p(r) = \{ (x_1, \dotsc, x_n) \in \mathbb{R}^n : |x|_p \leqslant r\}$$
@@ -97,11 +99,11 @@ où $|x|_p = (|x_1|^p + \dotsb + |x_n|^p)^{1/p}$. Le calcul donne
 $$\lambda(B_n^p(r)) = r^n \frac{\left(2\Gamma\left(\frac{1}{p}+1\right)\right)^n}{\Gamma\left(\frac{n}{p}+1\right)}.$$
 
 *Troisèmement*, un [article de Dirichlet lui-même](http://sites.mathdoc.fr/JMPA/PDF/JMPA_1839_1_4_A11_0.pdf) (en français), daté de 1839, fait le calcul encore plus général suivant : si l'on note
-$$A_{p_1, \dotsc, p_n} = \{x \in \mathbb{R}^n, \sum_{i=1}^n |x_i|^p_i \leqslant 1 \}$$
+$$A_{p_1, \dotsc, p_n} = \{x \in \mathbb{R}^n, \sum_{i=1}^n |x_i|^{p_i} \leqslant 1 \}$$
 alors 
 $$\lambda(A_{p_1, \dotsc, p_n}) = \frac{2^n \prod_{i=1}^n\Gamma\left(\frac{1}{p_i} + 1\right)}{\Gamma\left(\frac{1}{p_1} + \dotsb + \frac{1}{p_n}+1\right)}.$$
 C'est un calcul qui est parfaitement faisable et qui pourra, par exemple, faire l'objet d'une interrogation. 
-
+ 
 
 ## Petit point de notation
 
@@ -113,12 +115,13 @@ ce qui est évidemment très faux -- c'est un abus de notation.
 
 Pour que les choses soient claires et justes, il vaut mieux noter $\mu$ la loi de probabilité de $X$ et écrire $F(t) = \mu(]-\infty, t])$ et ainsi, 
 $$F(X)(\omega) = \mu(]-\infty, X(\omega)]).$$
+  
 
 
-## Exercice sur les lois conditionnelles
+## Exercice sur les lois conditionnelles
 
 Nous avons vu en exercice de nombreux exemples de variables aléatoires $X,Y$, positives, indépendantes, $L^1$, pour lesquelles 
 $$ \mathbb{E}[X | X+Y] = \frac{\alpha}{\alpha + \beta}(X+Y)$$
-où $\alpha = \mathbb{E}[X], \beta = \mathbb{E}[Y]$. Par exemple, lorsque $X,Y$ sont des lois de Poisson, ou des lois Gammas avec même paramètre de taux $\lambda$, etc. 
+où $\alpha = \mathbb{E}[X], \beta = \mathbb{E}[Y]$. Par exemple, lorsque $X,Y$ sont des lois de Poisson, ou des lois Gammas avec même paramètre de taux $\lambda$, etc. C'est essentiellement le contenu de l'exercice 4 de la feuille 6.
 
 Est-ce toujours vrai ? Existe-t-il des variables aléatoires $X,Y$ telles que la relation ci-dessus n'est pas valable ?
