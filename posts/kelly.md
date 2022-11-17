@@ -11,7 +11,7 @@ There's been a lot of fuss recently on the [FTX collapse](https://edition.cnn.co
 
 ## Fixed-fraction strategies 
 
-Here's the setting: you are in a situation where, for $n$ epochs, you can gamble money. At each epoch you can win with probability $p$, and if you win you get $w$ times your bet. If you loose (with proba $q=1-p$) you loose $\ell$ times your bet. Therefore, if you bet $1€$, your expected gain is
+Here's the setting: you are in a situation where, for $n$ epochs, you can gamble money. At each epoch you can win with probability $p$, and if you win you get $w$ times your bet. If you lose (with proba $q=1-p$) you lose $\ell$ times your bet. Therefore, if you bet $1€$, your expected gain is
 $$e = p w  -q\ell.$$
 And if you bet $R$, your expected gain is $Re$. 
 
