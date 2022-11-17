@@ -36,7 +36,7 @@ where we noted  $\gamma = (1+fw)/(1-f\ell)$.
 A no-brain strategy[^1] to maximize the final gain $R_n$ is to compute $\mathbb{E}[R_n]$ and then optimise in $f$. Using independence,
 $$\mathbb{E}[R_t]  =(\mathbb{E}[\gamma^{X_1}])^t = (1-f\ell)^t (p\gamma + 1-p)^t = (1+f(pw - lq))^t = (1+fe)^t$$
 and now we seek $f_\mathrm{degen}$ which maximizes this function. Clearly $(1 + fe)^n$ is increasing or decreasing according to $e>0$ or $e<0$; indeed, let us suppose that $e>0$ (the expected gain is positive), the nobrain strategy consists in $f_{\mathrm{degen}}=1$: at each epoch, you bet all your money. The expected gain is 
-$$R_{\mathrm{degen}} = (1+pw-q\ell)^n = (1+e)^n. $$ It is exponentially large: even for a very small expected gain of $e \approx 0.01$ and $n=100$ epochs you get $2.7$: you nearly tripled your wealth! But suppose that $a=b=1$ (that is, you win or loose what you bet); should you have only ONE loss during the $t$ epochs, you loose everything. The only outcome of this strategy where you don't finish broke is where all the $n$ bets are in your favor, with proba $p^n$. To fix ideas, if $n=10$ and $p = 0.7$, $p^n \approx 2\%$. For $n=100$ it drops to less than $0,00000000000001\%$. 
+$$R_{\mathrm{degen}} = (1+pw-q\ell)^n = (1+e)^n. $$ It is exponentially large: even for a very small expected gain of $e \approx 0.01$ and $n=100$ epochs you get $2.7$: you nearly tripled your wealth! But suppose that $a=b=1$ (that is, you win or lose what you bet); should you have only ONE loss during the $t$ epochs, you lose everything. The only outcome of this strategy where you don't finish broke is where all the $n$ bets are in your favor, with proba $p^n$. To fix ideas, if $n=10$ and $p = 0.7$, $p^n \approx 2\%$. For $n=100$ it drops to less than $0,00000000000001\%$. 
 
 That's a litteraly the St-Petersburg paradox.
 
@@ -72,7 +72,7 @@ This interpretation is the one put forward by SBF in his famous thread, and it i
 
 ### Don't be mad
 
-The twist is that with utility functions, you could justify any a priori strategy $f$. They're not a good tool for understanding people's beahviour or elaborating investment strategies. You can even exercice yourself by finding, for any fixed $f \in [0,1]$, a concave utility function $\varphi$ such that the maximum expected utility $\mathbb{E}[\varphi(R_n)]$ is attained at $f$. 
+The twist is that with utility functions, you could justify any a priori strategy $f$. They're not a good tool for understanding people's behaviour or elaborating investment strategies. You can even exercice yourself by finding, for any fixed $f \in [0,1]$, a concave utility function $\varphi$ such that the maximum expected utility $\mathbb{E}[\varphi(R_n)]$ is attained at $f$. 
 
 That's more or less how SBF justified his crazy over-leverage strategy, by saying that his own utility function was closer to linear ($f=f_{\mathrm{degen}})$ than logarithmic ($f = f_{\mathrm{kelly}})$. In his paper, Kelly actually argues that rather than taking his criterion as the best possible, we should take it as an upper limit above which it should be completely irrational to go. SBF, on the other hand, used this analysis to justify all-or-nothing strategies which resulted in, well, quite bad an outcome.
 
