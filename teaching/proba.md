@@ -125,3 +125,38 @@ $$ \mathbb{E}[X | X+Y] = \frac{\alpha}{\alpha + \beta}(X+Y)$$
 où $\alpha = \mathbb{E}[X], \beta = \mathbb{E}[Y]$. Par exemple, lorsque $X,Y$ sont des lois de Poisson, ou des lois Gammas avec même paramètre de taux $\lambda$, etc. C'est essentiellement le contenu de l'exercice 4 de la feuille 6.
 
 Est-ce toujours vrai ? Existe-t-il des variables aléatoires $X,Y$ telles que la relation ci-dessus n'est pas valable ?
+
+##  Un corrigé de l'exercice 4 du TD 7
+
+On rappelle que 
+$$\alpha = \inf \{t \in \mathbb{R} : \mathbb{P}(X \leqslant t) > 0 \}.$$
+
+On suppose que $\alpha$ n'est pas égal à $-\infty$, c'est le seul cas que je corrigerai. 
+
+Soit $u<\alpha$. Par définition de $\alpha$, on a $\mathbb{P}(X \leqslant u) = 0$. On en déduit que 
+$$ \mathbb{P}(\exists n, X_n \leqslant u) = \mathbb{P}\left(\cup_n \{X_n \leqslant u\}\right) \leqslant \sum_{n=1}^\infty \mathbb{P}(X_n \leqslant u) = 0. $$
+
+On pose $A_u = \cap_n \{X_n > u\}$; par ce qui vient d'être dit, $\mathbb{P}(A_u) = 1$. Soit $\omega \in A_u$. Comme $X_n(\omega)>u$ pour tout $n$, on a $\inf_{k\geqslant n}X_k(\omega) \geqslant u$, et donc $\sup_n \inf_{k\geqslant n}X_k(\omega) \geqslant u$, c'est-à-dire $\liminf X_k(\omega) \geqslant u$. On a démontré que : 
+@@important
+$\forall u < \alpha$, $\mathbb{P}(A_u)=1$ et $\forall \omega \in A_u, \liminf X_k \geqslant u$. 
+@@
+
+Maintenant, soit $v>\alpha$. Si l'on avait $\mathbb{P}(X\leqslant v) = 0$, alors on aurait aussi $\mathbb{P}(X \leqslant t) = 0$ pour tout $t \leqslant v$, par croissance de $t\mapsto \mathbb{P}(X \leqslant t)$. Mais alors, par définition de $\alpha$, on devrait avoir $\alpha \geqslant v$, une contradiction. On en déduit que $\mathbb{P}(X \leqslant v)>0$. Ainsi, 
+$$\sum_{n=1}^\infty \mathbb{P}(X_n \leqslant v)= +\infty, $$
+et par le second lemme de Borel-Cantelli (les $X_n$ étant indépendantes), on a $\mathbb{P}(\limsup \{X_n \leqslant v\})=1$. Notons $B_v =  \limsup \{X_n \leqslant v\}$. Pour tout $\omega \in B_v$, on a: 
+\begin{align} \omega \in \bigcap_{n \geqslant 1} \bigcup_{k\geqslant n}\{X_k \leqslant v\} & \Leftrightarrow \forall n \geqslant 1, \exists k \geqslant n, X_k(\omega) \leqslant v\\
+& \Rightarrow \forall n \geqslant 1, \inf_{k\geqslant n} X_k(\omega) \leqslant v \\
+& \Rightarrow \sup_{n\geqslant 1}\inf_{k\geqslant n}X_k(\omega) \leqslant v
+\end{align}
+et donc, $\omega \in B_v$ entraîne que $\liminf X_k(\omega) \leqslant v$. Attention, comme dûment remarqué en classe par de nombreuses personnes, **ce n'est pas une équivalence** (plus précisément, le passage de la première ligne à la seconde n'est pas une équivalence). J'adresse donc à la classe mes plus plates excuses pour cet embrouillamini. Bon an, mal an, nous avons démontré que 
+@@important
+$\forall v > \alpha, \mathbb{P}(B_v) = 1$ et $\forall \omega \in B_v, \liminf X_k (\omega) \leqslant v$. 
+@@
+
+On pose finalement 
+$$\mathscr{E} = \cap_{\ell = 1}^\infty (A_{\alpha - 1/\ell} \cap B_{\alpha + 1/\ell}).$$ 
+Cet événement est une intersection dénombrable d'ensembles de probabilité 1, donc $\mathbb{P}(\mathscr{E})=1$. De plus, soit $\omega \in \mathscr{E}$. Comme $\omega$ est dans $A_{\alpha-1/\ell}$ et dans $B_{\alpha +1/\ell}$, on a 
+$$ \alpha - \frac{1}{\ell}\leqslant \liminf X_k(\omega) \leqslant \alpha + \frac{1}{\ell} $$
+et ceci est valable pour tout $\ell$, donc on a bien $\liminf X_k(\omega) = \alpha$. 
+
+
