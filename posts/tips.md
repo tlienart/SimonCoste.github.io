@@ -153,9 +153,22 @@ julia> rand(2) .|> (f,g)
 ```
 
 
-### Slurping
+### Slurping and splatting
 
-If `X = [1, 2, 3]` and `f(a,b,c) = a + b - c` for instance, then `f(X)` obviously gives you an error since there is no method matching `f(::Vector)` or `f(::Array)`. But then, `f(X...)` does the trick. What the slurping operator `...` does is similar to what Python's `*` operator does: it simply unfolds the elements in the array and passes them as argument to the function. 
+Slurping and splatting refer to the two (different) uses of the `...` operator: [see the Julia manual](https://docs.julialang.org/en/v1/manual/faq/#What-does-the-...-operator-do?). 
+
+**Splatting**. If `X = [1, 2, 3]` and `f(a,b,c) = a + b - c` for instance, then `f(X)` obviously gives you an error since there is no method matching `f(::Vector)` or `f(::Array)`. But then, `f(X...)` does the trick. What the slurping operator `...` does is similar to what Python's `*` operator does: it simply unfolds the elements in the array and passes them as argument to the function. This is super useful.
+
+**Slurping**. By contrast you can also use `...` in functions definitions when you don't exactly know how many arguments there might be. Typically, a function defined by `f(args...) = #code ` can take any number of arguments, but they'll be combined into a single argument (a tuple, actually). Look at this: 
+```julia
+julia> f(x...) = x
+f (generic function with 1 method)
+julia> f(1,2,3)
+(1, 2, 3)
+julia> f("a")
+("a",)
+```
+
 
 ### Ellipsis notation
 
