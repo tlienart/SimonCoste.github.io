@@ -77,7 +77,13 @@ One can simply use `x = condition ? 0 : 1`. The condition must be a boolean va
 
 Those are also present in other programming languages but for some reason I always forget which one is which one. The logical *and* and *or* are `&` and `|`. But beware! In `expr1 | expr2`, both expressions are tested. This is slightly inefficient: if `expr1` is true, there's no need to check `expr2`. To avoid these spurious evaluations, we have the « short-circuit » operators `&&` and `||` which do exactly what you think they do. 
 
-You can use these to replace some `if` statements. For instance, `condition && f()` checks if `condition` if true, and if true, performs `f()`. 
+You can use these to replace some `if` statements. For instance, `condition && f()` checks if `condition` if true, and if true, performs `f()`. Typically, you see this in functions, for returning things based on a simple check on the argument. For example if you want to throw an error message, you can do
+```julia
+function f(x)
+    x<=0 && return ArgumentError("x must be nonnegative")
+    #rest of the code
+end
+```
 
 ### Defining functions
 
@@ -318,3 +324,7 @@ julia> typeof(pos(x))
 Int64
 ```
 The output is an Int. The function `pos` is not type stable -- shame! The solution, here, is `pos(x) = x < 0 ? zero(0) : x`. In general, if you have an object `y` and you want to convert it to the type of `x`, this operation can be performed (if able) by `oftype(x,y)`. There are helper functions, like `one(x)` which returns a unit of the same type of `x`. 
+
+## Coding style
+
+Most of Julia's packages adopt the [BlueStyle](https://github.com/invenia/BlueStyle) guideline in addition to the [general guidelines](https://docs.julialang.org/en/v1/manual/style-guide/). In general, you can check that your files have a correct style by using `JuliaFormatter.jl`: you just go at the root of your repo and launch `format(".")`. All your files will be formatted. In VSCode, you can simply right-click on your file in the text editor and select `Format Document`.  
