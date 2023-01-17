@@ -3,6 +3,12 @@
 
 @def tags = ["syntax", "code", "image"]
 
+# Statistiques fondamentales (STF8)
+
+TD du cours de statistiques mathématiques de Clément Levrard (M1). 
+
+Feuilles d'exercice : [TD1](/teaching/ST1.pdf)
+
 # Probabilités (PR7)
 
 2022-2023 : TD du cours de probabilités mathématiques de Cyril Labbé (M1). 
