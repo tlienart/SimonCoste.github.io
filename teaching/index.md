@@ -7,7 +7,7 @@
 
 TD du cours de statistiques mathématiques de Clément Levrard (M1). 
 
-Feuilles d'exercice : [TD1](/teaching/ST1.pdf), [TD2](/teaching/ST2.pdf), [TD3](/teaching/ST3.pdf)
+Feuilles d'exercice : [TD1](/teaching/ST1.pdf), [TD2](/teaching/ST2.pdf), [TD3](/teaching/ST3.pdf), [TD4](/teaching/ST4.pdf)
 
 # Probabilités (PR7)
 
