@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Simon Coste - LPSM">
+  <title>Le polynôme caractéristique des matrices en grande dimension</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="img/style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+   var mathElements = document.getElementsByClassName("math");
+   var macros = [];
+   for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") {
+     katex.render(texText.data, mathElements[i], {
+      displayMode: mathElements[i].classList.contains('display'),
+      throwOnError: false,
+      macros: macros,
+      fleqn: false
+     });
+  }}});
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Le polynôme caractéristique des matrices en grande dimension</h1>
+  <p class="author">Simon Coste - LPSM</p>
+  <p class="date">Exposé à l’IMJ, le 8 février 2023</p>
+</section>
+
+<section id="section" class="slide level1">
+<h1></h1>
+<p>Quelques images de spectres de matrices</p>
+</section>
+<section id="matrices-gaussiennes-denses" class="slide level1">
+<h1>Matrices gaussiennes denses</h1>
+<p><span class="math inline">A_n</span> : coefficients <span class="math inline">\mathscr{N}_{\mathbb{R}}(0,1)</span> indépendants.</p>
+<p><img data-src="./img/circle.svg" /></p>
+</section>
+<section id="matrices-binaires" class="slide level1">
+<h1>Matrices binaires</h1>
+<p><span class="math inline">A_n</span> : coefficients <span class="math inline">\mathrm{Bernoulli}(d/n)</span> indépendants.</p>
+<p><img data-src="./img/bernoulli.svg" /></p>
+</section>
+<section id="sommes-de-permutations-uniformes" class="slide level1">
+<h1>Sommes de permutations uniformes</h1>
+<p><span class="math inline">A_n =\pi_1 + \dotsc + \pi_d</span>, somme de <span class="math inline">d</span> matrices de permutation sur <span class="math inline">[n]</span>.</p>
+<p><img data-src="./img/rrd.svg" /></p>
+</section>
+<section id="sommes-de-permutations-de-ewens" class="slide level1">
+<h1>Sommes de permutations de Ewens</h1>
+<p><span class="math inline">A = \pi_1 + ... + \pi_d</span> où <span class="math inline">\pi_i</span> suivent la loi <span class="math inline">\mathrm{ewens}(\theta)</span> :</p>
+<p><span class="math display"> \mathbf{P}(\pi = \sigma) = \frac{\theta^{\mathrm{cycles(\sigma)}}}{\theta(\theta+1)\dotsb(\theta + n)}</span></p>
+<p><img data-src="./img/ewens.png" /></p>
+</section>
+<section id="section-1" class="slide level1">
+<h1></h1>
+<p>On se restreindra aux matrices</p>
+<ul>
+<li><p>de Bernoulli [C., 2022, EJP]</p></li>
+<li><p>aux Sommes de permutations uniformes [C, Lambert, Zhu, 2023+]</p></li>
+</ul>
+<p>(les résultats sont identiques dans les deux cas).</p>
+</section>
+<section id="section-2" class="slide level1">
+<h1></h1>
+<div class="theorem">
+<p><span class="math display">F(z) = \exp \left( -\sum_{k=1}^\infty X_k \frac{z^k}{k} \right) = \prod_{k=1}^\infty (1 - z^k)^{Y_k}</span></p>
+</div>
+<p><img data-src="./img/comparison3.png" /></p>
+</section>
+<section id="la-loi-de-kesten-mckay-orientée" class="slide level1">
+<h1>La loi de Kesten-McKay orientée</h1>
+<div class="theorem">
+<p><strong>Conjecture</strong>. Si <span class="math inline">\varrho_d =</span> la loi OKMC (<a href="https://arxiv.org/pdf/2204.00524.pdf">[CLZ eq(2.5)]</a> ), alors <span class="math display">\frac{1}{n}\log | \det( z - A_n)| \to \int \log | z - w| \varrho_d(w)\mathrm{d}w =: U_d(z) </span></p>
+</div>
+</section>
+<section id="fluctuations-autour-de-okmc" class="slide level1">
+<h1>Fluctuations autour de OKMC</h1>
+<p><span class="math display">\Phi_n(z) = \log | \det (z - A) | - n U_d(z) </span></p>
+<div style="display: inline-block;">
+<p><img src="./img/f1.png" alt="from far away" title="fluctuations 1" width="55%" /> <img src="./img/f2.png" alt="from the above" title="fluctuations 2" width="30%" /></p>
+</div>
+</section>
+<section id="non-orthogonalité" class="slide level1">
+<h1>Non-orthogonalité</h1>
+<p>couleur du spectre : <span class="math inline">\mathscr{O}_i = |u_i|^2 |v_i|^2</span></p>
+<p><img data-src="./img/overlaps_mas.png" /></p>
+<p><img data-src="./img/overlap_histogram_mas.png" /></p>
+</section>
+<section id="délocalisation-des-vecteurs-propres" class="slide level1">
+<h1>Délocalisation des vecteurs propres</h1>
+<p>couleur de chaque valeur propre : <span class="math inline">\frac{|\varphi|^2_2}{n|\varphi|^4_4}</span></p>
+<p><img data-src="./img/ginibre_eigvecs.png" /></p>
+</section>
+<section id="section-3" class="slide level1">
+<h1></h1>
+<div class="img_stack">
+<p><a href="https://ar5iv.org/pdf/2204.00524.pdf"><img data-src="./img/coste_lambert_zhu.png" /></a></p>
+<p><a href="https://ar5iv.org/pdf/2106.00593.pdf"><img data-src="./img/article_simon.png" /></a></p>
+<p><a href="https://ar5iv.org/abs/2012.05602"><img data-src="./img/article_charles.png" /></a></p>
+<p><a href="https://ar5iv.org/abs/1905.10244"><img data-src="./img/article_basak.png" /></a></p>
+</div>
+</section>
+<section id="section-4" class="slide level1">
+<h1></h1>
+<p>merci pour l’invitation !</p>
+<p>Mon bureau est à 5ème étage à Sophie Germain.</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  // reveal.js plugins
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+      
+        // Push each slide change to the browser history
+        history: true,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
