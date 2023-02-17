@@ -11,4 +11,7 @@ You can reach me at `firstname.lastname@u-paris.fr`.
 
 [GitHub](https://github.com/SimonCoste), [ArXiv](https://arxiv.org/search/?searchtype=author&query=Coste%2C+S), [LinkedIn](https://fr.linkedin.com/in/simon-coste-48540b220?trk=people-guest_people_search-card), [Twitter](https://twitter.com/__SimonCoste__), ~~~<a rel="me" href="https://mathstodon.xyz/@scoste">Mathstodon</a>~~~
 
+--- 
+
+**Agenda**: talk on hyperuniformity at [HPPR](https://www.mathconf.org/hsrpp2023), Tuesday feb 21 @Lille. 
 
