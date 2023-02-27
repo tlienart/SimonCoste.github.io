@@ -13,5 +13,5 @@ You can reach me at `firstname.lastname@u-paris.fr`.
 
 --- 
 
-**Agenda**: talk on hyperuniformity at [HPPR](https://www.mathconf.org/hsrpp2023), Tuesday feb 21 @Lille. 
+**Agenda**: talk at [Eurandom](https://www.eurandom.tue.nl/event/yep-xviii-spectra-of-random-graphs-and-related-combinatorial-problems-2/), March 27-31, Eidhoven
 
