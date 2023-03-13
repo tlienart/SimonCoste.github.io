@@ -99,7 +99,7 @@ That looks like a miss: if we want to evaluate $v_t$, we need to know $p_t$ for 
 2) **Second: score matching.** If $p$ is a probability density and $x^i$ are samples from $p$, estimating $\nabla \log p$ (called *score*) has been thoroughly examined and is fairly doable, a technique known as *score matching*. 
 
 
-## Score matching
+## Learning the score
 
 The results here are due to Hyvarinen (2005) and Vincent (2009). 
 
@@ -193,6 +193,14 @@ Once the algorithm has converged to $\theta$, the sampling consists in solving \
 $$ y'(t) = -v_t(y(t)).$$ A simple Euler scheme can be sufficient: let $\delta$ be a small step size. We initialize $y_0 \sim \mathscr{N}(0,\bar{\sigma}_T^2)$, then for $t=1, \dots, T/\delta$ we do one update: 
 $$y_{t-1} = y_t - \delta v_t(y_t) = y_t - \delta (\frac{\sigma_t^2}{\bar{\sigma_t}}r_\theta(t, y_t) + \alpha_t y_t) = (1 - \delta \alpha_t)y_t - \frac{\delta \sigma_t^2}{\bar{\sigma}_t} r_\theta(t, y_t).$$
 
+### Special choices for $\alpha_t$ and $\sigma_t$
+
+Considerable work has been done (mostly experimentally) to find good functions $\alpha_t,\beta_t$. Some choices seem to stand out. 
+
+- the **Variance Exploding** path takes $\alpha_t = 0$ (that is, no drift) and $\sigma_t$ a continuous, increasing function over $[0,1)$, such that $\sigma_0 = 0$ and $\sigma_1 = +\infty$; typically, $\sigma_t = (1-t)^{-1}$. 
+- the **Variance-Preserving** takes $\sigma_t = \sqrt{\alpha_t}$. 
+- the **pure Ornstein-Uhlenbeck** path takes $\alpha_t = \sigma_t = 1$, it is a special case of the previous one, mostly suitable for theoretical purposes. 
+
 
 ## A variational bound
 
@@ -210,4 +218,8 @@ where $\pi$ is a probability distribution on $\mathbb{R}^d$. Then,
 @@proof
 Will do tomorrow. 
 @@
+
+## Beyond SDEs: Flow matching techniques
+
+In this section I'll explain the Flow Matching [paper](https://arxiv.org/abs/2210.02747). 
 
