@@ -351,6 +351,13 @@ code {
   margin-bottom: 1em;
 }
 
+.proof {
+  background-color: rgb(232, 236, 251);
+  padding: 0.9em;
+  margin-bottom: 1em;
+  font-size: var(--small);
+}
+
 .twopic img {
   width: 40%;
   padding:0;
