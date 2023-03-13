@@ -5,7 +5,9 @@ abstract = "A small mathematical summary. "
 +++
 
 
-These are my own notes for the formulation of the celebrated Denoising Diffusion Probabilistic Model loss; they're intended for mathematicians, hence the notations and style is quite different than in the original papers. References will be added soon. 
+These are my own notes for the formulation of the celebrated Denoising Diffusion Probabilistic Models; they're intended for mathematicians, hence the notations and style is quite different than in the original papers. In particular, I completely formulate everything as a continuous stochastic problem, then only in the end discretize the theoretical losses. This is exactly the opposite to what was done in the papers. 
+
+References will be added soon. 
 
 \tableofcontents
 
@@ -32,7 +34,7 @@ Let $(t,x)\to f_t(x)$ and $t\to \sigma_t$ be two smooth functions. Consider the 
 \begin{equation}\label{SDE}dX_t = f_t(X_t)dt + \sqrt{2\sigma_t ^2}dB_t, \qquad \qquad X_0 \sim p\end{equation}
 where $dB_t$ denotes integration with respect to a Brownian motion. Under mild conditions on $f$, an almost-surely continuous stochastic process satisfying this SDE exists.  
 
-Let $p_t$ be the probability density of $X_t$. It is a solution of the Fokker-Plank equation: 
+Let $p_t$ be the probability density of $X_t$. It is a solution of the [Fokker-Planck equation](https://en.wikipedia.org/wiki/Fokker%E2%80%93Planck_equation): 
 $$ \partial_t p_t(x) = \Delta (\sigma_t^2 p_t(x)) - \nabla \cdot (f_t(x)p_t(x)).$$
 Importantly, this equation be recast as a transport equation: noting $v_t(x) = \sigma_t^2 \nabla \log p_t(x) - f_t(x)$ (called the **velocity field**), the equation \eqref{SDE} is equivalent to
 @@important
@@ -185,7 +187,7 @@ Let $\tau$ be a random time on $[0,T]$ with density proportional to $w(t)$; let
 Its empirical version is 
 $$\hat{\ell}(\theta) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}\left[\frac{1}{\bar{\sigma}_\tau}|\xi - r_\theta(e^{-\mu_\tau}x^i + \bar{\sigma}_\tau \xi)|^2\right].$$
 @@
-Up to the constants, this is exactly the loss function (14) from the paper [DDPM](https://arxiv.org/abs/2006.11239), for instance. 
+Up to the constants and the choice of the drift $\alpha_t$ and variance $\sigma_t$, this is exactly the loss function (14) from the paper [DDPM](https://arxiv.org/abs/2006.11239), for instance. 
 
 Once the algorithm has converged to $\theta$, the sampling consists in solving \eqref{ode} backwards, ie
 $$ y'(t) = -v_t(y(t)).$$ A simple Euler scheme can be sufficient: let $\delta$ be a small step size. We initialize $y_0 \sim \mathscr{N}(0,\bar{\sigma}_T^2)$, then for $t=1, \dots, T/\delta$ we do one update: 
