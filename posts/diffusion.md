@@ -204,22 +204,72 @@ Considerable work has been done (mostly experimentally) to find good functions $
 
 ## A variational bound
 
-Let $s : [0,T]\times \mathbb{R}^d \to \mathbb{R}^d$ be a smooth function, meant as a proxy for $\nabla \log p_t$. 
+Let $s : [0,T]\times \mathbb{R}^d \to \mathbb{R}^d$ be a smooth function, meant as a proxy for $\nabla \log p_t$. As explained earlier, the **generative process** consists in sampling some $y(0)=Z$ with a probability density $\pi$ (close to $p_t$, hopefully), and then solving the ODE $y'(t) = -u_t(y(t))$ for 
+$$u_t(x) = \sigma_t^2 s(t,x) + \alpha_t x.$$
+Let us note $q_t$ the distribution of $y(T)$. If things were correctly done, $q_t$ should be close to $p_{T-t}=p$, and $q_T$ should be close to $p_0$. The next fundamental lemma quantifies this. The original proof can be found in [this paper](https://arxiv.org/abs/2101.09258) and uses a fact completely shunned in this note, which is that instead of solving bacward the ODE \eqref{ode}, we could also solve backward the original SDE \eqref{SDE} with another SDE, then use the Girsanov theorem. This is utterly complicated and the following proof is indeed more elementary. 
+
+This theorem restricts to the case where the weights $w(t)$ are constant, and for simplicity, they are set to 1. 
+
 
 @@important 
-Let $q_{T-t}$ be the probability density of $Y(t)$, the solution to the following ODE: 
-$$ Y'(t) = - \sigma_t^2 s(t,Y_t) - \alpha_t Y_t \qquad \qquad Y(0) \sim \pi_T $$
-where $\pi$ is a probability distribution on $\mathbb{R}^d$. Then, 
-\begin{equation}
-\mathrm{kl}(p \mid q_T) \leqslant \mathrm{kl}(p_T \mid \pi_T) +\int_0^T w(t)\mathbb{E}\left[\vert  \nabla \log p_t(X_t) - s(t,X_t)\vert^2\right]dt
+**Variational lower-bound for score-based diffusion models**
+
+\begin{equation}\label{vlb}
+\mathrm{kl}(p \mid q_T) \leqslant \mathrm{kl}(p_T \mid \pi) +\int_0^T \mathbb{E}\left[\vert  \nabla \log p_t(X_t) - s(t,X_t)\vert^2\right]dt. 
 \end{equation}
 @@
 
-@@proof
-Will do tomorrow. 
+The proof of this formula will use a few technical lemmas. 
+
+Let $x$ be the solution of $x'(t) = v_t(x(t))$ started at $x(0) = Z$ and $y$ be the solution of $y'(t) = u_t(y(t))$ started at $y(0)=Z$, where $Z$ has density $\pi$. Let $p_t$ be the distribution of $x(t)$ and $q_t$ the one of $y(t)$. As explained earlier, $p_t$ satisfies $\partial_t p_t = -\nabla \cdot v_t p_t$ and $q_t$ satisfies $\partial_t q_t = -\nabla \cdot u_t q_t$. We recall that $$ \mathrm{kl}(p_t \mid q_t) = \int p_t(x)\log(p_t(x) - q_t(x))dx.$$
+@@important We have, 
+\begin{equation}\label{36}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) = \int p_t(x) \nabla \log\left(\frac{p_t(x)}{q_t(x)}\right) \cdot \left(s(t,x) - \nabla \log p_t(x) \right)dx\end{equation}
+and:
+\begin{equation}\label{37}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) \leqslant \frac{1}{2}\int p_t(x) |s(t,x) - \nabla \log p_t(x) |^2 dx.\end{equation}
+
 @@
+
+@@proof
+
+**Proof of \eqref{36}.**
+
+A small differentiation shows that  $ \frac{d}{dt}\mathrm{kl}(p_t \mid q_t) $ is equal to $$\int \nabla \cdot (v_t(x)p_t(x))\log(p_t(x)/q_t(x))dx + \int p_t(x)\frac{\nabla \cdot (v_t(x)p_t(x))}{p_t(x)}dx - \int p_t(x)\frac{\nabla \cdot (u_t(x)q_t(x))}{q_t(x)} dx.$$
+By an integration by parts, the first term is also equal to $-\int p_t(x)v_t(x)\cdot \nabla \log(p_t(x)/q_t(x))dx$. For the second term, it is clearly zero. Finally, for the last one, 
+\begin{align}
+- \int p_t(x)\frac{\nabla \cdot (u_t(x)q_t(x))}{q_t(x)} dx &= \int \nabla (p_t(x)/q_t(x)) \cdot u_t(x)q_t(x)dx \\
+&= \int \nabla \log(p_t(x)/q_t(x))\cdot u_t(x)p_t(x)dx.
+\end{align}
+Now, since $u_t(x) - v_t(x) = \sigma_t^2 (s(t,x) - \nabla \log p_t(x))$, the result holds. 
+
+**Proof of \eqref{37}.**
+
+We momentarily note $a = \nabla \log p_t(x)$ and $b = \nabla \log q_t(x)$ and $s=s(t,x)$. Then, 
+$$|a-s|^2 =|a-b|^2 + |b-s|^2 + 2 (a-b)\cdot (b-s)$$ 
+which clearly shows that $$2 (a - b)\cdot (b - s) = 2\nabla \log (p_t(x)/q_t(x)) \cdot (s(t,x) - \nabla \log p_t(x))$$ is smaller than $|\nabla \log p_t(x) - s(t,x)|^2$, as requested. 
+
+**Proof of \eqref{vlb}.**
+
+Now, we simply write
+\begin{align} \mathrm{kl}(p_t \mid q_t) - \mathrm{kl}(p_0 \mid q_0) &= \int_0^T \frac{d}{dt}\mathrm{kl}(p_t \mid q_t) dt \\
+&\leqslant \frac{1}{2}\int_0^T \mathbb{E}[|s(t,X_t) - \nabla \log p_t(X_t)|^2]dt.
+\end{align}
+Now the result readily comes, since $q_T = \pi$. 
+
+@@
+
+
+
 
 ## Beyond SDEs: Flow matching techniques
 
 In this section I'll explain the Flow Matching [paper](https://arxiv.org/abs/2210.02747). 
+
+
+## References
+
+[Variational perspective on Diffusions](https://openreview.net/forum?id=bXehDYUjjXi) or [arxiv](https://arxiv.org/abs/2106.02808)
+
+[Maximum likelihood training of Diffusions](https://arxiv.org/abs/2101.09258)
+
+[Probability flow for FP](https://arxiv.org/pdf/2206.04642.pdf)
 
