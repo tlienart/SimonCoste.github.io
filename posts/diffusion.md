@@ -101,11 +101,10 @@ That looks like a miss: if we want to evaluate $v_t$, we need to know $p_t$ for 
 
 ## Learning the score
 
-The results here are due to Hyvarinen (2005) and Vincent (2009). 
-
 ### Vanilla score matching
 
-Let $p$ be a smooth probability density function supported over $\mathbb{R}^d$ and let $X$ be a random variable with density $p$. 
+Let $p$ be a smooth probability density function supported over $\mathbb{R}^d$ and let $X$ be a random variable with density $p$. The following elementary identity is due to [Hyvärinen, 2005](https://www.jmlr.org/papers/volume6/hyvarinen05a/hyvarinen05a.pdf); it is the basis for score matching estimation in statistics. 
+
 @@important
 Let $s : \mathbb{R}^d \to \mathbb{R}^d$ be any smooth function with sufficiently fast decay at $\infty$. Then,
 \begin{equation}\label{SM}
@@ -144,7 +143,7 @@ which looks computable… except it's not ideal.  Suppose we perform a gradient 
 
 ### Denoising Score Matching
 
-Fortunately, there is another way to perform score matching when $p_t$ is the distribution of a random variable with gaussian noise added, as in our setting. We'll present this result in a fairly abstract setting; we suppose that $p$ is a density function, and $q = p*g_\sigma$ where $g_\sigma$ is the Gaussian density with variance $\sigma$. 
+Fortunately, there is another way to perform score matching when $p_t$ is the distribution of a random variable with gaussian noise added, as in our setting. We'll present this result in a fairly abstract setting; we suppose that $p$ is a density function, and $q = p*g_\sigma$ where $g_\sigma$ is the Gaussian density with variance $\sigma$. The following result is due to [Vincent, 2010](https://www.iro.umontreal.ca/~vincentp/Publications/smdae_techreport.pdf). 
 
 
 
@@ -204,9 +203,9 @@ Considerable work has been done (mostly experimentally) to find good functions $
 
 ## A variational bound
 
-Let $s : [0,T]\times \mathbb{R}^d \to \mathbb{R}^d$ be a smooth function, meant as a proxy for $\nabla \log p_t$. As explained earlier, the **generative process** consists in sampling some $y(0)=Z$ with a probability density $\pi$ (close to $p_t$, hopefully), and then solving the ODE $y'(t) = -u_t(y(t))$ for 
+Let $s : [0,T]\times \mathbb{R}^d \to \mathbb{R}^d$ be a smooth function, meant as a proxy for $\nabla \log p_t$. As explained earlier, the **generative process** consists in sampling some $y(0)=Z$ with a probability density $\pi$ (close to $p_T$, hopefully), and then solving the ODE $y'(t) = -u_t(y(t))$ for 
 $$u_t(x) = \sigma_t^2 s(t,x) + \alpha_t x.$$
-Let us note $q_t$ the distribution of $y(T)$. If things were correctly done, $q_t$ should be close to $p_{T-t}=p$, and $q_T$ should be close to $p_0$. The next fundamental lemma quantifies this. The original proof can be found in [this paper](https://arxiv.org/abs/2101.09258) and uses a fact completely shunned in this note, which is that instead of solving bacward the ODE \eqref{ode}, we could also solve backward the original SDE \eqref{SDE} with another SDE, then use the Girsanov theorem. This is utterly complicated and the following proof is indeed more elementary. 
+We will note $q_t$ the distribution of $y(T-t)$; in fact, $q_t$ is a solution to $\partial_t q_t(x) = \nabla \cdot (u_t(x)q_t(x))$ (the minus sign is removed, this is a forward ODE) subject to the *terminal condition* $q_T = \pi$. If things were correctly done, $q_t$ should be close to $p_{t}$ at every $t$, and in particular $q_0$ should be close to $p_0$. In particular, if we perfectly learnt the score, that is, if $s(t,x) = \nabla \log p_t(x)$ for every $t$, then clearly $u_t = v_t$ and the two probability flows $q_t, p_t$ only differ by their terminal condition; but in general, $s(t,x)$ is only *close* to $\nabla \log p_t(x)$ and these training errors diffuse in the system. The next fundamental lemma quantifies this. 
 
 This theorem restricts to the case where the weights $w(t)$ are constant, and for simplicity, they are set to 1. 
 
@@ -215,13 +214,13 @@ This theorem restricts to the case where the weights $w(t)$ are constant, and fo
 **Variational lower-bound for score-based diffusion models**
 
 \begin{equation}\label{vlb}
-\mathrm{kl}(p \mid q_T) \leqslant \mathrm{kl}(p_T \mid \pi) +\int_0^T \mathbb{E}\left[\vert  \nabla \log p_t(X_t) - s(t,X_t)\vert^2\right]dt. 
+\mathrm{kl}(p \mid q_0) \leqslant \mathrm{kl}(p_T \mid \pi) +\int_0^T \mathbb{E}\left[\vert  \nabla \log p_t(X_t) - s(t,X_t)\vert^2\right]dt. 
 \end{equation}
 @@
 
-The proof of this formula will use a few technical lemmas. 
+The proof of this formula will use a few technical lemmas. The original proof can be found in [this paper](https://arxiv.org/abs/2101.09258) and uses a fact completely shunned in this note, which is that instead of solving bacward the ODE \eqref{ode}, we could also solve backward the original SDE \eqref{SDE} with another SDE, then use the Girsanov theorem. This is utterly complicated and the following proof is indeed more elementary. 
 
-Let $x$ be the solution of $x'(t) = v_t(x(t))$ started at $x(0) = Z$ and $y$ be the solution of $y'(t) = u_t(y(t))$ started at $y(0)=Z$, where $Z$ has density $\pi$. Let $p_t$ be the distribution of $x(t)$ and $q_t$ the one of $y(t)$. As explained earlier, $p_t$ satisfies $\partial_t p_t = -\nabla \cdot v_t p_t$ and $q_t$ satisfies $\partial_t q_t = -\nabla \cdot u_t q_t$. We recall that $$ \mathrm{kl}(p_t \mid q_t) = \int p_t(x)\log(p_t(x) - q_t(x))dx.$$
+We recall that $$ \mathrm{kl}(p_t \mid q_t) = \int p_t(x)\log(p_t(x) - q_t(x))dx.$$
 @@important We have, 
 \begin{equation}\label{36}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) = \int p_t(x) \nabla \log\left(\frac{p_t(x)}{q_t(x)}\right) \cdot \left(s(t,x) - \nabla \log p_t(x) \right)dx\end{equation}
 and:
@@ -230,6 +229,8 @@ and:
 @@
 
 @@proof
+
+We recall for the reader that $p_t$ satisfies $\partial_t p_t = \nabla \cdot v_t p_t$ and $q_t$ satisfies $\partial_t q_t = \nabla \cdot u_t q_t$. The proofs of \eqref{vlb}-\eqref{36}-\eqref{37} will only need this fact. 
 
 **Proof of \eqref{36}.**
 
