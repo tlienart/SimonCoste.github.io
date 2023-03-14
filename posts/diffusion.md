@@ -220,9 +220,11 @@ This theorem restricts to the case where the weights $w(t)$ are constant, and fo
 
 The proof of this formula will use a few technical lemmas. The original proof can be found in [this paper](https://arxiv.org/abs/2101.09258) and uses a fact completely shunned in this note, which is that instead of solving bacward the ODE \eqref{ode}, we could also solve backward the original SDE \eqref{SDE} with another SDE, then use the Girsanov theorem. This is utterly complicated and the following proof is indeed more elementary. 
 
+(warning: the proof is not correct)
+
 We recall that $$ \mathrm{kl}(p_t \mid q_t) = \int p_t(x)\log(p_t(x) - q_t(x))dx.$$
 @@important We have, 
-\begin{equation}\label{36}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) = \int p_t(x) \nabla \log\left(\frac{p_t(x)}{q_t(x)}\right) \cdot \left(s(t,x) - \nabla \log p_t(x) \right)dx\end{equation}
+\begin{equation}\label{36}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) = \sigma_t^2 \int p_t(x) \nabla \log\left(\frac{p_t(x)}{q_t(x)}\right) \cdot \left(s(t,x) - \nabla \log p_t(x) \right)dx\end{equation}
 and:
 \begin{equation}\label{37}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) \leqslant \frac{1}{2}\int p_t(x) |s(t,x) - \nabla \log p_t(x) |^2 dx.\end{equation}
 
