@@ -26,22 +26,21 @@ Minimizing $\mathrm{kl}(p\mid p_\theta)$ with respect to $\theta$ is the same th
 $$\ell(\theta) = \frac{1}{n}\sum_{i=1}^n \log p_\theta(x^i). $$
 
 
-## Stochastic diffusions
+## Stochastic interpolation
 
-### SDEs transport the data distribution towards a near-Gaussian
+Diffusion models fall into the general framework of [stochastic interpolants](https://arxiv.org/abs/2303.08797). The idea is to continuously transform the samples of $p$ into samples from a known, easy-to-sample probability density $\pi$ (often called *the target*), and then to reverse the process: that is, to generate a sample from $\pi$, and to inverse the transformation to get a new sample from $p$. In other words, we seek a path $(p_t: t\in [0,1])$ with $p_0=p$ and $p_1=q$, such that generating samples $x_t \sim p_t$ is doable. 
+
+The success of *diffusion models* came from the realization that some stochastic processes (eg, Ornstein-Uhlenbeck processes, which connects $p$ with a pure noise $\mathscr{N}(0,I)$ distribution) can be reversed, as long as access is given to the *score function* $\nabla \log p_t$ at each time $t$. Although unknown, this score can efficiently be learnt using statistical procedures called *score matching*. 
+
+
+### The Gaussian noising process and its inversion
 
 Let $(t,x)\to f_t(x)$ and $t\to \sigma_t$ be two smooth functions. Consider the stochastic differential equation
 \begin{equation}\label{SDE}dX_t = f_t(X_t)dt + \sqrt{2\sigma_t ^2}dB_t, \qquad \qquad X_0 \sim p\end{equation}
-where $dB_t$ denotes integration with respect to a Brownian motion. Under mild conditions on $f$, an almost-surely continuous stochastic process satisfying this SDE exists.  
-
-Let $p_t$ be the probability density of $X_t$. It is a solution of the [Fokker-Planck equation](https://en.wikipedia.org/wiki/Fokker%E2%80%93Planck_equation): 
-$$ \partial_t p_t(x) = \Delta (\sigma_t^2 p_t(x)) - \nabla \cdot (f_t(x)p_t(x)).$$
-Importantly, this equation be recast as a transport equation: noting $v_t(x) = \sigma_t^2 \nabla \log p_t(x) - f_t(x)$ (called the **velocity field**), the equation \eqref{SDE} is equivalent to
-@@important
-\begin{equation}\label{TE} \partial_t p_t(x) = \nabla \cdot (v_t(x)p_t(x)).\end{equation}
-@@ 
-
-For simple functions $f$, we can completely solve \eqref{SDE} with an explicit representation.  Here we focus on the case where $f_t(x) = -\alpha_t x$ for some function $\alpha$, that is
+where $dB_t$ denotes integration with respect to a Brownian motion. Under mild conditions on $f$, an almost-surely continuous stochastic process satisfying this SDE exists. Let $p_t$ be the probability density of $X_t$; it is known that this process [could easily be reversed in time](https://www.sciencedirect.com/science/article/pii/0304414982900515). More precisely, the SDE
+\begin{equation}\label{bsde} dY_t = -\left(  f_t(Y_t)+ 2\sigma_t^2 \nabla \log p_t(Y_t) +\right)dt + \sqrt{2\sigma_t^2}dB_t \qquad \qquad Y_T \sim p_T 
+\end{equation}
+has the same marginals as $X_t$, that is $Y_{T-t}$ has exactly the same distribution as $p_t$. This inversion needs access to $\nabla \log p_t$, and we'll explain later how this can be done. A crucial feature of of \eqref{SDE} is that for simple functions $f$, it can be solved with an explicit representation.  Here we focus on the case where $f_t(x) = -\alpha_t x$ for some function $\alpha$, that is
 \begin{equation}\label{ou}
 dX_t = -\alpha_t X_t + \sqrt{2\sigma_t^2}dB_t.
 \end{equation}
@@ -64,16 +63,17 @@ Consequently, $Y_t = Y_0 + \int_0^t \sqrt{2\sigma_s^2e^{2\mu_t}}dB_s$ and the re
 
 
 
-A consequence of the preceding result is that when the variance $$\bar{\sigma}_t^2 = 2\int_0^t e^{2\mu_s - 2\mu_t}\sigma_s^2 ds$$ is big compared to $e^{-\mu_t}$, then the distribution of $X_t$ is well-approximated by $\mathscr{N}(0,\bar{\sigma}_t^2)$. Indeed, for $\sigma_t = 1$, we have $\bar{\sigma}_T = \sqrt{1 - e^{-2T}} \approx 1$ if $T$ is sufficiently large.  
+A consequence of the preceding result is that when the variance $$\bar{\sigma}_t^2 = 2\int_0^t e^{2\mu_s - 2\mu_t}\sigma_s^2 ds$$ is big compared to $e^{-\mu_t}$, then the distribution of $X_t$ is well-approximated by $\mathscr{N}(0,\bar{\sigma}_t^2)$. Indeed, for $\sigma_t = 1$, we have $\bar{\sigma}_T = \sqrt{1 - e^{-2T}} \approx 1$ if $T$ is sufficiently large. 
 
-In other words, we found a path $(p_t)_{t\in [0,T]}$ connecting the unknown density $p_0 = p$ to another probability density $p_T$, which is still unknown, but if $T$ is large enough we can safely approximate $p_T$ by a Gaussian with a known variance $\bar{\sigma}_T^2$. 
+### The Fokker-Planck point of view
 
-### Can you reverse this probability flow?
-
-Given a sample $X_T$ of $p_T$ (which is well approximated by a Gaussian), we want to solve \eqref{TE} backwards starting from $X_T$, and we'll obtain a new sample $X_0$ approximately distributed as $p_0$. That would solve our second objective given in the introduction. 
-
-Now, there are many ways in which we can backward solve \eqref{TE}. First, we could note that \eqref{TE} is nothing but the transport equation associated with a simple ODE. 
-
+It was recently realized that there is nothing special with the Ornstein-Uhlenbeck representation of $p_t$ as in \eqref{SDE}, nor with the stochastic process \eqref{BSDE} which has the same marginals as $p_t$. In fact, the important features are (i) that $p_t$ provides a path connecting $p$ and $p_T \sim \mathscr{N}(0,I)$ and (ii) that its marginal are easy to sample. But there are many processes beyond \eqref{SDE} with $p_t$ as its marginals, processes that can also be reversed. The key is that $p_t$  is a solution of the [Fokker-Planck equation](https://en.wikipedia.org/wiki/Fokker%E2%80%93Planck_equation): 
+$$ \partial_t p_t(x) = \Delta (\sigma_t^2 p_t(x)) - \nabla \cdot (f_t(x)p_t(x)).$$
+Importantly, this equation be recast as a transport equation: noting $v_t(x) = \sigma_t^2 \nabla \log p_t(x) - f_t(x)$ (called the **velocity field**), the equation \eqref{SDE} is equivalent to
+@@important
+\begin{equation}\label{TE} \partial_t p_t(x) = \nabla \cdot (v_t(x)p_t(x)).\end{equation}
+@@ 
+Transport equations come from simple ODEs; there is a simple, *deterministic* process with the same marginals as \eqref{SDE}. 
 @@important
 Let $x(t)$ be the solution of the differential equation with random initial condition
 \begin{equation}\label{ode}x'(t) = v_t(x(t))\qquad \qquad x(0) =X_0.\end{equation}
@@ -88,13 +88,13 @@ Then the probability density of $x(t)$ is $p_t$.
 where the last line uses the multidimensional integration by parts formula (remember that $\nabla \cdot$ is nothing but the divergence). 
 @@ 
 
-Simple ODEs can be reversed. The time-reversal of \eqref{ode} is just $y'(t) = -v_t(y(t))$. More precisely, the solution of the system
+Simple ODEs can be also reversed. The time-reversal of \eqref{ode} is just $y'(t) = -v_t(y(t))$. More precisely, the solution of the system
 $$ y'(t) = -v_t(y(t))\qquad \qquad y(0) = X_T$$
 is exactly $x(T-t)$, and in particular $y(0) = X_0$. We could thus sample one realization of $X_T$, or approximate it with a Gaussian, then solve the backward ODE, and obtain a near realization of $X_0$. But solving \eqref{ode} requires to know the flow $v_t$, which we recall here when $f(x) = -x$: 
 $$ v_t(x) = \sigma_t^2 \nabla \log p_t(x)  + \alpha_t x.$$
 That looks like a miss: if we want to evaluate $v_t$, we need to know $p_t$ for all $t$, which requires knowledge of $p$. But thanks to the Gods of Statistics, we can very efficiently *estimate* $\nabla \log p_t$. This is due to two things. 
 
-1) **First: we have samples from $p_t$**. Remember that our only information about $p$ is a collection $x^1, \dotsc, x^n$ of samples. But thanks to \eqref{pt}, we can represent $x^i_t = e^{-\mu_t}x^i + \bar{\sigma}_t \xi^i$ with $\xi^i \sim \mathscr{N}(0,I)$ are samples from $p_t$. They are extremely easy to access, since we only need to generate iid standard Gaussian variables $\xi^i$. 
+1) **First: we have samples from $p_t$**. Remember that our only information about $p$ is a collection $x^1, \dotsc, x^n$ of samples. But thanks to the representation \eqref{pt}, we can represent $x^i_t = e^{-\mu_t}x^i + \bar{\sigma}_t \xi^i$ with $\xi^i \sim \mathscr{N}(0,I)$ are samples from $p_t$. They are extremely easy to access, since we only need to generate iid standard Gaussian variables $\xi^i$. 
 
 2) **Second: score matching.** If $p$ is a probability density and $x^i$ are samples from $p$, estimating $\nabla \log p$ (called *score*) has been thoroughly examined and is fairly doable, a technique known as *score matching*. 
 
@@ -179,6 +179,7 @@ Let us wrap everything up.
 
 @@important
 **The Denoising Diffusion Score Matching loss**
+
 Let $\tau$ be a random time on $[0,T]$ with density proportional to $w(t)$; let $\xi$ be a standard Gaussian random variable. The DDPM theoretical objective is
 \begin{equation}
 \ell(\theta) =  \mathbb{E}\left[\frac{1}{\bar{\sigma}_\tau}\left|\xi - r_\theta(\tau, e^{-\mu_\tau}X_0 + \bar{\sigma}_\tau \xi )\right|^2\right].
@@ -205,7 +206,7 @@ Considerable work has been done (mostly experimentally) to find good functions $
 
 Let $s : [0,T]\times \mathbb{R}^d \to \mathbb{R}^d$ be a smooth function, meant as a proxy for $\nabla \log p_t$. As explained earlier, the **generative process** consists in sampling some $y(0)=Z$ with a probability density $\pi$ (close to $p_T$, hopefully), and then solving the ODE $y'(t) = -u_t(y(t))$ for 
 $$u_t(x) = \sigma_t^2 s(t,x) + \alpha_t x.$$
-We will note $q_t$ the distribution of $y(T-t)$; in fact, $q_t$ is a solution to $\partial_t q_t(x) = \nabla \cdot (u_t(x)q_t(x))$ (the minus sign is removed, this is a forward ODE) subject to the *terminal condition* $q_T = \pi$. If things were correctly done, $q_t$ should be close to $p_{t}$ at every $t$, and in particular $q_0$ should be close to $p_0$. In particular, if we perfectly learnt the score, that is, if $s(t,x) = \nabla \log p_t(x)$ for every $t$, then clearly $u_t = v_t$ and the two probability flows $q_t, p_t$ only differ by their terminal condition; but in general, $s(t,x)$ is only *close* to $\nabla \log p_t(x)$ and these training errors diffuse in the system. The next fundamental lemma quantifies this. 
+We will note $q_t$ the distribution of $y(T-t)$; in fact, $q_t$ is a solution to $\partial_t q_t(x) = \nabla \cdot (u_t(x)q_t(x))$ (the minus sign is removed) subject to the *terminal condition* $q_T = \pi$. If things were correctly done, $q_t$ should be close to $p_{t}$ at every $t$, and in particular $q_0$ should be close to $p_0$. In particular, if we perfectly learnt the score, that is, if $s(t,x) = \nabla \log p_t(x)$ for every $t$, then clearly $u_t = v_t$ and the two probability flows $q_t, p_t$ only differ by their terminal condition; but in general, $s(t,x)$ is only *close* to $\nabla \log p_t(x)$ and these training errors diffuse in the system. The next fundamental lemma quantifies this. 
 
 This theorem restricts to the case where the weights $w(t)$ are constant, and for simplicity, they are set to 1. 
 
@@ -218,21 +219,20 @@ This theorem restricts to the case where the weights $w(t)$ are constant, and fo
 \end{equation}
 @@
 
-The proof of this formula will use a few technical lemmas. The original proof can be found in [this paper](https://arxiv.org/abs/2101.09258) and uses a fact completely shunned in this note, which is that instead of solving bacward the ODE \eqref{ode}, we could also solve backward the original SDE \eqref{SDE} with another SDE, then use the Girsanov theorem. This is utterly complicated and the following proof is indeed more elementary. 
+The proof of this formula will use a few technical lemmas. The original proof can be found in [this paper](https://arxiv.org/abs/2101.09258) and uses the Girsanov theorem applied to the SDE representations \eqref{SDE}-\eqref{BSDE} of the forward/backward process. This is utterly complicated and is too dependent on the SDE representation. The proof presented below only needs the Fokker-Planck equation and is done directly at the level of probability densities $p_t, q_t$. 
 
-(warning: the proof is not correct)
 
 We recall that $$ \mathrm{kl}(p_t \mid q_t) = \int p_t(x)\log(p_t(x) - q_t(x))dx.$$
 @@important We have, 
 \begin{equation}\label{36}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) = \sigma_t^2 \int p_t(x) \nabla \log\left(\frac{p_t(x)}{q_t(x)}\right) \cdot \left(s(t,x) - \nabla \log p_t(x) \right)dx\end{equation}
 and:
-\begin{equation}\label{37}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) \leqslant \frac{1}{2}\int p_t(x) |s(t,x) - \nabla \log p_t(x) |^2 dx.\end{equation}
+\begin{equation}\label{37}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) \leqslant \frac{1}{4\sigma_t^2}\int p_t(x) |s(t,x) - \nabla \log p_t(x) |^2 dx.\end{equation}
 
 @@
 
 @@proof
 
-We recall for the reader that $p_t$ satisfies $\partial_t p_t = \nabla \cdot v_t p_t$ and $q_t$ satisfies $\partial_t q_t = \nabla \cdot u_t q_t$. The proofs of \eqref{vlb}-\eqref{36}-\eqref{37} will only need this fact. 
+We recall reader that $p_t$ satisfies $\partial_t p_t = \nabla \cdot v_t p_t$ and $q_t$ satisfies $\partial_t q_t = \nabla \cdot u_t q_t$. The proofs of \eqref{vlb}-\eqref{36}-\eqref{37} will only need this fact. 
 
 **Proof of \eqref{36}.**
 
@@ -246,17 +246,21 @@ Now, since $u_t(x) - v_t(x) = \sigma_t^2 (s(t,x) - \nabla \log p_t(x))$, the res
 
 **Proof of \eqref{37}.**
 
-We momentarily note $a = \nabla \log p_t(x)$ and $b = \nabla \log q_t(x)$ and $s=s(t,x)$. Then, 
-$$|a-s|^2 =|a-b|^2 + |b-s|^2 + 2 (a-b)\cdot (b-s)$$ 
-which clearly shows that $$2 (a - b)\cdot (b - s) = 2\nabla \log (p_t(x)/q_t(x)) \cdot (s(t,x) - \nabla \log p_t(x))$$ is smaller than $|\nabla \log p_t(x) - s(t,x)|^2$, as requested. 
+We momentarily note $a = \nabla \log p_t(x)$ and $b = \nabla \log q_t(x)$ and $s=s(t,x)$. Then, \eqref{36} shows that
+\begin{align} \frac{d}{dt}\mathrm{kl}(p_t \mid q_t) &= \sigma_t^2 \int p_t(x)(a - b)\cdot (s - b)dx\\
+&= -\sigma_t^2 \int p_t(x)|a-b|^2 dx + \sigma_t^2 \int p_t(x)(a - b)\cdot (s-a)dx.
+\end{align}
+We now use the classical inequality $x\cdot y \leqslant ( \lambda^2 |x|^2 + \lambda^{-2}|y|^2)/2$, valid for any $\lambda$: with $\lambda = \sqrt{2 \sigma_t}$, we get
+$$ (a-b)\cdot (s-a) \leqslant \sigma_t^2 |a-b|^2  + \frac{1}{4\sigma_t^{2}}|s-a|^2$$ 
+and finally, 
+$$ \frac{d}{dt}\mathrm{kl}(p_t \mid q_t) \leqslant \frac{1}{4\sigma_t^2}\int p_t(x)|s(t,x) - \nabla\log p_t(x)|^2dx.$$
 
 **Proof of \eqref{vlb}.**
 
 Now, we simply write
-\begin{align} \mathrm{kl}(p_t \mid q_t) - \mathrm{kl}(p_0 \mid q_0) &= \int_0^T \frac{d}{dt}\mathrm{kl}(p_t \mid q_t) dt \\
-&\leqslant \frac{1}{2}\int_0^T \mathbb{E}[|s(t,X_t) - \nabla \log p_t(X_t)|^2]dt.
+\begin{align} \mathrm{kl}(p_t \mid q_t) - \mathrm{kl}(p_0 \mid q_0) &= \int_0^T \frac{d}{dt}\mathrm{kl}(p_t \mid q_t) dt 
 \end{align}
-Now the result readily comes, since $q_T = \pi$. 
+and plug \eqref{37} inside the RHS. Here $q_T = \pi$, hence the result. 
 
 @@
 
