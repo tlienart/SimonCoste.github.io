@@ -5,7 +5,7 @@ abstract = "A small mathematical summary. "
 +++
 
 
-These are my own notes for the formulation of the celebrated Denoising Diffusion Probabilistic Models; they're intended for mathematicians, hence the notations and style is quite different than in the original papers. In particular, I completely formulate everything as a continuous-time problem, then only in the end explain how to discretize the theoretical losses or the generative models. This is exactly the opposite to what was done in the papers. A special attention is given to the differences between ODE sampling and SDE sampling. 
+These are my notes on generative models using stochastic diffusions, eg the celebrated Denoising Diffusion Probabilistic Models; they're intended for mathematicians, hence the notations and style is different than in the original papers. In particular, everything is fitted into the continuous-time framework (which is not how it is done in practice). A special attention is given to the differences between ODE sampling and SDE sampling, and the analysis of the time evolution  for the probability densities though Fokker-Planck and Transport Equations.  
 
 \tableofcontents
 
@@ -18,14 +18,14 @@ Let $p$ be a probability density on $\mathbb{R}^d$. The goal of generative model
 There were a certain number of methods to solve these two problems: Energy-Based Models, Normalizing Flows and the famous Neural ODEs, vanilla Score-Matching. Each of those methods seemed to be limited for some reason I'll not detail here: for example, EBMs are very hard to train, NFs are not very expressive and SM fails to capture multimodal distributions. Diffusion models have sufficient flexibility to overcome these limitations, at least partly. 
 
 
-## Stochastic interpolation
+### Stochastic interpolation
 
-Diffusion models fall into the general framework of [stochastic interpolants](https://arxiv.org/abs/2303.08797). The idea is to continuously transform the samples of $p$ into samples from a known, easy-to-sample probability density $\pi$ (often called *the target*), and then to reverse the process: that is, to generate a sample from $\pi$, and to inverse the transformation to get a new sample from $p$. In other words, we seek a path $(p_t: t\in [0,1])$ with $p_0=p$ and $p_1=q$, such that generating samples $x_t \sim p_t$ is doable. 
+Diffusion models fall into the general framework of [stochastic interpolants](https://arxiv.org/abs/2303.08797). The idea is to continuously transform the samples of $p$ into samples from a known, easy-to-sample probability density $\pi$ (often called *the target*), and then to reverse the process: that is, to generate a sample from $\pi$, and to inverse the transformation to get a new sample from $p$. In other words, we seek a path $(p_t: t\in [0,T])$ with $p_0=p$ and $p_T=q$, such that generating samples $x_t \sim p_t$ is doable. 
 
-The success of *diffusion models* came from the realization that some stochastic processes (eg, Ornstein-Uhlenbeck processes, which connects $p$ with a pure noise $\mathscr{N}(0,I)$ distribution) can be reversed, as long as access is given to the *score function* $\nabla \log p_t$ at each time $t$. Although unknown, this score can efficiently be learnt using statistical procedures called *score matching*. 
+The success of *diffusion models* came from the realization that some stochastic processes (eg, Ornstein-Uhlenbeck processes, which connects $p_0$ with a distribution $p_T$ very close to pure noise $\mathscr{N}(0,I)$) can be reversed, as long as access is given to the *score function* $\nabla \log p_t$ at each time $t$. Although unknown, this score can efficiently be learnt using statistical procedures called *score matching*. 
 
 
-### Original formulation: Gaussian noising process and its inversion
+## Original formulation: Gaussian noising process and its inversion
 
 Let $(t,x)\to f_t(x)$ and $t\to \sigma_t$ be two smooth functions. Consider the stochastic differential equation
 \begin{equation}\label{SDE}dX_t = f_t(X_t)dt + \sqrt{2\sigma_t ^2}dB_t, \qquad \qquad X_0 \sim p\end{equation}
@@ -122,7 +122,7 @@ Of course, in both cases this time-evolution is the same, but the *processes $y(
 2) **Second: score matching.** If $p$ is a probability density and $x^i$ are samples from $p$, estimating $\nabla \log p$ (called *score*) has been thoroughly examined and is fairly doable, a technique known as *score matching*. 
 
 
-## Learning the score
+## Methods for learning the score
 
 ### Vanilla score matching
 
@@ -279,7 +279,7 @@ The following lemma is interesting on its own since it gives an exact expression
 @@
 In our case, 
 @@important
-\begin{align}\label{37}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) \leqslant \frac{1}{4\sigma_t^2}\int \pbt(x) |s(t,x) - \nabla \log \pbt(x) |^2 dx \end{align}
+\begin{align}\label{37}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) \leqslant \int \pbt(x) |s(t,x) - \nabla \log \pbt(x) |^2 dx \end{align}
 
 @@
 
@@ -308,25 +308,59 @@ $$ \frac{d}{dt}\mathrm{kl}(\pbt \mid q_t) \leqslant \int \pbt(x)|s(t,x) - \nabla
 **Proof of \eqref{vlb}.**
 
 Now, we simply write
-\begin{align} \mathrm{kl}(p^{\mathrm{b}}_T \mid q^{\mathrm{sde}}_T) - \mathrm{kl}(p^{\mathrm{b}}_0 \mid q_0^{\mathrm{sde}}) &= \int_0^T \frac{d}{dt}\mathrm{kl}(\pbt \mid q_t) dt 
+\begin{align}\label{integ} \mathrm{kl}(p^{\mathrm{b}}_T \mid q^{\mathrm{sde}}_T) - \mathrm{kl}(p^{\mathrm{b}}_0 \mid q_0^{\mathrm{sde}}) &= \int_0^T \frac{d}{dt}\mathrm{kl}(\pbt \mid q_t) dt 
 \end{align}
 and plug \eqref{37} inside the RHS. Here $q_0 = \pi$ and $p^{\mathrm{b}}_T= p$, hence the result. 
 
 @@
 
+### What about the ODE ?
+
+It turns out that the ODE solver, whose density is $\qo$, does not have such a nice upper bound. In fact, since $\qo$ solves a Transport Equation, we can still use \eqref{36} but with $u_t$ replaced with $\hat{v}^{\mathrm{b}}_t$, and integrate in $t$ just as in \eqref{integ}. We have 
+\begin{align}\hbt(x) - \vbt(x) &= \nabla \log \pbt(x)-s(t,x) \\
+&= \nabla \log \pbt(x) - \nabla\log q_t(x) + \nabla\log q_t(x) - s(t,x).
+\end{align}
+Using the Cauchy-Schwarz inequality, we could obtain the following upper bound. 
+@@important
+\begin{align}
+\mathrm{kl}(p \mid q_T^{\mathrm{ode}}) - \mathrm{kl}(p_T \mid \pi) &\leqslant \int_0^T \int p_t(x)\left|\nabla\log p_t(x) - \nabla\log q_t(x)\right|^2 +  p_t(x)\left|\nabla \log q_t(x) - s(t,x)\right|^2 dx dt\\
+&\leqslant \int_0^T \mathbb{E}\left[|\nabla\log p_t(X_t) - \nabla\log q_t(X_t)|^2 + |\nabla\log q_t(X_t) - s(t,X_t)|^2\right]dt.  
+\end{align}
+@@
+Minimizing the score matching objective function does not minimize this upper bound, a striking difference with the SDE version. The reason is that the Fisher divergence provides no control whatsoever on the kl divergence between the solutions of two transport equations; but, due to the presence of a diffusive term, it provides a control on the kl divergence between the solutions of the associated Fokker-Planck equations. This might be one of the explanations for the notorious underperformance of the ODE solvers, observed in practice by many practicioners. Such an analysis was brought by the remarkable paper  on [stochastic interpolants](https://arxiv.org/abs/2303.08797). 
 
 
 
-## Beyond SDEs: Flow matching techniques
-
-In this section I'll explain the Flow Matching [paper](https://arxiv.org/abs/2210.02747). 
 
 
 ## References
 
-[Variational perspective on Diffusions](https://openreview.net/forum?id=bXehDYUjjXi) or [arxiv](https://arxiv.org/abs/2106.02808)
+### On diffusion models
 
-[Maximum likelihood training of Diffusions](https://arxiv.org/abs/2101.09258)
+[The original paper on diffusion models](https://arxiv.org/abs/1503.03585)
+
+[DDPM](https://arxiv.org/abs/2006.11239) (seminal paper for image generation)
+
+[Diffusion beat GANs](https://arxiv.org/abs/2105.05233) (pushing diffusions well beyond the SOTA)
+
+[Variational perspective on Diffusions](https://openreview.net/forum?id=bXehDYUjjXi) or [arxiv](https://arxiv.org/abs/2106.02808) (the analytical SDE approach)
+
+[Maximum likelihood training of Diffusions](https://arxiv.org/abs/2101.09258) (proofs of the variational lower-bound)
+
+[Sampling is as easy as learning the score](https://arxiv.org/abs/2209.11215) (theoretical analysis under minimal assumptions)
+
+
+### Beyond diffusions
+
+[Diffusion Schrodinger Bridge](https://proceedings.neurips.cc/paper/2021/file/940392f5f32a7ade1cc201767cf83e31-Paper.pdf)
 
 [Probability flow for FP](https://arxiv.org/pdf/2206.04642.pdf)
+
+[Flow matching paper](https://arxiv.org/abs/2210.02747)
+
+[Stochastic interpolants](https://arxiv.org/abs/2303.08797)
+
+[Consistency models](https://arxiv.org/pdf/2303.01469.pdf)
+
+[Rectified Flow](https://arxiv.org/pdf/2209.03003.pdf)
 
