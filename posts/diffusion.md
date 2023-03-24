@@ -86,21 +86,22 @@ Importantly, equation \eqref{FP} can be recast as a transport equation: with a *
 Transport equations like \eqref{TE} come from simple ODEs; that is, there is a *deterministic* process with the same marginals as \eqref{SDE}. 
 @@important
 Let $x(t)$ be the solution of the differential equation with random initial condition
-\begin{equation}\label{ode}x'(t) = v_t(x(t))\qquad \qquad x(0) =X_0.\end{equation}
+\begin{equation}\label{ode}x'(t) = -v_t(x(t))\qquad \qquad x(0) =X_0.\end{equation}
 Then the probability density of $x(t)$ satisfies \eqref{TE}, hence it is equal to $p_t$. 
 @@
 
 
 @@proof
-**Proof.** Let $p_t$ be the probability density of $x_t$ and let $\varphi$ be any smooth, compactly supported test function. Then, $\mathbb{E}[\varphi(x(t))] = \int p_t(x)\varphi(x)dx$, so by derivation under the integral, 
+**Proof.** Let $p_t$ be the probability density of $x(t)$ and let $\varphi$ be any smooth, compactly supported test function. Then, $\mathbb{E}[\varphi(x(t))] = \int p_t(x)\varphi(x)dx$, so by derivation under the integral, 
 \begin{align}\int \partial_t p_t(x)\varphi(x)dx = \partial_t \mathbb{E}[\varphi(x(t))]&= \mathbb{E}[\nabla\varphi(x(t))x'(t)]\\
-&= \int \nabla \varphi(x)v_t(x)p_t(x)dx = -\int \varphi(x) \nabla \cdot (v_t(x)p_t(x))dx
+&= -\int \nabla \varphi(x)v_t(x)p_t(x)dx = \int \varphi(x) \nabla \cdot (v_t(x)p_t(x))dx
 \end{align}
-where the last line uses the multidimensional integration by parts formula (remember that $\nabla \cdot$ is nothing but the divergence). 
+where the last line uses the multidimensional integration by parts formula. 
 @@ 
 
 Up to now, we proved that there are two continuous random processes having the same marginal probability density at time $t$: a smooth one provided by $x(t)$, the solution of the ODE, and a continuous but not differentiable one, $X_t$, provided by the solution of the SDE. 
 
+![](/posts/img/diff.svg)
 
 ### Time-reversal of Transport Equations and Fokker-Planck equations
 
@@ -109,30 +110,29 @@ Up to now, we proved that there are two continuous random processes having the s
 \newcommand{\wbt}{w^{\mathrm{b}}_t}
 
 
-Our goal is to reverse the process going from $X_0 \sim p_0$ to $X_T \sim p_T$. Let us take a look first at the time-reversal of the equations satisfied by $p_t$. 
-@@important
-Let $p^{\mathrm{b}}_t$ be the time-reversal of $p_t$, that is $p^{\mathrm{b}}_t = p_{T-t}$. It solves the *backward* Transport Equation: 
-\begin{equation}\label{BTE}\partial \pbt(x)= \nabla \cdot \vbt(x) \pbt(x) \end{equation}
-where $\vbt(x) = -v_t(x) = -\sigma_{T-t}^2 \nabla \log p_t(x) - \alpha_{T-t} x$. 
+We now have various processes $x(t), X_t$ starting at a density $p_0$ and evolving towards a density $p_T \approx \pi = \mathscr{N}(0,I)$. Can these processes be reversed in time? The answer is *yes* for both of them. We'll start by reversing their associated equations. From now on, we will note $p^{\mathrm{b}}_t$ the time-reversal of $p_t$, that is: $$p^{\mathrm{b}}_t(x) = p_{T-t}(x).$$ 
 
-It also solves the *backward* Fokker-Planck Equation: 
-\begin{equation}\label{BFP}\partial \pbt(x) =\sigma_t^2 \Delta \pbt(x) - \nabla \cdot w_t^{\mathrm{b}}(x)\pbt(x)\end{equation}
-where $w^{\mathrm{b}}_t(x) = 2\sigma_{T-t}^2 \nabla \log \pbt(x) + \alpha_{T-t} x$. 
+@@important
+The density $\pbt$ solves the *backward* Transport Equation: 
+\begin{equation}\label{BTE}\partial \pbt(x)= \nabla \cdot \vbt(x) \pbt(x) \end{equation}
+where $$\vbt(x) = -v_t(x) = -\sigma_{T-t}^2 \nabla \log p_t(x) - \alpha_{T-t} x.$$
+@@ 
+@@important
+The density $\pbt$ also solves the *backward* Fokker-Planck Equation: 
+\begin{equation}\label{BFP}\partial \pbt(x) =\sigma_{T-t}^2 \Delta \pbt(x) - \nabla \cdot w_t^{\mathrm{b}}(x)\pbt(x)\end{equation}
+where $$w^{\mathrm{b}}_t(x) = 2\sigma_{T-t}^2 \nabla \log \pbt(x) + \alpha_{T-t} x.$$ 
 @@ 
 
 @@proof
-**Proof.** It is a mere verification. The time-reversal of the solution of a transport equation solves the same equation, with a minus sign. For the backward Fokker-Planck, note that
-\begin{align}\partial_t \pbt(x) &= -\partial_t p_t\mid_{T-t}(x) = -\sigma_{T-t}^2\Delta p_{T-t}(x) + \nabla\cdot f_{T-t}(x)p_{T-t}(x)\\
-&=\sigma_{T-t}^2\Delta p_{T-t}(x) -2\sigma_{T-t}^2\Delta p_{T-t}(x) + \nabla \cdot f_{T-t}(x)p_{T-t}(x)\\
-&=\Delta \sigma_{T-t}^2\pbt(x) - \nabla \cdot [2\sigma_{T-t}^2\nabla \log p_{T-t}(x) - f_{T-t}(x)]\pbt(x)
-\end{align}
+**Proof.** Noting $\dot{p}_t(x)$ the time derivative of $t\mapsto p_t(x)$ at time $t$, we immediately see that $\partial_t \pbt(x) = -\dot{p}_{T-t}(x)$ and the rest is a mere verification. 
 @@
 
-Of course, these two equations are exactly the same, but they represent the (identical) probability density $p_{T-t}$ of two different random processes. As explained before, the Transport version \eqref{BTE} represents the time-evolution of the density of the ODE system 
-\begin{equation}\label{BODE}y'(t) = \vbt(y(t)) \qquad \qquad y(0) = X_T\end{equation} 
-but the Fokker-Planck version \eqref{BFP} represents the time-evolution of the SDE system
-\begin{equation}\label{BSDE2}dY_t = w^{\mathrm{b}}_t(Y_t)dt + \sqrt{2\sigma_t^2}dB_t \qquad \qquad Y_0 = X_T.\end{equation}
-Of course, in both cases this time-evolution is the same, but the *processes $y(t)$ and $Y_t$* are not the same ($y$ is smooth and $Y_t$ is rough). They only have the same marginals $\pbt$. Each of these two processes can be sampled: there are many ODE and SDE solvers, the simplest of which being the Euler scheme and the Euler-Maruyama scheme. But these solvers need access to the functions $\vbt$ and $\wbt$, which in turn depend on the unknown score $\nabla \log p_t$. Fortunately, we can efficiently *estimate* $\nabla \log p_t$. This is due to two things. 
+Of course, these two equations are the same, but they represent the time-evolution of the density of two different random processes. As explained before, the Transport version \eqref{BTE} represents the time-evolution of the density of the ODE system 
+\begin{align}\label{BODE}& y'(t) = -\vbt(y(t)) \\ & y(0) \sim p_T\end{align} 
+while the Fokker-Planck version \eqref{BFP} represents the time-evolution of the SDE system
+\begin{align}\label{BSDE2}&dY_t = w^{\mathrm{b}}_t(Y_t)dt + \sqrt{2\sigma_{T-t}^2}dB_t \\ & Y_0 \sim p_T.\end{align}
+
+Both of these two processes can be sampled using a range of ODE and SDE solvers, the simplest of which being the Euler scheme and the Euler-Maruyama scheme. However, this requires access to the functions $\vbt$ and $\wbt$, which in turn depend on the unknown score $\nabla \log p_t$. Fortunately, $\nabla \log p_t$ can efficiently be *estimated* due to two factors. 
 
 1) **First: we have samples from $p_t$**. Remember that our only information about $p$ is a collection $x^1, \dotsc, x^n$ of samples. But thanks to the representation \eqref{pt}, we can represent $x^i_t = e^{-\mu_t}x^i + \bar{\sigma}_t \xi^i$ with $\xi^i \sim \mathscr{N}(0,I)$ are samples from $p_t$. They are extremely easy to access, since we only need to generate iid standard Gaussian variables $\xi^i$. 
 
@@ -146,9 +146,9 @@ Of course, in both cases this time-evolution is the same, but the *processes $y(
 Let $p$ be a smooth probability density function supported over $\mathbb{R}^d$ and let $X$ be a random variable with density $p$. The following elementary identity is due to [Hyvärinen, 2005](https://www.jmlr.org/papers/volume6/hyvarinen05a/hyvarinen05a.pdf); it is the basis for score matching estimation in statistics. 
 
 @@important
-Let $s : \mathbb{R}^d \to \mathbb{R}^d$ be any smooth function with sufficiently fast decay at $\infty$. Then,
+Let $s : \mathbb{R}^d \to \mathbb{R}^d$ be any smooth function with sufficiently fast decay at $\infty$, and $X \sim p$. Then,
 \begin{equation}\label{SM}
-\mathbb{E}[\vert \nabla \log p(X) - s(X)\vert^2] = c + \mathbb{E}\left[|s(X)|^2 +  2 \mathrm{div}(s(X))\right]
+\mathbb{E}[\vert \nabla \log p(X) - s(X)\vert^2] = c + \mathbb{E}\left[|s(X)|^2 +  2 \nabla \cdot s(X)\right]
 \end{equation}
 where $c$ is a constant not depending on $s$. 
 @@ 
@@ -162,19 +162,17 @@ $$2\int  \nabla \log p(x)\cdot p(x)s(x) dx = 2\int \nabla p(x) \cdot s(x) dx = -
 and the identity is proved. 
 @@ 
 
-Now, \eqref{SM} is particularly interesting for us. Remember that if we want to reverse \eqref{ode}, we do not really need to estimate $p_t$ but only $\nabla \log p_t$. We do so by approximating it using a parametrized family of functions, say $s_\theta$ (typically, neural networks): 
-\begin{equation}\label{opt_theta} \theta_t \in \argmin_\theta \mathbb{E}[\vert \nabla \log p_t(X_t) - s_{\theta}(X_t)\vert^2] = \argmin_\theta \mathbb{E}[|s_{\theta}(X_t)|^2 + 2 \mathrm{div}(s_{\theta}(X_t))].\end{equation}
+Now, \eqref{SM} is particularly interesting for us. Remember that if we want to reverse \eqref{ode}, we do not really need to estimate $p_t$ but only $\nabla \log p_t$. We do so by approximating it using a parametrized family of functions, say $s_\theta$ (typically, a neural network): 
+\begin{equation}\label{opt_theta} \theta_t \in \argmin_\theta \mathbb{E}[\vert \nabla \log p_t(X_t) - s_{\theta}(X_t)\vert^2] = \argmin_\theta \mathbb{E}[|s_{\theta}(X_t)|^2 + 2 \nabla \cdot (s_{\theta}(X_t))].\end{equation}
 
 
-### How do you do empirically?
-
-How do we solve \eqref{opt_theta}? 
+### How do we empirically optimize \eqref{opt_theta}? 
 
 1) First, we need not solve this optimization problem for every $t$. We could obviously discretize $[0,T]$ with $t_1, \dots, t_N$ and only solve for $\theta_{t_i}$ independently,  but it is actually smarter and cheaper to approximate the whole function $(t,x) \to \nabla \log p_t(x)$ by a single neural network (a U-net, in general). That is, we use a parametrized family $s_\theta(t,x)$. This enforces a form of time-continuity which seems natural. Now, since we want to aggregate the losses at each time, we solve the following problem: 
-\begin{equation}\label{20}\argmin_\theta \int_0^T w(t)\mathbb{E}[|s_{\theta}(t, X_t)|^2 + 2 \mathrm{div}(s_{\theta}(t, X_t))]dt\end{equation} where $w(t)$ is a weighting function (for example, $w(t)$ can be higher for $t\approx 0$, since we don't really care about approximating $p_T$ as precisely as $p_0$). 
+\begin{equation}\label{20}\argmin_\theta \int_0^T w(t)\mathbb{E}[|s_{\theta}(t, X_t)|^2 + 2 \nabla \cdot (s_{\theta}(t, X_t))]dt\end{equation} where $w(t)$ is a weighting function (for example, $w(t)$ can be higher for $t\approx 0$, since we don't really care about approximating $p_T$ as precisely as $p_0$). 
 
 2) In the preceding formulation we cannot exactly compute the expectation with respect to $p_t$, but we can approximate it with our samples $x_t^i$. Additionnaly, we need to approximate the integral, for instance we can discretize the time steps with $t_0=0 < t_1 < \dots < t_N = T$. Our objective function becomes
-$$ \ell(\theta) =\frac{1}{n}\sum_{t \in \{t_0, \dots, t_N\}} w(t)\sum_{i=1}^n |s_{\theta}(t, x_t^i)|^2 + 2 \mathrm{div}(s_{\theta}(t, x_t^i))$$
+$$ \ell(\theta) =\frac{1}{n}\sum_{t \in \{t_0, \dots, t_N\}} w(t)\sum_{i=1}^n |s_{\theta}(t, x_t^i)|^2 + 2 \nabla\cdot(s_{\theta}(t, x_t^i))$$
 which looks computable… except it's not ideal.  Suppose we perform a gradient descent on $\theta$ to find the optimal $\theta$ for time $t$. Then at each gradient descent step, we need to evaluate $s_{\theta}$ as well as its divergence; *and then* compute the gradient in $\theta$ of the divergence in $x$, in other words to compute $\nabla_\theta \nabla_x \cdot s_\theta$. In high dimension, this can be too costly. 
 
 ### Denoising Score Matching
@@ -217,7 +215,7 @@ Intuitively, the neural network $r_\theta$ tries to guess the scaled noise $\xi$
 
 Let us wrap everything up in this section. 
 
-### Training
+### Training: learning the score
 
 @@important
 **The Denoising Diffusion Score Matching loss**
@@ -226,10 +224,13 @@ Let $\tau$ be a random time on $[0,T]$ with density proportional to $w(t)$; let
 \begin{equation}
 \ell(\theta) =  \mathbb{E}\left[\frac{1}{\bar{\sigma}_\tau}\left|\xi - r_\theta(\tau, e^{-\mu_\tau}X_0 + \bar{\sigma}_\tau \xi )\right|^2\right].
 \end{equation}
-Its empirical version is 
-\begin{equation}\label{empirical_loss}\hat{\ell}(\theta) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}\left[\frac{1}{\bar{\sigma}_\tau}|\xi - r_\theta(e^{-\mu_\tau}x^i + \bar{\sigma}_\tau \xi)|^2\right].\end{equation}
 @@
-Up to the constants and the choice of the drift $\alpha_t$ and variance $\sigma_t$, this is exactly the loss function (14) from the paper [DDPM](https://arxiv.org/abs/2006.11239), for instance. Note that \eqref{empirical_loss} can be optimized using mini-batch methods. 
+
+Since we have access to samples $(x^i, \xi^i, \tau^i)$ (at the cost of generating iid samples $\xi^i$ from a standard Gaussian and $\tau^i$ uniform over $[0,T]$), we get the empirical version: 
+\begin{equation}\label{empirical_loss}\hat{\ell}(\theta) = \frac{1}{n}\sum_{i=1}^n \left[\frac{1}{\bar{\sigma}_\tau}|\xi^i - r_\theta(e^{-\mu_\tau}x^i + \bar{\sigma}_\tau \xi^i)|^2\right].\end{equation}
+Up to the constants and the choice of the drift $\alpha_t$ and variance $\sigma_t$, this is exactly the loss function (14) from the paper [DDPM](https://arxiv.org/abs/2006.11239), for instance. 
+
+In practice, for image generations, the go-to choice for the architecture of $r_\theta$ is a [U-net](https://twitter.com/marc_lelarge/status/1632708387589832705), a special kind of convolutional neural networks with a downsampling phase, an upsampling phase, and skip-connections in between.  
 
 ### Sampling
 
@@ -240,7 +241,7 @@ Once the algorithm has converged to $\theta$, we get $s_\theta(t,x)$ which is a 
 \newcommand{\hwbt}{\hat{w}^{\mathrm{b}}_t}
 
 @@important
-The **ODE sampler** solves $ y'(t) = \hbt(y(t))$ started at $y(0) \sim \mathscr{N}(0,I)$, 
+The **ODE sampler** solves $ y'(t) = -\hbt(y(t))$ started at $y(0) \sim \mathscr{N}(0,I)$, 
 where $\hbt(x) = -\sigma_t^2 s_\theta(t,x) - \alpha_t x$. 
 @@
 
@@ -249,10 +250,11 @@ The **SDE sampler** solves $dY_t = \hwbt(Y_t)dt + \sqrt{2\sigma_t^2}dB_t$ start
 @@
 \newcommand{\qo}{q^{\mathrm{ode}}_t}
 \newcommand{\qs}{q^{\mathrm{sde}}_t}
-We must stress a subtle fact. Equations \eqref{FP} and \eqref{TE}, or their backward counterparts, are exactly the same equation accounting for $p_t$. But since now we replaced $\nabla \log p_t$ by its *approximation* $s_\theta$, this is no longer the case for our two samplers: their probability densities are not the same. In fact, let us note $\qo,\qs$ the densities of $y(T-t)$ and $Y_{T-t}$; the first one solves a Transport Equation, the second one a Fokker-Planck equation, and these two equations are different. 
+We must stress a subtle fact. Equations \eqref{FP} and \eqref{TE}, or their backward counterparts, are exactly the same equation accounting for $p_t$. But since now we replaced $\nabla \log p_t$ by its *approximation* $s_\theta$, this is no longer the case for our two samplers: their probability densities are not the same. In fact, let us note $\qo,\qs$ the densities of $y(t)$ and $Y_{t}$; the first one solves a Transport Equation, the second one a Fokker-Planck equation, and these two equations are different. 
 @@important 
-\begin{equation}\label{TE-a}\partial \qo(x) = -\nabla \cdot \hbt(x)\qo(x)\qquad \qquad q_0^{\mathrm{ode}} = \mathscr{N}(0,I) \end{equation}
-\begin{equation}\label{FP-a}\partial \qs(x) = -\nabla \cdot [\nabla \log \qs(x) - \hwbt(x)]\qs(x) \qquad \qquad q_0^{\mathrm{sde}} = \mathscr{N}(0,I) \end{equation}
+**Backward Equations for the samplers**
+\begin{equation}\label{TE-a}\partial_t \qo(x) = \nabla \cdot \hbt(x)\qo(x)\qquad \qquad q_0^{\mathrm{ode}} = \pi \end{equation}
+\begin{equation}\label{FP-a}\partial_t \qs(x) = \nabla \cdot [\nabla \log \qs(x) - \hwbt(x)]\qs(x) \qquad \qquad q_0^{\mathrm{sde}} = \pi \end{equation}
 @@
 Importantly, the drift $\nabla \log \qs(x) - \hwbt(x)$ is in general *not equal* to the drift $\hbt(x)$. They would be equal only in the case $s_\theta(t,x) = \nabla \log p_t(x)$. 
 @@proof 
