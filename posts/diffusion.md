@@ -141,6 +141,12 @@ Both of these two processes can be sampled using a range of ODE and SDE solver
 
 ## Methods for learning the score
 
+The L2-distance between the scores of two probability densities is often called the *Fisher divergence*: 
+$$ \mathrm{fisher}(\rho_1 \mid \rho_2) = \int \rho_1(x)|\nabla\log\rho_1(x) - \nabla\log\rho_2(x)|^2dx.$$
+Since our goal is to learn $\nabla\log p_t(x)$, it is natural to choose a parametrized family of functions $s_\theta$ and to optimize $\theta$ so that the divergence 
+$$\int p_t(x)|\nabla\log p_t(x) - s_\theta(x)|^2dx $$
+is as small as possible. However, this optimization problem is intractable, due to the presence of the explicit form of $p_t$ inside the integral. This is where Score Matching techniques come into play. 
+
 ### Vanilla score matching
 
 Let $p$ be a smooth probability density function supported over $\mathbb{R}^d$ and let $X$ be a random variable with density $p$. The following elementary identity is due to [Hyvärinen, 2005](https://www.jmlr.org/papers/volume6/hyvarinen05a/hyvarinen05a.pdf); it is the basis for score matching estimation in statistics. 
@@ -242,11 +248,11 @@ Once the algorithm has converged to $\theta$, we get $s_\theta(t,x)$ which is a 
 
 @@important
 The **ODE sampler** solves $ y'(t) = -\hbt(y(t))$ started at $y(0) \sim \mathscr{N}(0,I)$, 
-where $\hbt(x) = -\sigma_t^2 s_\theta(t,x) - \alpha_t x$. 
+where $\hbt(x) = -\sigma_{T-t}^2 s_\theta(T-t,x) - \alpha_{T-t} x$. 
 @@
 
 @@important 
-The **SDE sampler** solves $dY_t = \hwbt(Y_t)dt + \sqrt{2\sigma_t^2}dB_t$ started at $Y_0 \sim \mathscr{N}(0,I)$, where $\hwbt(x) = 2\sigma_t^2 s_\theta(t,x) + \alpha_t x$. 
+The **SDE sampler** solves $dY_t = \hwbt(Y_t)dt + \sqrt{2\sigma_t^2}dB_t$ started at $Y_0 \sim \mathscr{N}(0,I)$, where $\hwbt(x) = 2\sigma_{T-t}^2 s_\theta(T-t,x) + \alpha_{T-t} x$. 
 @@
 \newcommand{\qo}{q^{\mathrm{ode}}_t}
 \newcommand{\qs}{q^{\mathrm{sde}}_t}
@@ -254,9 +260,9 @@ We must stress a subtle fact. Equations \eqref{FP} and \eqref{TE}, or their back
 @@important 
 **Backward Equations for the samplers**
 \begin{equation}\label{TE-a}\partial_t \qo(x) = \nabla \cdot \hbt(x)\qo(x)\qquad \qquad q_0^{\mathrm{ode}} = \pi \end{equation}
-\begin{equation}\label{FP-a}\partial_t \qs(x) = \nabla \cdot [\nabla \log \qs(x) - \hwbt(x)]\qs(x) \qquad \qquad q_0^{\mathrm{sde}} = \pi \end{equation}
+\begin{equation}\label{FP-a}\partial_t \qs(x) = \nabla \cdot [\sigma_{T-t}^2\nabla \log \qs(x) - \hwbt(x)]\qs(x) \qquad \qquad q_0^{\mathrm{sde}} = \pi \end{equation}
 @@
-Importantly, the drift $\nabla \log \qs(x) - \hwbt(x)$ is in general *not equal* to the drift $\hbt(x)$. They would be equal only in the case $s_\theta(t,x) = \nabla \log p_t(x)$. 
+Importantly, the velocity $\sigma_{T-t}^2\nabla \log \qs(x) - \hwbt(x)$ is in general *not equal* to the velocity $\hbt(x)$. They would be equal only in the case $s_\theta(t,x) = \nabla \log p_t(x)$. 
 @@proof 
 **Proof.** Since $y(t)$ is an ODE, it directly satisfies the transport equation with velocity $\hbt$. Since $Y_t$ is an SDE, it satisfies the Fokker-Planck equation associated with the drift $\hwbt$, which in turn can be transformed in the transport equation shown above. 
 @@ 
@@ -266,17 +272,20 @@ Importantly, the drift $\nabla \log \qs(x) - \hwbt(x)$ is in general *not equal*
 Considerable work has been done (mostly experimentally) to find good functions $\alpha_t,\beta_t$. Some choices seem to stand out. 
 
 - the **Variance Exploding** path takes $\alpha_t = 0$ (that is, no drift) and $\sigma_t$ a continuous, increasing function over $[0,1)$, such that $\sigma_0 = 0$ and $\sigma_1 = +\infty$; typically, $\sigma_t = (1-t)^{-1}$. 
-- the **Variance-Preserving** takes $\sigma_t = \sqrt{\alpha_t}$. 
+- the **Variance-Preserving** path takes $\sigma_t = \sqrt{\alpha_t}$. 
 - the **pure Ornstein-Uhlenbeck** path takes $\alpha_t = \sigma_t = 1$, it is a special case of the previous one, mostly suitable for theoretical purposes. 
 
 
 ## A variational bound for the SDE sampler
 
-Let $s : [0,T]\times \mathbb{R}^d \to \mathbb{R}^d$ be a smooth function, meant as a proxy for $\nabla \log p_t$. Our goal is to quantify the difference between $\qo, \qs$ and $p_t$. It turns out that controlling the Fisher divergence $\mathbb{E}[|\nabla \log p_t(X) - s(t,X)|^2]$ results in a bound for $\mathrm{kl}(p \mid q_0^{\mathrm{sde}})$, but not for $\mathrm{kl}(p \mid q_0^{\mathrm{ode}})$. We recall the notations defined up to now: first, $\pbt = p_{T-t}$, which satisfies the backward equation
-$$ \partial_t \pbt(x) = \nabla \cdot \vbt(x)\pbt(x)\qquad \qquad \vbt(x) = -\nabla \log \pbt(x) - \alpha_{T-t}x.$$
-The density of the generative process is $\qs$, but we'll simply note $q_t$. It satisfies the equation
-$$\partial_t q_t(x) = \nabla\cdot u_t(x)q_t(x)\qquad u_t(x) = \nabla \log q_t(x) - 2s(t,x) - \alpha_{T-t}x. $$
-The original distribution we want to sample is $p = p_0 = p^{\mathrm{b}}_T$, and the final distribution of our SDE sampler is $q^{\mathrm{sde}}_T = q_T$. Finally, the distribution $p_T = p_0^{\mathrm{b}}$ is approximated with $\pi$ (in practice, $\mathscr{N}(0,I)$).  
+Let $s : [0,T]\times \mathbb{R}^d \to \mathbb{R}^d$ be a smooth function, meant as a proxy for $\nabla \log p_t$. Our goal is to quantify the difference between the sampled densities $\qo, \qs$ and $\pbt=p_{T-t}$. It turns out that controlling the Fisher divergence $\mathbb{E}[|\nabla \log p_t(X) - s(t,X)|^2]$ results in a bound for $\mathrm{kl}(p \mid q_T^{\mathrm{sde}})$, but not for $\mathrm{kl}(p \mid q_T^{\mathrm{ode}})$. 
+
+### Small recap on notations 
+The true density is $\pbt = p_{T-t}$, it satisfies the backward equation \eqref{BTE}: 
+$$ \partial_t \pbt(x) = \nabla \cdot \vbt(x)\pbt(x)\qquad \qquad \vbt(x) = -\sigma_{T-t}^2\nabla \log \pbt(x) - \alpha_{T-t}x.$$
+The density of the generative process is $\qs$, but we'll simply note $q_t$. It satisfies the backward equation \eqref{FP-a}
+$$\partial_t q_t(x) = \nabla\cdot u_t(x)q_t(x)$$ where $$ u_t(x) = \sigma_{T-t}^2\nabla \log q_t(x) - 2\sigma_{T-t}^2s(t,x) - \alpha_{T-t}x. $$
+The original distribution we want to sample is $p = p_0 = p^{\mathrm{b}}_T$, and the output distribution of our SDE sampler is $q^{\mathrm{sde}}_T = q_T$. Finally, the distribution $p_T = p_0^{\mathrm{b}}$ is approximated with $\pi$ (in practice, $\mathscr{N}(0,I)$).  
 
 The KL divergence between densities $\rho_1, \rho_2$ is $$ \mathrm{kl}(\rho_1 \mid \rho_2) = \int \rho_2(x)\log(\rho_2(x)/ \rho_1(x))dx.$$
 
@@ -287,23 +296,25 @@ This theorem restricts to the case where the weights $w(t)$ are constant, and fo
 **Variational lower-bound for score-based diffusion models with SDE sampler**
 
 \begin{equation}\label{vlb}
-\mathrm{kl}(p \mid q_T^{\mathrm{sde}}) \leqslant \mathrm{kl}(p_T \mid \pi) +\int_0^T \int p_t(x) |\nabla \log p_t(x) - s(t,x)\vert^2 dx dt. 
+\mathrm{kl}(p \mid q_T^{\mathrm{sde}}) \leqslant \mathrm{kl}(p_T \mid \pi) +\int_0^T \sigma^2_{t}  \mathbb{E}[ |\nabla \log p_t(X_t) - s(t,X_t)\vert^2 ] dt. 
 \end{equation}
 @@
 
 The original proof can be found in [this paper](https://arxiv.org/abs/2101.09258) and uses the Girsanov theorem applied to the SDE representations \eqref{SDE}-\eqref{BSDE} of the forward/backward process. This is utterly complicated and is too dependent on the SDE representation. The proof presented below only needs the Fokker-Planck equation and is done directly at the level of probability densities. 
+
+
 The following lemma is interesting on its own since it gives an exact expression for the KL divergence between transport equations. 
 @@important 
-\begin{equation}\label{36}\frac{d}{dt}\mathrm{kl}(\pbt \mid q_t) = \int \pbt(x) \nabla \log\left(\frac{\pbt(x)}{q_t(x)}\right) \cdot \left(u_t(x)- \vbt(x) \right)dx\end{equation}
+\begin{equation}\label{36}\frac{d}{dt}\mathrm{kl}(\pbt \mid q_t) = \sigma^2_{T-t} \int \pbt(x) \nabla \log\left(\frac{\pbt(x)}{q_t(x)}\right) \cdot \left(u_t(x)- \vbt(x) \right)dx\end{equation}
 @@
-In our case, 
+In our case with the specific shape assumed by $u_t, \vbt$, we get the following bound:
 @@important
-\begin{align}\label{37}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) \leqslant \int \pbt(x) |s(t,x) - \nabla \log \pbt(x) |^2 dx \end{align}
+\begin{align}\label{37}\frac{d}{dt}\mathrm{kl}(p_t \mid q_t) \leqslant \sigma^2_{T-t}\int \pbt(x) |s(t,x) - \nabla \log \pbt(x) |^2 dx \end{align}
 
 @@
 
 @@proof
- The proofs of \eqref{vlb}-\eqref{36}-\eqref{37} will only need this fact. 
+ The proofs of \eqref{vlb}-\eqref{36}-\eqref{37} are only based on elementary manipulations of time-evolution equations. 
 
 **Proof of \eqref{36}.**
 
@@ -315,14 +326,14 @@ By an integration by parts, the first term is also equal to $-\int \pbt(x)\vbt(x
 \end{align}
 
 **Proof of \eqref{37}.**
-We recall that $u_t(x) = \nabla \log q_t(x) - 2s(t,x) - \alpha_{T-t}x$ and $\vbt(x) = -\nabla \log \pbt(x) - \alpha_{T-t}x$, so that
-\begin{align}  u_t - \vbt &= \nabla \log q_t - 2s + \nabla \log \pbt\\ &= \nabla \log q_t - \nabla \log \pbt + 2 (\nabla \log \pbt - s).\end{align}
+We recall that $$u_t(x) = \sigma^2_{T-t}\nabla \log q_t(x) - 2\sigma^2_{T-t}s(t,x) - \alpha_{T-t}x$$ and $$\vbt(x) = -\sigma^2_{T-t}\nabla \log \pbt(x) - \alpha_{T-t}x,$$ so that
+\begin{align}  u_t - \vbt &= \sigma^2_{T-t}\nabla \log q_t - 2\sigma^2_{T-t}s + \sigma^2_{T-t}\nabla \log \pbt\\ &= \sigma^2_{T-t} \left( \nabla \log q_t - \nabla \log \pbt + 2 (\nabla \log \pbt - s) \right).\end{align}
 We momentarily note $a = \nabla \log \pbt(x)$ and $b = \nabla \log q_t(x)$ and $s=s(t,x)$. Then, \eqref{36} shows that
-\begin{align} \frac{d}{dt}\mathrm{kl}(\pbt \mid q_t) &=  \int \pbt(x)(a - b)\cdot ((b-a) + 2(s - a))dx\\
-&= - \int p_t(x)|a-b|^2 dx + 2 \int p_t(x)(a-b)\cdot (s-a)dx.
+\begin{align} \frac{d}{dt}\mathrm{kl}(\pbt \mid q_t) &=  \sigma^2_{T-t}\int \pbt(x)(a - b)\cdot ((b-a) + 2(s - a))dx\\
+&= - \sigma^2_{T-t}\int p_t(x)|a-b|^2 dx + 2 \sigma^2_{T-t}\int p_t(x)(a-b)\cdot (s-a)dx.
 \end{align}
 We now use the classical inequality $2(x\cdot y) \leqslant  |x|^2  + |y|^2$; we get
-$$ \frac{d}{dt}\mathrm{kl}(\pbt \mid q_t) \leqslant \int \pbt(x)|s(t,x) - \nabla\log \pbt(x)|^2dx.$$
+$$ \frac{d}{dt}\mathrm{kl}(\pbt \mid q_t) \leqslant \sigma^2_{T-t} \int \pbt(x)|s(t,x) - \nabla\log \pbt(x)|^2dx.$$
 
 **Proof of \eqref{vlb}.**
 
@@ -346,7 +357,7 @@ Using the Cauchy-Schwarz inequality, we could obtain the following upper bound.
 &\leqslant \int_0^T \mathbb{E}\left[|\nabla\log p_t(X_t) - \nabla\log q_t(X_t)|^2 + |\nabla\log q_t(X_t) - s(t,X_t)|^2\right]dt.  
 \end{align}
 @@
-Minimizing the score matching objective function does not minimize this upper bound, a striking difference with the SDE version. The reason is that the Fisher divergence provides no control whatsoever on the kl divergence between the solutions of two transport equations; but, due to the presence of a diffusive term, it provides a control on the kl divergence between the solutions of the associated Fokker-Planck equations. This might be one of the explanations for the notorious underperformance of the ODE solvers, observed in practice by many practicioners. Such an analysis was brought by the remarkable paper  on [stochastic interpolants](https://arxiv.org/abs/2303.08797). 
+There is a significant difference between the score matching objective function and the SDE version. Minimizing the former does not minimize the upper bound, whereas the latter does. This disparity is due to the Fisher divergence, which does not provide control over the KL divergence between the solutions of two transport equations. However, it does regulate the KL divergence between the solutions of the associated Fokker-Planck equations, thanks to the presence of a diffusive term. This could be one of the reasons for the poor performance of ODE solvers in practice, as noted by many practitioners. The aforementioned analysis was presented in an outstanding paper on [stochastic interpolants](https://arxiv.org/abs/2303.08797). 
 
 
 
