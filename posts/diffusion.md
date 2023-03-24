@@ -5,34 +5,40 @@ abstract = "A small mathematical summary. "
 +++
 
 
-These are my notes on generative models using stochastic diffusions, eg the celebrated Denoising Diffusion Probabilistic Models; they're intended for mathematicians, hence the notations and style is different than in the original papers. In particular, everything is fitted into the continuous-time framework (which is not how it is done in practice). A special attention is given to the differences between ODE sampling and SDE sampling, and the analysis of the time evolution  for the probability densities though Fokker-Planck and Transport Equations.  
+These notes focus on diffusion-based generative models, like the celebrated Denoising Diffusion Probabilistic Models; the material was presented as a series of lectures I gave at some working groups of mathematicians, so the style is tailored for this audience. In particular, everything is fitted into the continuous-time framework (which is not how it is done in practice). 
+
+A special attention is given to the differences between ODE sampling and SDE sampling. The analysis of the time evolution of the densities $p_t$ is done using only Fokker-Planck Equations or Transport Equations.  
 
 \tableofcontents
 
 ## The problem 
 
-Let $p$ be a probability density on $\mathbb{R}^d$. The goal of generative modelling is twofold: given a training sample $x^1, \dotsc, x^n$ of realizations of $p$, we want to 
-1) learn $p$ from the samples; 
-2) learn how to sample from $p$. 
+Let $p$ be a probability density on $\mathbb{R}^d$. The goal of generative modelling is twofold: given samples $x^1, \dotsc, x^n$ from $p$, we want to 
+1) learn $p$; 
+2) generate new samples from $p$. 
 
-There were a certain number of methods to solve these two problems: Energy-Based Models, Normalizing Flows and the famous Neural ODEs, vanilla Score-Matching. Each of those methods seemed to be limited for some reason I'll not detail here: for example, EBMs are very hard to train, NFs are not very expressive and SM fails to capture multimodal distributions. Diffusion models have sufficient flexibility to overcome these limitations, at least partly. 
+There are various methods for tackling these challenges: Energy-Based Models, Normalizing Flows and the famous Neural ODEs, vanilla Score-Matching. However, each method has its limitations. For example, EBMs are very challenging to train, NFs lack expressivity and SM fails to capture multimodal distributions. Diffusion models offer sufficient flexibility to (partially) overcome these limitations. 
 
 
 ### Stochastic interpolation
 
-Diffusion models fall into the general framework of [stochastic interpolants](https://arxiv.org/abs/2303.08797). The idea is to continuously transform the samples of $p$ into samples from a known, easy-to-sample probability density $\pi$ (often called *the target*), and then to reverse the process: that is, to generate a sample from $\pi$, and to inverse the transformation to get a new sample from $p$. In other words, we seek a path $(p_t: t\in [0,T])$ with $p_0=p$ and $p_T=q$, such that generating samples $x_t \sim p_t$ is doable. 
+Diffusion models fall into the general framework of [stochastic interpolants](https://arxiv.org/abs/2303.08797). The central idea is to continuously transform the density $p$ into another easy-to-sample density $\pi$ (often called *the target*), while also transforming the samples $x^i$ from $p$ into samples from $\pi$; and then, to reverse the process: that is, to generate a sample from $\pi$, and to inverse the transformation to get a new sample from $p$. In other words, we seek a path $(p_t: t\in [0,T])$ with $p_0=p$ and $p_T=q$, such that generating samples $x_t \sim p_t$ is doable. 
 
-The success of *diffusion models* came from the realization that some stochastic processes (eg, Ornstein-Uhlenbeck processes, which connects $p_0$ with a distribution $p_T$ very close to pure noise $\mathscr{N}(0,I)$) can be reversed, as long as access is given to the *score function* $\nabla \log p_t$ at each time $t$. Although unknown, this score can efficiently be learnt using statistical procedures called *score matching*. 
+The success of *diffusion models* came from the realization that some stochastic processes, such as Ornstein-Uhlenbeck processes that connect $p_0$ with a distribution $p_T$ very close to pure noise $\mathscr{N}(0,I)$, can be reversed when the *score function* $\nabla \log p_t$ is available at each time $t$. Although unknown, this score can efficiently be learnt using statistical procedures called *score matching*. 
 
 
 ## Original formulation: Gaussian noising process and its inversion
 
 Let $(t,x)\to f_t(x)$ and $t\to \sigma_t$ be two smooth functions. Consider the stochastic differential equation
-\begin{equation}\label{SDE}dX_t = f_t(X_t)dt + \sqrt{2\sigma_t ^2}dB_t, \qquad \qquad X_0 \sim p\end{equation}
+\begin{align}\label{SDE}& dX_t = f_t(X_t)dt + \sqrt{2\sigma_t ^2}dB_t, \\ & X_0 \sim p\end{align}
 where $dB_t$ denotes integration with respect to a Brownian motion. Under mild conditions on $f$, an almost-surely continuous stochastic process satisfying this SDE exists. Let $p_t$ be the probability density of $X_t$; it is known that this process [could easily be reversed in time](https://www.sciencedirect.com/science/article/pii/0304414982900515). More precisely, the SDE
-\begin{equation}\label{bsde} dY_t = -\left(  f_t(Y_t)+ 2\sigma_t^2 \nabla \log p_t(Y_t) \right)dt + \sqrt{2\sigma_t^2}dB_t \qquad \qquad Y_T \sim p_T 
-\end{equation}
-has the same marginals as $X_t$, that is $Y_{T-t}$ has exactly the same distribution as $p_t$. This inversion needs access to $\nabla \log p_t$, and we'll explain later how this can be done. A crucial feature of of \eqref{SDE} is that for simple functions $f$, it can be solved with an explicit representation.  Here we focus on the case where $f_t(x) = -\alpha_t x$ for some function $\alpha$, that is
+\begin{align}\label{bsde} & dY_t = -\left(  f_t(Y_t)+ 2\sigma_t^2 \nabla \log p_t(Y_t) \right)dt + \sqrt{2\sigma_t^2}dB_t \\ & Y_T \sim p_T 
+\end{align}
+has the same marginals as $X_t$ reversed in time: more precisely $Y_{T-t}$ has the same distribution as $X_t$, with density noted $p_t$. This inversion needs access to $\nabla \log p_t$, and we'll explain later how this can be done. 
+
+![](/posts/img/score_based_dog.png)
+
+For simple functions $f$, the process \eqref{SDE} has an explicit representation.  Here we focus on the case where $f_t(x) = -\alpha_t x$ for some function $\alpha$, that is
 \begin{equation}\label{ou}
 dX_t = -\alpha_t X_t + \sqrt{2\sigma_t^2}dB_t.
 \end{equation}
@@ -59,20 +65,29 @@ A consequence of the preceding result is that when the variance $$\bar{\sigma}_t
 
 ### The Fokker-Planck point of view
 
-It was recently realized that there is nothing special with the Ornstein-Uhlenbeck representation of $p_t$ as in \eqref{SDE}, nor with the stochastic process \eqref{BSDE} which has the same marginals as $p_t$. In fact, the important features are (i) that $p_t$ provides a path connecting $p$ and $p_T \sim \mathscr{N}(0,I)$ and (ii) that its marginal are easy to sample. But there are many processes beyond \eqref{SDE} with $p_t$ as its marginals, processes that can also be reversed. The key is that $p_t$  is a solution of the [Fokker-Planck equation](https://en.wikipedia.org/wiki/Fokker%E2%80%93Planck_equation): 
+It has recently been recognized that the Ornstein-Uhlenbeck representation of $p_t$ as in \eqref{SDE}, as well as the stochastic process \eqref{BSDE} that has the same marginals as $p_t$, are not necessarily unique or special. Instead, what matters are two key features: (i) $p_t$ provides a path connecting $p$ and $p_T\sim N(0,I)$, and (ii) its marginals are easy to sample. There are many other processes besides \eqref{SDE} that have $p_t$ as their marginals, and that can also be reversed. The crucial point is that $p_t$ is a solution of the [Fokker-Planck equation](https://en.wikipedia.org/wiki/Fokker%E2%80%93Planck_equation): 
 @@important
 \begin{equation}\label{FP} \partial_t p_t(x) = \Delta (\sigma_t^2 p_t(x)) - \nabla \cdot (f_t(x)p_t(x)).\end{equation}
 @@
 
-Importantly, this equation can be recast as a transport equation: noting $v_t(x) = \sigma_t^2 \nabla \log p_t(x) - f_t(x)$ (called the **velocity field**), the equation \eqref{SDE} is equivalent to
+Just to settle the notations once and for all: $\nabla$ is the gradient, and for a function $\rho : \mathbb{R}^d \to \mathbb{R}^d$, $\nabla \cdot \rho(x)$ stands for the divergence, that is $\sum_{i=1}^d \partial_{x_i} \rho(x_1, \dotsc, x_d)$, and $\nabla \cdot \nabla = \Delta = \sum_{i=1}^d \partial^2_{x_i}$ is the Laplacian.  
+
+Importantly, equation \eqref{FP} can be recast as a transport equation: with a **velocity field** defined as $$v_t(x) = \sigma_t^2 \nabla \log p_t(x) - f_t(x),$$ the equation \eqref{FP} is equivalent to
 @@important
 \begin{equation}\label{TE} \partial_t p_t(x) = \nabla \cdot (v_t(x)p_t(x)).\end{equation}
 @@ 
-Transport equations come from simple ODEs; there is a simple, *deterministic* process with the same marginals as \eqref{SDE}. 
+
+@@proof 
+**Proof.** $\nabla \cdot v_t(x)p_t(x) = \nabla\cdot \nabla (\log p_t(x))p_t(x) - \nabla\cdot f_t(x)p_t(x)= \nabla\cdot \nabla p_t(x) - \nabla\cdot f_t(x)p_t(x)      $
+@@
+
+### An associated ODE 
+
+Transport equations like \eqref{TE} come from simple ODEs; that is, there is a *deterministic* process with the same marginals as \eqref{SDE}. 
 @@important
 Let $x(t)$ be the solution of the differential equation with random initial condition
 \begin{equation}\label{ode}x'(t) = v_t(x(t))\qquad \qquad x(0) =X_0.\end{equation}
-Then the probability density of $x(t)$ is $p_t$. 
+Then the probability density of $x(t)$ satisfies \eqref{TE}, hence it is equal to $p_t$. 
 @@
 
 
@@ -84,6 +99,8 @@ Then the probability density of $x(t)$ is $p_t$.
 where the last line uses the multidimensional integration by parts formula (remember that $\nabla \cdot$ is nothing but the divergence). 
 @@ 
 
+Up to now, we proved that there are two continuous random processes having the same marginal probability density at time $t$: a smooth one provided by $x(t)$, the solution of the ODE, and a continuous but not differentiable one, $X_t$, provided by the solution of the SDE. 
+
 
 ### Time-reversal of Transport Equations and Fokker-Planck equations
 
@@ -92,7 +109,7 @@ where the last line uses the multidimensional integration by parts formula (reme
 \newcommand{\wbt}{w^{\mathrm{b}}_t}
 
 
-Our goal is to reverse the process going from $p_0$ to $p_T$. Let us take a look first at the time-reversal of the equations satisfied by $p_t$. 
+Our goal is to reverse the process going from $X_0 \sim p_0$ to $X_T \sim p_T$. Let us take a look first at the time-reversal of the equations satisfied by $p_t$. 
 @@important
 Let $p^{\mathrm{b}}_t$ be the time-reversal of $p_t$, that is $p^{\mathrm{b}}_t = p_{T-t}$. It solves the *backward* Transport Equation: 
 \begin{equation}\label{BTE}\partial \pbt(x)= \nabla \cdot \vbt(x) \pbt(x) \end{equation}
