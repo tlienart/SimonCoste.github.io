@@ -289,6 +289,8 @@ The original distribution we want to sample is $p = p_0 = p^{\mathrm{b}}_T$, and
 
 The KL divergence between densities $\rho_1, \rho_2$ is $$ \mathrm{kl}(\rho_1 \mid \rho_2) = \int \rho_2(x)\log(\rho_2(x)/ \rho_1(x))dx.$$
 
+### A variational lower-bound
+
 This theorem restricts to the case where the weights $w(t)$ are constant, and for simplicity, they are set to 1. 
 
 
