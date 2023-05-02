@@ -7,11 +7,11 @@ abstract = "Long-time memory results in non-diffusivity "
 \newcommand{\ERW}{\mathrm{ERW}}
 
 
-In the Simple Random Walk (ERW), a walker takes steps in random directions; all of her steps are independent of one another. For example in one dimension, the SRW goes one step forward or one step backward with probability $1/2$. The variance of the displacement of a random walker after $n$ steps typically grows linearly with $n$: for example in the 1d symmetric version, $$\SRW_n = S_1 + \dotsb + S_n$$ with $\mathbf{P}(S_n =\pm 1) = 1/2$, one has $\mathrm{Var}(\SRW_n) = n/4$. This behaviour is called [*diffusive*](https://en.wikipedia.org/wiki/Diffusion), because it is the discrete analog of heat dissipation. 
+In the Simple Random Walk (ERW), a walker moves in random directions; all of her steps are independent. The variance of the displacement of a random walker after $n$ steps typically grows linearly with $n$: for example in the 1d symmetric random walk defined by $$\SRW_n = S_1 + \dotsb + S_n$$ with $\mathbf{P}(S_n =\pm 1) = 1/2$, one has $\mathrm{Var}(\SRW_n) = n/4$. This behaviour is called [*diffusive*](https://en.wikipedia.org/wiki/Diffusion), because it is a discrete analog of heat dissipation. 
 
-The introduction of *long-term memory* in Random Walks completely breaks this diffusive behaviour. In the Simple Random Walk, the walker takes a random step independently of its former moves, oblivious of her past; but insteal, she could decide to recast some of her previous steps, just like Elephants, known for their good memory. 
+The introduction of *long-term memory* in Random Walks breaks this diffusive behaviour. In the Simple Random Walk, the walker takes a random step independently of its former moves, oblivious of her past; but instead, she could remember one of her previous steps and reproduce it, just like Elephants whose memory is said to be surprisingly vast. The *Elephant Randow Walk* (ERW) has been thoroughly studied since its introduction in the paper [Elephants can always remember](https://arxiv.org/abs/cond-mat/0406593), both for its mathematical tractability and rich behaviour. 
 
-Here is a description of the Elephant Randow Walk (ERW), with memory parameter $p$. 
+Here is a description of the Elephant Randow Walk (ERW) with memory parameter $p$. 
 
 @@important
 - The Elephant starts at 0 and takes a first step $S_1=+1$ with initial probability $p_0$ or $S_1 = -1$ with probability $1-p_0$; in fact $p_0$ will not have any influence whatsoever.
@@ -26,11 +26,13 @@ The $n+1$-th step is $\ERW_{n+1} = \ERW_n + S_{n+1}$, with the last step $S_{n+1
 
 ![](/posts/img/erw.png)
 
-When the memory parameter $p$ is large, the Elephant tends to reproduce always the same steps, thus going way further than the Simple Randow Walker corresponding to $p=1/2$. The histogram of its final position is less concentrated. A surprising transition happens at the critical value $p=3/4$, as was noted in the early paper [Elephants can always remember](https://arxiv.org/abs/cond-mat/0406593). We describe
+When the memory parameter $p$ is close to $1$ (full memory), the Elephant tends to reproduce always the same steps, thus going way further than the Simple Randow Walker corresponding to $p=1/2$, and the histogram of its final position is less concentrated. 
+
+The goal of this note is to explain the appearance of a sudden and surprising transition, happening at the critical value $p=3/4$: the ERW is still diffusive for $p<3/4$, and becomes super-diffusive if $p>3/4$. It all boils down to computing the variance. 
 
 
 ## Computing the variance
-When the initial step has a probability $p_0=1/2$ to jump left or right, the whole ERW is symmetric, hence centered. Computing its variance $V_n = \mathbf{E}[W_n^2]$ undercovers a very interesting change of nature according to the value of the memory parameter $p$. Indeed, the variance solves the following recursion. 
+When the initial step has a probability $p_0=1/2$ to jump left or right, the whole ERW is symmetric, hence centered. Its variance $V_n = \mathbf{E}[W_n^2]$  solves the following recursion. 
 
 @@important
 \begin{equation}\label{Vn}
@@ -49,9 +51,9 @@ which gives \eqref{Vn} when plugged back in the first expression.
 
 @@important
 The variance of the Elephant Randow Walk has the following explicit expression depending on $\alpha = 4p-2$:
-\begin{equation}\label{explicit}\mathrm{Var}(W_n) = \frac{\Gamma(\alpha+n)}{\Gamma(\alpha)\Gamma(n)} \int_0^1 (1-x)^{(\alpha-1)-1} (1-x^n)dx.\end{equation}
+\begin{equation}\label{explicit}\mathrm{Var}(W_n) = \frac{\Gamma(\alpha+n)}{\Gamma(\alpha)\Gamma(n)} \int_0^1 (1-x)^{(\alpha-1)-1} (1-x^n)\mathrm{d}x.\end{equation}
 @@
-The proof is postponed to later. This expression might not be very informative at first sight, but the large-$n$ asymptotics is easily understood and unveils a qualitative change in the behaviour of the ERW at the critical value $p=3/4$. By symmetry we restrict to $p>1/2$. 
+The proof is postponed to later. This expression might not be very informative at first sight, but its large-$n$ asymptotics are easily understood and unveil a qualitative change in the behaviour of the ERW at the critical value $p=3/4$. By symmetry we restrict to $p>1/2$. 
 @@deep
 **Diffusive case:**
 if $p<3/4$, 
@@ -73,7 +75,9 @@ Now,
 - If $\alpha-1<0$ then $I_n(\alpha)\sim \Gamma(\alpha)n^{-\alpha}n/(1-\alpha)$
 @@
 
+Here is a log-plot of the empirical variance of 100 runs of Elephant Randow Walks with various memory parameters $p$ ranging between $0.6$ and $0.9$. 
 ![](/posts/img/erw_variance.png)
+The white line marks the transition at $p=3/4$, between a diffusive behaviour and a super-diffusive behaviour. 
 
 
 ## Proof of \eqref{explicit}: exact computation of the variance $V_n$
@@ -95,13 +99,9 @@ V_n&=\frac{\Gamma(\alpha+n)}{\Gamma(\alpha)\Gamma(n)}\sum_{k=1}^n \int_0^1 x^{k-
 &=\frac{\Gamma(\alpha+n)}{\Gamma(\alpha)\Gamma(n)} \int_0^1 (1-x)^{\alpha-2} (1-x^n)dx. 
 \end{align}
 
-## References
-- [Elephants can always remember](https://arxiv.org/abs/cond-mat/0406593)
+## Conclusion and references
 
-- [Anomalous dynamics](https://arxiv.org/pdf/1005.2780.pdf)
+Many aspects of the ERW are now well understood. Its introduction in the papers [Elephants can always remember](https://arxiv.org/abs/cond-mat/0406593) and [Anomalous dynamics…](https://arxiv.org/pdf/1005.2780.pdf) was mostly motivated by the physics of non-Markovian diffusions; they even formulated the continuous-time version with a non-diffusive Fokker-Planck equation. The effect of the type of memory on diffusive properties was studied in [this paper](https://arxiv.org/abs/1611.06743). 
 
-- [Long time scaling](https://arxiv.org/abs/1611.06743)
+Mathematically, the functional limit for the ERW was proved in a very elegant way in [this paper](https://arxiv.org/abs/1608.01305) -- it appears that the ERW converges towards a continuous Gaussian process with a particular covariance kernel. Multi-dimensional versions were studied in [this paper](https://arxiv.org/pdf/1709.07345.pdf). 
 
-- [The multi-dimensional version](https://arxiv.org/pdf/1709.07345.pdf)
-
-- [Link with Polya Urns and limit theorems](https://arxiv.org/abs/1608.01305)
