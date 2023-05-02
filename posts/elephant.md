@@ -1,19 +1,21 @@
 +++
 titlepost = " 🐘 The Elephant Random Walk "
 date = "May 2023"
-abstract = "Adding memory to diffusive processes "
+abstract = "Long-time memory results in non-diffusivity "
 +++
 \newcommand{\SRW}{\mathrm{SRW}}
 \newcommand{\ERW}{\mathrm{ERW}}
 
 
-In the Simple Random Walk (ERW), a walker moves in random directions; all of her steps have the same behaviour and they are independent of one another. Typically in one dimension, the SRW goes one step forward or one step backward with probability $1/2$. The variance of the position of a random walker after $n$ steps typically grows linearly with $n$: for example in the 1d symmetric version, $$\SRW_n = S_1 + \dotsb + S_n$$ with $\mathbf{P}(S_n =\pm 1) = 1/2$, one has $\mathrm{Var}(\SRW_n) = n/4$. This behaviour is called [*diffusive*](https://en.wikipedia.org/wiki/Diffusion). 
+In the Simple Random Walk (ERW), a walker takes steps in random directions; all of her steps are independent of one another. For example in one dimension, the SRW goes one step forward or one step backward with probability $1/2$. The variance of the displacement of a random walker after $n$ steps typically grows linearly with $n$: for example in the 1d symmetric version, $$\SRW_n = S_1 + \dotsb + S_n$$ with $\mathbf{P}(S_n =\pm 1) = 1/2$, one has $\mathrm{Var}(\SRW_n) = n/4$. This behaviour is called [*diffusive*](https://en.wikipedia.org/wiki/Diffusion), because it is the discrete analog of heat dissipation. 
 
-Since the last 20 years or so, there has been a host of work trying to tweak random walks into having non-diffusive properties. The introduction of *reminiscence mechanisms* turns out to be sufficient. At each step of a SRW, the walker takes a random step independently of its former moves; but he could instead decide to recast some of his previous steps, just like Elephants who are known for their supposed memory. Here is a description of the Elephant Randow Walk (ERW), with memory parameter $p$. 
+The introduction of *long-term memory* in Random Walks completely breaks this diffusive behaviour. In the Simple Random Walk, the walker takes a random step independently of its former moves, oblivious of her past; but insteal, she could decide to recast some of her previous steps, just like Elephants, known for their good memory. 
+
+Here is a description of the Elephant Randow Walk (ERW), with memory parameter $p$. 
 
 @@important
 - The Elephant starts at 0 and takes a first step $S_1=+1$ with initial probability $p_0$ or $S_1 = -1$ with probability $1-p_0$; in fact $p_0$ will not have any influence whatsoever.
-- Then, at time $n$, the Elephant randomly remembers one of the steps he took in the past; each of the former steps has the same chance to be remembered. Then, with probability $p$, he reproduces this step; otherwise he goes the opposite way. 
+- Then, at time $n$, the Elephant randomly remembers one of the steps she took in the past; each of the former steps has the same chance to be remembered. Then, with probability $p$, she reproduces this step; otherwise she goes the opposite way. 
 @@ 
 
 Formally, we set $\ERW_0=0$. The first step is $\ERW_1 = \pm 1$ with some probability $p_0$. 
@@ -22,7 +24,9 @@ At step $k$, let $U_k \sim \mathrm{Uniform}(\{1, \dotsc, k\})$ be the « remembe
 
 The $n+1$-th step is $\ERW_{n+1} = \ERW_n + S_{n+1}$, with the last step $S_{n+1} = \varepsilon_n S_{U_n}$. 
 
+![](/posts/img/erw.png)
 
+When the memory parameter $p$ is large, the Elephant tends to reproduce always the same steps, thus going way further than the Simple Randow Walker corresponding to $p=1/2$. The histogram of its final position is less concentrated. A surprising transition happens at the critical value $p=3/4$, as was noted in the early paper [Elephants can always remember](https://arxiv.org/abs/cond-mat/0406593). We describe
 
 
 ## Computing the variance
@@ -68,6 +72,8 @@ Now,
 - If $\alpha=1$ then $I_n(\alpha)=1+1/2+1/3 +\dotsb + 1/n\sim \log(n)$;
 - If $\alpha-1<0$ then $I_n(\alpha)\sim \Gamma(\alpha)n^{-\alpha}n/(1-\alpha)$
 @@
+
+![](/posts/img/erw_variance.png)
 
 
 ## Proof of \eqref{explicit}: exact computation of the variance $V_n$
