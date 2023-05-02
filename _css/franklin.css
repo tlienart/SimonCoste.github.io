@@ -351,6 +351,12 @@ code {
   margin-bottom: 1em;
 }
 
+.deep {
+  background-color: rgb(236, 212, 212);
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
 .proof {
   background-color: rgb(232, 236, 251);
   padding: 0.9em;
