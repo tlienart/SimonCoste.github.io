@@ -7,7 +7,7 @@ abstract = "Long-time memory results in non-diffusivity "
 \newcommand{\ERW}{\mathrm{ERW}}
 
 
-In the Simple Random Walk (ERW), a walker moves in random directions; all of her steps are independent. The variance of the displacement of a random walker after $n$ steps typically grows linearly with $n$: for example in the 1d symmetric random walk defined by $$\SRW_n = S_1 + \dotsb + S_n$$ with $\mathbf{P}(S_n =\pm 1) = 1/2$, one has $\mathrm{Var}(\SRW_n) = n/4$. This behaviour is called [*diffusive*](https://en.wikipedia.org/wiki/Diffusion), because it is a discrete analog of heat dissipation. 
+In the Simple Random Walk (ERW), a walker moves in random directions; all of her steps are independent. The variance of the displacement of a random walker after $n$ steps typically grows linearly with $n$: for example in the 1d symmetric random walk defined by $$\SRW_n = S_1 + \dotsb + S_n$$ with $\mathbf{P}(S_n =\pm 1) = 1/2$, one has $\mathrm{Var}(\SRW_n) = n$. This behaviour is called [*diffusive*](https://en.wikipedia.org/wiki/Diffusion), because it is a discrete analog of heat dissipation. 
 
 The introduction of *long-term memory* in Random Walks breaks this diffusive behaviour. In the Simple Random Walk, the walker takes a random step independently of its former moves, oblivious of her past; but instead, she could remember one of her previous steps and reproduce it, just like Elephants whose memory is said to be surprisingly vast. The *Elephant Randow Walk* (ERW) has been thoroughly studied since its introduction in the paper [Elephants can always remember](https://arxiv.org/abs/cond-mat/0406593) by Schütz and Trimper, both for its mathematical tractability and rich behaviour. 
 
@@ -75,9 +75,9 @@ Now,
 - If $\alpha-1<0$ then $I_n(\alpha)\sim \Gamma(\alpha)n^{-\alpha}n/(1-\alpha)$
 @@
 
-Here is a log-plot of the empirical variance of 100 runs of Elephant Randow Walks with various memory parameters $p$ ranging between $0.6$ and $0.9$. 
+Here is a log-plot of the empirical variance of 100 runs of Elephant Randow Walks with various memory parameters $p$ ranging between $0.5$ and $0.9$. 
 ![](/posts/img/erw_variance.png)
-The white line marks the transition at $p=3/4$, between a diffusive behaviour and a super-diffusive behaviour. 
+The white line marks the transition at $p=3/4$, between a diffusive behaviour and a super-diffusive behaviour. The red line represents the Simple Random Walk with a variance of $n$. 
 
 
 ## Proof of \eqref{explicit}: exact computation of the variance $V_n$
