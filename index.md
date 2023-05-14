@@ -13,5 +13,5 @@ You can reach me at `firstname.lastname@u-paris.fr`.
 
 --- 
 
-**Agenda**: talk at [Eurandom](https://www.eurandom.tue.nl/event/yep-xviii-spectra-of-random-graphs-and-related-combinatorial-problems-2/), March 27-31, Eidhoven
+**Agenda**: talk at [Grenoble](/talks/spectrum/) on Tuesday, May 14th
 
