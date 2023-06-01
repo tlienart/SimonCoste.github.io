@@ -11,9 +11,7 @@ date = Date(2019, 3, 22)
 
 
 
-# Extremal eigenvalues
-
-I study spectral properties of random objects like graphs and matrices, and their application to statistical inference problems. The use of low-dimensional spectral embeddings has proven to be a fruitful method in many problems such as matrix completion, community detection, graph alignment, etc. I recently got into spectral convolutions in graph neural networks. 
+## Extremal eigenvalues
 
 
 ### The spectral gap of sparse random digraphs 
@@ -79,17 +77,21 @@ We show that scattering transforms on graphs are continuous with respect to loca
 Work in progress with Bartek B. and Bharatt Chowdhuri. 
 
 
-# Generative models
+## Generative models
 
-[Wavlet Score-Based Generative Modeling](https://arxiv.org/abs/2208.05003)
+### Wavelet Score-Based Generative Modeling
+
+[Arxiv link](https://arxiv.org/abs/2208.05003), joint work with Florentin Guth, [Valentin de Bortoli](https://vdeborto.github.io/) and [Stéphane Mallat](https://www.di.ens.fr/~mallat/) -- accepted at *Neurips 2022*
 
 In deep learning, score-based diffusion models recently achieved very impressive results in generating samples from unknown distributions, especially in images. However, training these models and sampling from them is very costly. In this collaboration with Florentin Guth, Valentin de Bortoli and Stéphane Mallat, we propose a multi-scale approach and show why sampling high frequencies conditionnaly on lower scales can considerably accelerate everything; we provide a theoretic analysis of this and show how separating scales is similar to preconditioning the data distribution. 
 
-[Training EBMs with Jarczynski reweighting](https://arxiv.org/abs/2305.19414)
+### Training EBMs with Jarczynski reweighting
 
-Energy-based models (EBMs) are generative models inspired by statistical physics with a wide range of applications in unsupervised learning. Their performance is best measured by the cross-entropy (CE) of the model distribution relative to the data distribution. Using the CE as the objective for training is however challenging because the computation of its gradient with respect to the model parameters requires sampling the model distribution. Here we show how results for nonequilibrium thermodynamics based on Jarzynski equality together with tools from sequential Monte-Carlo sampling can be used to perform this computation efficiently and avoid the uncontrolled approximations made using the standard contrastive divergence algorithm. 
+[Arxiv link](https://arxiv.org/abs/2305.19414), joint work with Davide Carbone, Mengjian Hua and [Eric Vanden-Eijnden](https://wp.nyu.edu/courantinstituteofmathematicalsciences-eve2/)
 
-# Order and fluctuations in point processes
+Energy-based models (EBMs) are generative models inspired by statistical physics. Their performance is measured by the cross-entropy (CE) of the model distribution relative to the data distribution. Using the CE as the objective for training is challenging because the computation of its gradient wrt the model parameters requires sampling the model distribution. We show how results for nonequilibrium thermodynamics based on Jarzynski equality can be used to perform this computation efficiently and avoid the uncontrolled approximations made using the standard contrastive divergence algorithm. 
+
+## Order and fluctuations in point processes
 
 ### Hyperuniformity survey
 
@@ -111,7 +113,7 @@ Work in progress with Antoine Brochard.
 
 
 
-# Other works
+## Misc
 
 
 
