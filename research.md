@@ -34,7 +34,7 @@ We confirm the long-standing prediction that $c=e \approx 2.718$ is the threshol
 
 Joint work with [Charles Bordenave](http://www.i2m.univ-amu.fr/perso/charles.bordenave/start) and [Raj Rao Nadakuditi](https://web.eecs.umich.edu/~rajnrao/). 
 
-[Arxiv link](https://arxiv.org/abs/2005.06062) -- to be published in [JoFoCM](https://www.springer.com/journal/10208).  
+[Arxiv link](https://arxiv.org/abs/2005.06062) -- published in [JoFoCM](https://www.springer.com/journal/10208).  
 
 We completely describe the extremal elements in the eigendecomposition of some very sparse matrices, with a new and efficient point of view regarding the problem of matrix completion in the very hard regime. We show how non-symmetric matrices can sometimes be beneficial in such regimes.
 
@@ -43,7 +43,7 @@ We completely describe the extremal elements in the eigendecomposition of some v
 
 Joint work with [Ludovic Stephan](https://www.lstephan.fr/).
 
- [Arxiv link](https://arxiv.org/abs/2102.03188) -- submitted. 
+ [Arxiv link](https://arxiv.org/abs/2102.03188) -- in rework. 
 
  We prove spectral asymptotics for very sparse inhomogeneous random matrices, as well as limits for eigenvector distributions. We apply these results to clustering in sparse, directed networks and we show that the simplest method based on the eigenvectors of the adjacency matrix provably works well. We provide numerical evidence for the superiority of Gaussian mixture against Kmeans when doing the last step of the spectral clustering pipeline.. 
 
@@ -53,14 +53,14 @@ Joint work with [Ludovic Stephan](https://www.lstephan.fr/).
 
 Joint work with [Yizhe Zhu](https://sites.google.com/uci.edu/yizhezhu). 
 
-[Arxiv link](https://arxiv.org/abs/1907.05603) -- Published in *Random Matrix Theory and Applications*.
+[Arxiv link](https://arxiv.org/abs/1907.05603) -- published in *Random Matrix Theory and Applications*.
 
 This is a note on "bulk insider" eigenvalues for the non-backtracking spectrum of SBM. We prove their existence in the $\omega(\log n)$ regime, which partially answers a question of [Dall'Amico et al 2019](https://arxiv.org/abs/1901.09715). The existence is still not proved in the sparse regime (feb. 2021).
 
  
 ### The characteristic polynomial of sparse matrices seen from infinity
 
-[Arxiv link](https://arxiv.org/abs/2106.00593) -- to appear in *Electronic Journal of Probability*. 
+[Arxiv link](https://arxiv.org/abs/2106.00593) -- published in *Electronic Journal of Probability*. 
 
 Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arxiv.org/pdf/2012.05602.pdf), I show that when $A_n$ is a random $n\times n$ matrix with all $n^2$ entries independent random variables with distribution $\mathrm{Bernoulli}(d/n)$ and $d>1$ is fixed while $n \to \infty$, then the random polynomial $det(I_n - zA_n)$ converges weakly in distribution towards a random analytic function on $D(0, 1/\sqrt{d})$. This function is a Poisson analog of the *Gaussian Holomorphic Chaos*, see [Najnudel, Paquette, Simm 2020](https://arxiv.org/pdf/2011.01823.pdf).  The result is also proved when $d$ is allowed to grow to infinity with $n$ slowly. In this semi-sparse regime, the limits are more classical Gaussian objects and the statement on the eigenvalues is still valid: in particular, the second eigenvalue sticks to the bulk of the circular distribution. 
 
@@ -68,7 +68,7 @@ Following the recent paper of [Bordenave, Chafaï and Garcia-Zelada](https://arx
 
 Joint work with [Yizhe Zhu](https://sites.google.com/uci.edu/yizhezhu) and [Gaultier Lambert](http://user.math.uzh.ch/gaultier/) 
 
-[Arxiv link](https://arxiv.org/abs/2204.00524) 
+[Arxiv link](https://arxiv.org/abs/2204.00524) -- published in *International Mathematical Research Notices*
 
 Following the preceding item, we proved a similar result for the characteristic polynomial of sums of random uniform permutation matrices. The paper contains an appendix on sums of Ewens-distributed permutations. 
 
@@ -85,6 +85,9 @@ Work in progress with Bartek B. and Bharatt Chowdhuri.
 
 In deep learning, score-based diffusion models recently achieved very impressive results in generating samples from unknown distributions, especially in images. However, training these models and sampling from them is very costly. In this collaboration with Florentin Guth, Valentin de Bortoli and Stéphane Mallat, we propose a multi-scale approach and show why sampling high frequencies conditionnaly on lower scales can considerably accelerate everything; we provide a theoretic analysis of this and show how separating scales is similar to preconditioning the data distribution. 
 
+[Training EBMs with Jarczynski reweighting](https://arxiv.org/abs/2305.19414)
+
+Energy-based models (EBMs) are generative models inspired by statistical physics with a wide range of applications in unsupervised learning. Their performance is best measured by the cross-entropy (CE) of the model distribution relative to the data distribution. Using the CE as the objective for training is however challenging because the computation of its gradient with respect to the model parameters requires sampling the model distribution. Here we show how results for nonequilibrium thermodynamics based on Jarzynski equality together with tools from sequential Monte-Carlo sampling can be used to perform this computation efficiently and avoid the uncontrolled approximations made using the standard contrastive divergence algorithm. 
 
 # Order and fluctuations in point processes
 
