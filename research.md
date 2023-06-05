@@ -70,6 +70,14 @@ Joint work with [Yizhe Zhu](https://sites.google.com/uci.edu/yizhezhu) and [Gaul
 
 Following the preceding item, we proved a similar result for the characteristic polynomial of sums of random uniform permutation matrices. The paper contains an appendix on sums of Ewens-distributed permutations. 
 
+### The spectrum of fullerenes and graphenes
+
+Joint work with Artur Bille, [Evgeny Spodarev](https://www.uni-ulm.de/en/mawi/institute-of-stochastics/staff/staff/evgeny-spodarev/), [Victor Buchstaber](https://en.wikipedia.org/wiki/Victor_Buchstaber) and [Satoshi Kuriki](https://www.ism.ac.jp/~kuriki/)
+
+[Arxiv link](https://arxiv.org/abs/2306.01462), submitted
+
+Graphene is the infinite tiling of the plane with hexagons. Fullerenes are finite planar 3-regular graphs with all faces being hexagons or pentagons. We explore the eigenvalues of these two graphs from various point of views: global convergence of the spectrum of fullerenes (and local weak convergence), analytic formulas for the density of states on the graphene, combinatorial identities. 
+
 ### Stability of scattering transforms on sparse graphs
 
 We show that scattering transforms on graphs are continuous with respect to local-weak distance: as a consequences, these graph descriptors are transferable among network models sharing the same local properties and show a remarkable degree of stability, even in very sparse graph models. From an experimental perspective, we examine how these non-learned transforms characterize graph models and graph signals through moment-constrained sampling. 
