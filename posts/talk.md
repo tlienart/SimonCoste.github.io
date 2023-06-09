@@ -19,5 +19,9 @@ It's written in markdown then converted to HTML with pandoc. Then I use CSS styl
 
 Slideshow for my GDR talk is [here](/talks/isis/).
 
+## Talk on Jarzynski's method for EBMs
+
+[BOLOSS seminar](/assets/source.pdf)
+
 
 
