@@ -1,6 +1,6 @@
 +++
 titlepost = "Importance sampling ⚖️ "
-date = "March 2022"
+date = "June 2023"
 abstract = "Change-of-measure for out-of-equilibrium systems"
 +++
 
