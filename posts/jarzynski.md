@@ -1,5 +1,5 @@
 +++
-titlepost = "The Jarzynski connection"
+titlepost = "Importance sampling ⚖️⚖️ : The Jarzynski connection"
 date = "March 2022"
 abstract = "Change-of-measure for out-of-equilibrium systems"
 +++
