@@ -64,7 +64,7 @@ $$ J_n(\varphi) = \frac{\sum_{i=1}^n w(X_i) \varphi(X_i)}{\sum_{i=1}^n w(X_i)}. 
 
 
 
-@@important
+@@deep
 **Theorem ([Chatterjee and Diaconis, 2015](https://arxiv.org/pdf/1511.01437.pdf)).**
 
 
