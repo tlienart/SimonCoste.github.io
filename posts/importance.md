@@ -1,7 +1,7 @@
 +++
 titlepost = "Importance sampling ⚖️ "
 date = "June 2023"
-abstract = "Change-of-measure for out-of-equilibrium systems"
+abstract = "On the sample size required to get a good approximation"
 +++
 
 *Sampling* refers to the generation of random variables following a certain probability distribution; for example if $\rho$ is a probability measure on $\mathbb{R}$, we want to generate random variables which are independent and follow the distribution given by $\rho$, or we want to compute expectations like $\mathbb{E}[\varphi(Y)]$ for some function $\varphi$, where $Y \sim \rho$. In many cases, one does not fully knows $\rho$, but only that it is proportional to some function $f$, that is $\rho(x) = f(x)/Z$ where $Z = \int f(u)du$, and computing $Z$ (the normalizing constant) is intractable. 
