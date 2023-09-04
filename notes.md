@@ -3,6 +3,6 @@
 
 # Notes
 
-Those are mostly blog posts, notes, talk slides, nice pictures and various things about mathematics, statistics, CS and machine learning.  
+Those are mostly blog posts, notes, talk slides, nice pictures and various things about mathematics, statistics, CS and machine learning. 
 
 {{recentblogposts}}
