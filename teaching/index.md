@@ -3,38 +3,18 @@
 
 @def tags = ["syntax", "code", "image"]
 
-# Statistiques fondamentales (STF8)
+# Calcul Stochastique (M2MO, 2023)
 
-TD du cours de statistiques mathématiques de Clément Levrard (M1). 
+TD du cours de Calcul Stochastique de Cyril Labbé. 
 
-Feuilles d'exercice : [TD1](/teaching/ST1.pdf), [TD2](/teaching/ST2.pdf), [TD3](/teaching/ST3.pdf), [TD4](/teaching/ST4.pdf), [TD5](/teaching/ST5.pdf), [TD6](/teaching/ST6.pdf)
+Feuilles d'exercice : [TD1 (rappels)](/teaching/csto/TD1.pdf), [TD2 (rappels)](/teaching/csto/TD2.pdf), [TD3 (mouvement brownien)](/teaching/csto/TD3.pdf)
 
-Voici une liste de questions très proches du cours qui devrait vous aider dans vos révisions : [questions](/teaching/STliste.pdf). 
 
-# Probabilités (PR7)
+# Probabilités (PR7, 2023)
 
-2022-2023 : TD du cours de probabilités mathématiques de Cyril Labbé (M1). 
-
-Je mettrai régulièrement quelques compléments sur [cette page](/teaching/proba). 
+2023-2024 : TD du cours de probabilités mathématiques de Cyril Labbé (M1). 
 
 Feuilles d'exercice : [TD1](/teaching/TD1.pdf), [TD2](/teaching/TD2.pdf), [TD3](/teaching/TD3.pdf), [TD4](/teaching/TD4.pdf), [TD5](/teaching/TD5.pdf), [TD6](/teaching/TD6.pdf), [TD7](/teaching/TD7.pdf), [TD8](/teaching/TD8.pdf)
 
-Devoir 1 : [D1](/teaching/DM1.pdf), [correction](/teaching/DM1_corr.pdf), [D2](/teaching/DM2.pdf), [correction](/teaching/DM2_corr.pdf)
-
-# Statistique pour l'agrégation
-
-2020 - 2021 : cours et TD de statistiques pour la préparation à l'agrégation de SES (ENS Paris et Paris-Saclay), avec Rafael Grompone von Gioi. Toutes les informations sur [cette page](/teaching/statagreg).
-
-# Analyse complexe
-
-2017 - 2019 : travaux dirigés d'analyse complexe (3M366) pour les cours de Vincent Minerbe et Vincent Michel. 
-
-[Compilation de l'intégralité des exercices](/teaching/complexe_2019.pdf)
-
-# Analyse réelle dans $\mathbb{R}^n$
-
-2017 : travaux dirigés pour le cours d'analyse vectorielle (2M216) de Jean-François Babadjian.
-
-[Compilation de l'intégralité des exercices](/teaching/exercices2M216.pdf)
 
 
