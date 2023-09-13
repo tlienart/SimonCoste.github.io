@@ -1,7 +1,7 @@
 +++
 titlepost = "The point of view of Professor Parapine"
 date = "November 2022"
-abstract = "An interesting vision of science from one century ago."
+abstract = "An interesting vision of Science from one century ago. "
 +++
 
 

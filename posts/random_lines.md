@@ -1,14 +1,14 @@
 +++
 titlepost = "Random line processes"
 date = "August 2021"
-abstract = "How to draw random lines on the plane.  "
+abstract = "How to draw random lines on the plane."
 +++
 
 How do you draw lines at random in the plane, in such a way that the corresponding process does not depend on the origin?
 
 ## Representing lines with points
 
-Let $\ell$ be 2d line -- a one-dimensional subspace of $\mathbb{R}^2$. 
+Let $\ell$ be 2d line, ie a one-dimensional subspace of $\mathbb{R}^2$. 
 
 Mathematically, it can be represented in many ways: for instance, if it is not vertical, there are two unique numbers $\alpha, \beta$ such that $\ell = \{ (x, \alpha x + \beta) : x \in \mathbb{R} \}$. A less trivial way of representing lines is with orthogonality: if $\ell$ does not go through the origin, there is a unique couple $z=(r, \theta)$ with $r \geqslant 0$ and $\theta \in [0, 2\pi[$ such that $\ell$ is the unique line passing through the point $p=(r\cos(\theta), r\sin(\theta))$, and orthogonal to the line $(0, p)$. If $\ell$ passes through zero, the same is true provided that $\theta \in [0, \pi[$. 
 

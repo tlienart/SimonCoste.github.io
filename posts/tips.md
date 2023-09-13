@@ -1,6 +1,6 @@
 +++
-titlepost = "Tips and tricks in Julia"
-date = "2022"
+titlepost = "Tips and tricks for the Julia language"
+date = "August 2022"
 abstract = "A personnal collection of Julia's nice tricks. "
 +++
 
