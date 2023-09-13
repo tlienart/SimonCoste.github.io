@@ -14,7 +14,7 @@ Feuilles d'exercice : [TD1 (rappels)](/teaching/csto/TD1.pdf), [TD2 (rappels)](
 
 2023-2024 : TD du cours de probabilités mathématiques de Cyril Labbé (M1). 
 
-Feuilles d'exercice : [TD1](/teaching/TD1.pdf), [TD2](/teaching/TD2.pdf), [TD3](/teaching/TD3.pdf), [TD4](/teaching/TD4.pdf), [TD5](/teaching/TD5.pdf), [TD6](/teaching/TD6.pdf), [TD7](/teaching/TD7.pdf), [TD8](/teaching/TD8.pdf)
+Feuilles d'exercice : [TD1 (espaces mesurés)](/teaching/pr7/TD1.pdf)
 
 
 
