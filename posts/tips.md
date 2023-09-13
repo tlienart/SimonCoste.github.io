@@ -1,7 +1,7 @@
 +++
-titlepost = "Tips and tricks for the Julia language"
+titlepost = "Tips and tricks in the Julia language"
 date = "August 2022"
-abstract = "A personnal collection of Julia's nice tricks. "
+abstract = "A personnal collection of nice tricks in Julia. "
 +++
 
 
@@ -340,3 +340,5 @@ The output is an Int. The function `pos` is not type stable -- shame! The soluti
 ## Coding style
 
 Most of Julia's packages adopt the [BlueStyle](https://github.com/invenia/BlueStyle) guideline in addition to the [general guidelines](https://docs.julialang.org/en/v1/manual/style-guide/). In general, you can check that your files have a correct style by using `JuliaFormatter.jl`: you just go at the root of your repo and launch `format(".")`. All your files will be formatted. In VSCode, you can simply right-click on your file in the text editor and select `Format Document`.  
+
+---
