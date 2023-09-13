@@ -15,6 +15,19 @@ function lx_baz(com, _)
   return uppercase(brace_content)
 end
 
+function hfun_post(name)
+  url = joinpath("/posts/", name[1])
+  surl = strip(url, '/')
+  titlepost = pagevar(surl, :titlepost)
+  dateofpost = pagevar(surl, :date)
+  description = pagevar(surl, :abstract)
+  io = IOBuffer()
+  write(io, """<ul class="blog-posts">""")
+  write(io, """<b><a href="$url">$titlepost</a></b> &nbsp; <i> ($dateofpost) </i>""")
+  write(io, """<li><i class="description">$description</i></li>""")
+  write(io, "</ul>")
+  return String(take!(io))
+end
 
 function hfun_recentblogposts()
 

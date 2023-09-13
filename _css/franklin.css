@@ -390,7 +390,7 @@ ul.blog-posts li {
 }
 
 ul.blog-posts li span {
-  flex: 0 0 130px;
+  flex: 0 0 100px;
 }
 
 
@@ -400,7 +400,7 @@ ul.blog-posts li span {
 
 .description {
   margin-top: 4px;
-  margin-bottom: 24px;
+  margin-bottom: 4px;
 }
 
 .page-date {
