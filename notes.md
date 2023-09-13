@@ -11,7 +11,7 @@ Those are mostly blog posts, notes, talk slides, nice pictures and various thing
 
 {{post doubledescent}}
 
-{{post inv_equiv}}
+{{post invequiv}}
 
 {{post convmixer}}
 
@@ -39,16 +39,16 @@ Those are mostly blog posts, notes, talk slides, nice pictures and various thing
 
 {{post schur}}
 
-{{post dkl_gaussian}}
+{{post dklgaussian}}
 
 ## Nice pictures
 
 
-{{post elliptic_law}}
+{{post ellipticlaw}}
 
-{{post random_lines}}
+{{post randomlines}}
 
-{{post random_eigenfunctions}}
+{{post randomeigenfunctions}}
 
 
 ## Misc
