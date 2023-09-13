@@ -142,7 +142,6 @@ julia> rand() |> f |> g
 and you can also broadcast the functions: 
 ```julia
 julia> rand(3) .|> f .|> g
-3-element Vector{Float64}:
  0.4548384389788184
  0.7478851483599316
  0.20344218484963622
@@ -154,7 +153,6 @@ Finally, note that you can broadcast the pipe itself with the same syntax:
 
 ```julia
 julia> rand(2) .|> (f,g)
-2-element Vector{Float64}:
  0.5208181108065045
  0.047596231335982044
 ```

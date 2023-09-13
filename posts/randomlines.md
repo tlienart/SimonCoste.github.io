@@ -1,7 +1,7 @@
 +++
-titlepost = "Random line processes"
+titlepost = "Random line on the plane"
 date = "August 2021"
-abstract = "How to draw random lines on the plane."
+abstract = "How can we draw random lines on the plane?"
 +++
 
 How do you draw lines at random in the plane, in such a way that the corresponding process does not depend on the origin?
