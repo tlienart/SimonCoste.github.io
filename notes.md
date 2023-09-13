@@ -36,11 +36,13 @@ Those are mostly blog posts, notes, talk slides, nice pictures and various thing
 
 ## Gaussian computations
 
+
 {{post schur}}
 
 {{post dkl_gaussian}}
 
 ## Nice pictures
+
 
 {{post elliptic_law}}
 
@@ -50,6 +52,7 @@ Those are mostly blog posts, notes, talk slides, nice pictures and various thing
 
 
 ## Misc
+
 
 {{post tips}}
 

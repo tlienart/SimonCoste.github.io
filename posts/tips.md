@@ -4,6 +4,7 @@ date = "2022"
 abstract = "A personnal collection of Julia's nice tricks. "
 +++
 
+
 This post is some kind of a personnal collection of things learnt on-the-fly, small tips and tricks in the Julia language. They're not life-safers and won't make your code work better nor faster, but they'll probably help you write cleaner code, they're incredibly smooth, and using them fills me with an intense satisfaction. I hope this helps. 
 
 **Contents**
