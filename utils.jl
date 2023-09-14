@@ -15,7 +15,7 @@ function lx_baz(com, _)
   return uppercase(brace_content)
 end
 
-function hfun_post(name)
+@delay function hfun_post(name)
   url = joinpath("/posts/", name[1]*".md")
   surl = strip(url, '/')
   titlep = pagevar(surl, :titlepost)
