@@ -1,0 +1,4 @@
+Sitemap: https://scoste.fr/sitemap.xml
+
+User-agent: *
+Disallow:

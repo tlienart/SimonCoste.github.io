@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+   <link rel="stylesheet" href="/libs/highlight/github.min.css">
+   
+  <link rel="stylesheet" href="/css/franklin.css">
+<link rel="stylesheet" href="/css/poole_hyde.css">
+<!-- style adjustments -->
+<style>
+  html {font-size: 17px;}
+  .franklin-content {position: relative; padding-left: 8%; padding-right: 5%; line-height: 1.35em;}
+  @media (min-width: 940px) {
+    .franklin-content {width: 100%; margin-left: auto; margin-right: auto;}
+  }
+  @media (max-width: 768px) {
+    .franklin-content {padding-left: 6%; padding-right: 6%;}
+  }
+</style>
+<link rel="icon" href="/assets/lichen.png">
+
+   <title>Simon Coste</title> 
+
+</head>
+<body>
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+
+    <div class="sidebar-about">
+
+      <h1><a class="sidebar-about" href="/">Simon Coste</a></h1>
+      <p class="sidebar-about">Mathematics</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item " href="/">About</a>
+      <a class="sidebar-nav-item " href="/research/">Research</a>
+      <a class="sidebar-nav-item " href="/teaching/">Teaching</a>
+      <a class="sidebar-nav-item active" href="/notes/">Notes</a>
+      <a class="sidebar-nav-item " href="/talk/">Talks</a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <p>&copy; Simon Coste, modified: September 14, 2023. <br> Built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language. </a></p>
+    </div>
+
+
+  </div>
+  
+
+  
+</div>
+<div class="content container">
+
+<!-- Content appended here -->
+
+<div class="franklin-content"><h1 id="notes"><a href="#notes" class="header-anchor">Notes</a></h1>
+<p>Those are mostly blog posts, notes, talk slides, nice pictures and various things about mathematics, statistics, CS and machine learning. </p>
+<h2 id="deep_learning"><a href="#deep_learning" class="header-anchor">Deep learning</a></h2>
+<ul class="blog-posts"><b><a href="/posts/diffusion.md">Diffusion models</a></b> &nbsp; <i> (March 2023) </i><li><i class="description">A small mathematical summary. </i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/doubledescent.md">The double descent phenomenon</a></b> &nbsp; <i> (November 2021) </i><li><i class="description">Why do overparametrized networks do well?</i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/invequiv.md">The dimension of invariant and equivariant linear layers</a></b> &nbsp; <i> (July 2021) </i><li><i class="description">We compute the dimension of equivariant linear layers in neural architectures.</i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/convmixer.md">The ConvMixer architecture: 🤷</a></b> &nbsp; <i> (December 2021) </i><li><i class="description">I am training a deep network on a GPU using the Flux.jl library. There are two takeaway messages: 1) patches are all you need, 2) in Julia, the ConvMixer *largely* fits in one Tweet. </i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/gradient.md">Gradient descent over convex landscapes</a></b> &nbsp; <i> (April 2022) </i><li><i class="description">A note on the most elementary result of convex optimization: the speed of convergence is determined by the conditionning number of the Hessian. </i></li></ul>
+<h2 id="probability_and_maths"><a href="#probability_and_maths" class="header-anchor">Probability and maths</a></h2>
+<ul class="blog-posts"><b><a href="/posts/importance.md">Importance sampling ⚖️ </a></b> &nbsp; <i> (June 2023) </i><li><i class="description">On the sample size required to get a good approximation</i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/jarzynski.md">Importance sampling ⚖️⚖️ : The Jarzynski connection</a></b> &nbsp; <i> (March 2022) </i><li><i class="description">Change-of-measure for out-of-equilibrium systems</i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/elephant.md"> 🐘 The Elephant Random Walk </a></b> &nbsp; <i> (May 2023) </i><li><i class="description">Long-time memory results in non-diffusivity </i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/kelly.md">The Kelly criterion, crypto exchange drama, and your own utility function</a></b> &nbsp; <i> (November 2022) </i><li><i class="description">The most misused and simplistic investment criterion. </i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/stirling.md">Robbins' version of the Stirling approximation</a></b> &nbsp; <i> (November 2022) </i><li><i class="description">A handy, easy-to-remember estimate for the error in Stirling's approximation.</i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/catalan.md">Super-Catalan</a></b> &nbsp; <i> (Janvier 2022) </i><li><i class="description">Une question non-résolue, vieille de 150 ans, et probablement très inutile. </i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/randomseries.md">Random analytic functions: Ryll-Nardzewski's theorem</a></b> &nbsp; <i> (April 2021) </i><li><i class="description">What happens at the boundary of the disk of convergence of random analytic series. </i></li></ul>
+<h2 id="gaussian_computations"><a href="#gaussian_computations" class="header-anchor">Gaussian computations</a></h2>
+<ul class="blog-posts"><b><a href="/posts/schur.md">Gaussian conditioning </a></b> &nbsp; <i> (September 2023) </i><li><i class="description">The conditional distribution of some part of a gaussian vector given the other</i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/dklgaussian.md">The Kullback-Leibler divergence between Gaussians</a></b> &nbsp; <i> (June 2022) </i><li><i class="description">I'll know once and for all where to find this damn formula. </i></li></ul>
+<h2 id="nice_pictures"><a href="#nice_pictures" class="header-anchor">Nice pictures</a></h2>
+<ul class="blog-posts"><b><a href="/posts/ellipticlaw.md">An inverse visualization for the elliptic law</a></b> &nbsp; <i> (March 2021) </i><li><i class="description">A beautiful colorplot of the characteristic polynomial of random matrices. </i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/randomlines.md">Random line on the plane</a></b> &nbsp; <i> (August 2021) </i><li><i class="description">How can we draw random lines on the plane?</i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/randomeigenfunctions.md">Waves on donuts</a></b> &nbsp; <i> (August 2021) </i><li><i class="description">A nice plot of random Laplace eigenfuctions on the torus, also called random arithmetic waves.</i></li></ul>
+<h2 id="misc"><a href="#misc" class="header-anchor">Misc</a></h2>
+<ul class="blog-posts"><b><a href="/posts/tips.md">Tips and tricks in the Julia language</a></b> &nbsp; <i> (August 2022) </i><li><i class="description">A personnal collection of nice tricks in Julia. </i></li></ul>
+<ul class="blog-posts"><b><a href="/posts/parapine.md">The point of view of Professor Parapine</a></b> &nbsp; <i> (November 2022) </i><li><i class="description">An interesting vision of Science from one century ago. </i></li></ul>
+<!-- 
+  Page footer is in the sidebar. 
+ --></div><!-- CONTENT ENDS HERE -->
+    </div>  <!-- div: content container -->
+    
+    
+        
+
+
+    
+  </body>
+</html>

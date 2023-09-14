@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/libs/katex/katex.min.css">
+     
+   <link rel="stylesheet" href="/libs/highlight/github.min.css">
+   
+  <link rel="stylesheet" href="/css/franklin.css">
+<link rel="stylesheet" href="/css/poole_hyde.css">
+<!-- style adjustments -->
+<style>
+  html {font-size: 17px;}
+  .franklin-content {position: relative; padding-left: 8%; padding-right: 5%; line-height: 1.35em;}
+  @media (min-width: 940px) {
+    .franklin-content {width: 100%; margin-left: auto; margin-right: auto;}
+  }
+  @media (max-width: 768px) {
+    .franklin-content {padding-left: 6%; padding-right: 6%;}
+  }
+</style>
+<link rel="icon" href="/assets/lichen.png">
+
+   <title>Tips and tricks in the Julia language</title> 
+
+</head>
+<body>
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+
+    <div class="sidebar-about">
+
+      <h1><a class="sidebar-about" href="/">Simon Coste</a></h1>
+      <p class="sidebar-about">Mathematics</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item " href="/">About</a>
+      <a class="sidebar-nav-item " href="/research/">Research</a>
+      <a class="sidebar-nav-item " href="/teaching/">Teaching</a>
+      <a class="sidebar-nav-item " href="/notes/">Notes</a>
+      <a class="sidebar-nav-item " href="/talk/">Talks</a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <p>&copy; Simon Coste, modified: September 14, 2023. <br> Built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language. </a></p>
+    </div>
+
+
+  </div>
+  
+
+  
+</div>
+<div class="content container">
+
+<!-- Content appended here -->
+
+
+<div class="franklin-content">
+   <h1 class="page-title"> Tips and tricks in the Julia language </h1> 
+   <span class="page-date"> August 2022 </span> 
+</div>
+<div class="franklin-content">
+<p>This post is some kind of a personnal collection of things learnt on-the-fly, small tips and tricks in the Julia language. They&#39;re not life-safers and won&#39;t make your code work better nor faster, but they&#39;ll probably help you write cleaner code, they&#39;re incredibly smooth, and using them fills me with an intense satisfaction. I hope this helps. </p>
+<p><strong>Contents</strong></p>
+<div class="franklin-toc"><ol><li><a href="#repl_tricks">REPL tricks</a></li><li><a href="#updating_julia">Updating Julia</a></li><li><a href="#showing_off_with_unicode">Showing off with Unicode</a></li><li><a href="#various_kinds_of_syntactic_sugar">Various kinds of syntactic sugar</a></li><li><a href="#multiple_dispatch">Multiple dispatch</a></li><li><a href="#inlining">Inlining</a></li><li><a href="#logging_macros">Logging macros</a></li><li><a href="#saving_stuff_to_files">Saving stuff to files</a></li><li><a href="#keyword_arguments">Keyword arguments</a></li><li><a href="#type_stability">Type stability</a></li><li><a href="#coding_style">Coding style</a></li></ol></div>
+<h2 id="repl_tricks"><a href="#repl_tricks" class="header-anchor">REPL tricks</a></h2>
+<p>Typing <code>&#93;</code> in a REPL brings you to package mode – you can <code>activate</code> environments or <code>add</code> packages. </p>
+<p>Typing <code>?</code> in a REPL brings you to help mode – type anything and you&#39;ll get documentation. </p>
+<p>Typing <code>;</code> in a REPL brings you to shell mode – you can do your regular <code>ls</code> and <code>cd</code> and <code>grep</code> commands. </p>
+<p>To come back to the normal mode, juste type <code>del</code>. </p>
+<h3 id="writing_the_output_to_the_repl"><a href="#writing_the_output_to_the_repl" class="header-anchor">Writing the output to the REPL</a></h3>
+<p>If you&#39;re in a REPL and you want to define something, say an array, the ouput will be written in the REPL. In other words, you&#39;ll see</p>
+<pre><code class="julia hljs">julia&gt; x = rand(<span class="hljs-number">2</span>)
+<span class="hljs-number">2</span>-element <span class="hljs-built_in">Vector</span>{<span class="hljs-built_in">Float64</span>}:
+ <span class="hljs-number">0.35720058578070635</span>
+ <span class="hljs-number">0.5348958549457257</span></code></pre>
+<p>If you don&#39;t want the output to be displayed, you only have to add <code>;</code> at the end of the line. Also, you can chain many expressions in the same line if you separate them with <code>;</code>. </p>
+<pre><code class="julia hljs">julia&gt; x = rand(<span class="hljs-number">2</span>);y = <span class="hljs-number">2</span>*x;</code></pre>
+<h2 id="updating_julia"><a href="#updating_julia" class="header-anchor">Updating Julia</a></h2>
+<p>Julia evolves fast. Right now we&#39;re at 1.8x, but 1.9 is in alpha and scheduled soon. To upgrade my local julia version, I always use <a href="https://github.com/abelsiqueira/jill">Abel Siqueira&#39;s Jill installer</a>. Basically, you just have to </p>
+<pre><code class="julia hljs">sudo bash -ci <span class="hljs-string">&quot;<span class="hljs-subst">$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/main/jill.sh)</span>&quot;</span></code></pre>
+<p>in your terminal and that&#39;s all. </p>
+<h2 id="showing_off_with_unicode"><a href="#showing_off_with_unicode" class="header-anchor">Showing off with Unicode</a></h2>
+<p>Yes, you can write unicode in Julia. </p>
+<p>No, you should not abuse unicode in Julia. </p>
+<p>Some people just do not know how to reproduce unicode input and they&#39;re stuck trying to copy-paste your fancy <code>⨦&#40;🌁, 🌄&#41; &#61; 🌁 &#43; √🌄</code> &#40;yes, this is defining <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mo>=</mo><mi>a</mi><mo>+</mo><msqrt><mi>b</mi></msqrt></mrow><annotation encoding="application/x-tex">f(a,b) = a+\sqrt{b}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.10777999999999999em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.93222em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathnormal">b</span></span></span><span style="top:-2.89222em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.10777999999999999em;"><span></span></span></span></span></span></span></span></span>&#41;. But Julia is probably the only language where I can write crystal-clear mathematical functions that are directly readable as if they were LaTeX: </p>
+<pre><code class="julia hljs">φ(θ) = <span class="hljs-number">0.5</span> * (√θ - cos(θ))</code></pre>
+<p>And you can overload and use all the usual symbols, from greek letters &#40;<code>α, β, Θ...</code>&#41; to operators &#40;<code>∫, ∑, ∈, ≤...</code>&#41;, mathbb/mathfrak/mathcal/mathscr letters &#40;<code>𝕄, ℱ, 𝓝, 𝔖</code>&#41;, and so on. To get all those, see <a href="https://docs.julialang.org/en/v1/manual/unicode-input/">the julia unicode manual</a>. In the VScode extension for julia, when you want to use unicode letters &#40;for instance <code>\lambda</code> for <code>λ</code>&#41;, you type <code>\lambda</code> then <code>shift</code> and use autocompletion. </p>
+<h2 id="various_kinds_of_syntactic_sugar"><a href="#various_kinds_of_syntactic_sugar" class="header-anchor">Various kinds of syntactic sugar</a></h2>
+<p>Julia has nice syntactic shortcuts; they&#39;re clear, usefull, and simple to use, but some of them are not so well-known. Here&#39;s my personnal list. </p>
+<h3 id="condition_yes_no"><a href="#condition_yes_no" class="header-anchor">condition ? yes : no</a></h3>
+<p>This is the same as in Python. Instead of writing</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">if</span> condition
+    x = <span class="hljs-number">0</span>
+<span class="hljs-keyword">else</span>
+    x = <span class="hljs-number">1</span>
+<span class="hljs-keyword">end</span></code></pre>
+<p>One can simply use <code>x &#61; condition ? 0 : 1</code>. The condition must be a boolean variable. Note that having spaces around the <code>?</code> and <code>:</code> operators is mandatory.  </p>
+<h3 id="short-circuit_boolean_operators"><a href="#short-circuit_boolean_operators" class="header-anchor">Short-circuit boolean operators</a></h3>
+<p>Those are also present in other programming languages but for some reason I always forget which one is which one. The logical <em>and</em> and <em>or</em> are <code>&amp;</code> and <code>|</code>. But beware&#33; In <code>expr1 | expr2</code>, both expressions are tested. This is slightly inefficient: if <code>expr1</code> is true, there&#39;s no need to check <code>expr2</code>. To avoid these spurious evaluations, we have the « short-circuit » operators <code>&amp;&amp;</code> and <code>||</code> which do exactly what you think they do. </p>
+<p>You can use these to replace some <code>if</code> statements. For instance, <code>condition &amp;&amp; f&#40;&#41;</code> checks if <code>condition</code> if true, and if true, performs <code>f&#40;&#41;</code>. Typically, you see this in functions, for returning things based on a simple check on the argument. For example if you want to throw an error message, you can do</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">function</span> f(x)
+    x&lt;=<span class="hljs-number">0</span> &amp;&amp; <span class="hljs-keyword">return</span> <span class="hljs-built_in">ArgumentError</span>(<span class="hljs-string">&quot;x must be nonnegative&quot;</span>)
+    <span class="hljs-comment">#rest of the code</span>
+<span class="hljs-keyword">end</span></code></pre>
+<h3 id="defining_functions"><a href="#defining_functions" class="header-anchor">Defining functions</a></h3>
+<p>There are at least three ways to define functions in Julia. The classical one reads</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">function</span> f(x)
+    <span class="hljs-keyword">return</span> x^<span class="hljs-number">2</span>
+<span class="hljs-keyword">end</span></code></pre>
+<p>and note that one is not forced to use the <code>return</code> keyword: if the last line of the code block defining a function is simply an expression, then the function will return this expression. Thus, the former function is strictly the same as</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">function</span> f(x)
+    x^<span class="hljs-number">2</span>
+<span class="hljs-keyword">end</span></code></pre>
+<p>Now, there&#39;s the inline way: </p>
+<pre><code class="julia hljs">f(x) = x^<span class="hljs-number">2</span></code></pre>
+<p>and finally there&#39;s the anonymous way:</p>
+<pre><code class="julia hljs">x -&gt; x^<span class="hljs-number">2</span></code></pre>
+<p>This last way is useful for passing functions as argument of other functions, without hassling to give them a name. Typically, if you want to apply a function to every element in an array, you can use </p>
+<pre><code class="julia hljs">map(x-&gt;x^<span class="hljs-number">2</span>, array)</code></pre>
+<h3 id="feeding_things_to_structs"><a href="#feeding_things_to_structs" class="header-anchor">Feeding things to structs</a></h3>
+<p>Despite being essentially functional, Julia allows some object-oriented-style code. A very useful tip is that if you defined a custom <code>Struct</code>, you might want to call it like a function –- just as in Python, you can override the <code>self.__call__&#40;&#41;</code> method for your objects. Say you have a struct, </p>
+<pre><code class="julia hljs"><span class="hljs-keyword">struct</span> Thing
+    a
+<span class="hljs-keyword">end</span></code></pre>
+<p>Typically, this can be a machine-learning model, such as a multi-layer perceptron. The functional way to do this would be to define a <code>feed</code> function, such as</p>
+<pre><code class="julia hljs">feed(T::Thing, x) = <span class="hljs-comment">#code which outputs something</span></code></pre>
+<p>but it should be more intuitive if we could call <code>T&#40;x&#41;</code> directly instead. This can easily be done with </p>
+<pre><code class="julia hljs">(T::Thing)(x) = <span class="hljs-comment">#same code</span></code></pre>
+<h3 id="piping"><a href="#piping" class="header-anchor">Piping</a></h3>
+<p>You have two functions, say <code>f&#40;x&#41; &#61; x^2</code> and <code>g&#40;x&#41; &#61; sin&#40;x&#41;</code>. If you want to compute <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g(f(x))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span> for some random <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span>, you can write <code>g&#40;f&#40;x&#41;&#41;</code>, but you can also pipe the functions: </p>
+<pre><code class="julia hljs">julia&gt; rand() |&gt; f |&gt; g
+<span class="hljs-number">4.847492976007113e-7</span></code></pre>
+<p>and you can also broadcast the functions: </p>
+<pre><code class="julia hljs">julia&gt; rand(<span class="hljs-number">3</span>) .|&gt; f .|&gt; g
+ <span class="hljs-number">0.4548384389788184</span>
+ <span class="hljs-number">0.7478851483599316</span>
+ <span class="hljs-number">0.20344218484963622</span></code></pre>
+<p>This works with any function; it is common practice, when using a GPU with CUDA.jl, to put an array or a model to the gpu using <code>model &#61; model |&gt; gpu</code> instead of <code>model &#61; gpu&#40;model&#41;</code> </p>
+<p>Finally, note that you can broadcast the pipe itself with the same syntax:</p>
+<pre><code class="julia hljs">julia&gt; rand(<span class="hljs-number">2</span>) .|&gt; (f,g)
+ <span class="hljs-number">0.5208181108065045</span>
+ <span class="hljs-number">0.047596231335982044</span></code></pre>
+<h3 id="slurping_and_splatting"><a href="#slurping_and_splatting" class="header-anchor">Slurping and splatting</a></h3>
+<p>Slurping and splatting refer to the two &#40;different&#41; uses of the <code>...</code> operator: <a href="https://docs.julialang.org/en/v1/manual/faq/#What-does-the-...-operator-do?">see the Julia manual</a>. </p>
+<p><strong>Splatting</strong>. If <code>X &#61; &#91;1, 2, 3&#93;</code> and <code>f&#40;a,b,c&#41; &#61; a &#43; b - c</code> for instance, then <code>f&#40;X&#41;</code> obviously gives you an error since there is no method matching <code>f&#40;::Vector&#41;</code> or <code>f&#40;::Array&#41;</code>. But then, <code>f&#40;X...&#41;</code> does the trick. What the slurping operator <code>...</code> does is similar to what Python&#39;s <code>*</code> operator does: it simply unfolds the elements in the array and passes them as argument to the function. This is super useful.</p>
+<p><strong>Slurping</strong>. By contrast you can also use <code>...</code> in functions definitions when you don&#39;t exactly know how many arguments there might be. Typically, a function defined by <code>f&#40;args...&#41; &#61; #code</code> can take any number of arguments, but they&#39;ll be combined into a single argument &#40;a tuple, actually&#41;. Look at this: </p>
+<pre><code class="julia hljs">julia&gt; f(x...) = x
+f (generic <span class="hljs-keyword">function</span> with <span class="hljs-number">1</span> method)
+julia&gt; f(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)
+(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)
+julia&gt; f(<span class="hljs-string">&quot;a&quot;</span>)
+(<span class="hljs-string">&quot;a&quot;</span>,)</code></pre>
+<h3 id="ellipsis_notation"><a href="#ellipsis_notation" class="header-anchor">Ellipsis notation</a></h3>
+<p>Python has its famous ellipsis notation for slicing, <code>...</code>; roughly speaking, it allows to access a range of indices in a list or array, without having to specify the indices. For instance, if you have an array <code>x</code> with 3 dimensions, of size, say, &#40;5,6,7&#41;, writing <code>x&#91;0,:,:&#93;</code> is the same thing as writing <code>x&#91;0,...&#93;</code>. Since <code>...</code> is already taken in Julia for the slurping operator, we use <code>..</code> instead for the ellipsis notation. This is a part of Chris Rackauckas&#39;s package <a href="https://github.com/ChrisRackauckas/EllipsisNotation.jl">EllipsisNotation.jl</a> which just needs to be installed with Pkg and imported with <code>using EllipsisNotation</code>. </p>
+<h3 id="identity_matrices"><a href="#identity_matrices" class="header-anchor">Identity matrices</a></h3>
+<p>The identity matrix is <code>I</code>, period. Nothing more is needed &#40;except <code>using LinearAlgebra</code> of course&#41;. You don&#39;t need to specify its size or its datatype, those will be inferred by Julia when you need it. For instance you can very well write <code>rand&#40;3,3&#41; &#43; I</code>. </p>
+<h3 id="broadcasting_and_the_macro"><a href="#broadcasting_and_the_macro" class="header-anchor">Broadcasting and the <code>@.</code> macro</a></h3>
+<p>The &quot;dot syntax&quot; is well known in Julia: append any operation with a <code>.</code> to broadcast it, ie to cast it elementwise. For instance, if you have an array <code>X</code>, say <code>X &#61; rand&#40;10&#41;</code>, then <code>sin.&#40;X&#41;</code> is equivalent to <code>&#91;sin&#40;x&#41; for x in X&#93;</code>, or even to <code>map&#40;sin, X&#41;</code>. Note that this dot-syntax is almost customary, since <code>sin&#40;X&#41;</code> will result in a <code>MethodError</code> &#40;there is no method <code>sin&#40;::Vector&#123;...&#125;&#41;&#41;</code>&#41;. Virtually all operations can be dot-broadcasted: <code>&#43;, -, ^, *, sin, cos, tan</code>, whatever. But sometimes you need to chain many broadcasting operations and this results in clumpy dotted code: </p>
+<pre><code class="julia hljs">X = rand(<span class="hljs-number">10</span>)
+Y = sin.(X.^<span class="hljs-number">2</span>) .- cos.(X .* sin.(X .+ <span class="hljs-number">1</span>)).^<span class="hljs-number">3</span></code></pre>
+<p>Fortunately, you can distribute the dot itself using the <code>@.</code> macro: </p>
+<pre><code class="julia hljs">Y = @. sin(X^<span class="hljs-number">2</span>) - cos(X * sin(X+<span class="hljs-number">1</span>))^<span class="hljs-number">3</span></code></pre>
+<p>Of course, sometimes you want to dot-broadcast some operations and not others in the same expression, and in this case you need to escape some caracters with <code>&#36;</code> as explained in <a href="https://www.juliabloggers.com/broadcasting-in-julia-the-good-the-bad-and-the-ugly/?utm_source&#61;ReviveOldPost&amp;utm_medium&#61;social&amp;utm_campaign&#61;ReviveOldPost">this post by B. Kaminski</a>, but it results in even uglier code. </p>
+<h2 id="multiple_dispatch"><a href="#multiple_dispatch" class="header-anchor">Multiple dispatch</a></h2>
+<p>Multiple dispatch is when a function has several definitions according to the type of its arguments. Typically, </p>
+<pre><code class="julia hljs"><span class="hljs-keyword">function</span> f(x::<span class="hljs-built_in">Int</span>)
+    x+<span class="hljs-number">1</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-keyword">function</span> f(x::<span class="hljs-built_in">String</span>)
+    string(x, <span class="hljs-string">&quot;+1&quot;</span>)
+<span class="hljs-keyword">end</span></code></pre>
+<p>Here, the function <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span> is said to have two <em>methods</em> and you can see all the methods of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span> and where they are defined with <code>methods&#40;f&#41;</code>. You can also add some kind of constraints on the parameters: for instance, if you want a function to take as input two elements of the same type <code>T</code>, whatever it is, then</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">function</span> f(a::T, b::T) <span class="hljs-keyword">where</span> {T}
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;whatever&quot;</span>
+<span class="hljs-keyword">end</span></code></pre>
+<h2 id="inlining"><a href="#inlining" class="header-anchor">Inlining</a></h2>
+<p><em>Inlining</em> refers to the practice of <a href="https://en.wikipedia.org/wiki/Inline_expansion#:~:text&#61;In&#37;20computing&#37;2C&#37;20inline&#37;20expansion&#37;2C&#37;20or,body&#37;20of&#37;20the&#37;20called&#37;20function.&amp;text&#61;Inlining&#37;20is&#37;20an&#37;20important&#37;20optimization&#37;2C&#37;20but&#37;20has&#37;20complicated&#37;20effects&#37;20on&#37;20performance.">replacing a function call by its body</a>. Instead of calling the function &#40;which wastes a small amount of overhead&#41;, the compiler directly uses the code used to define the function. Under certain circumstances, this increases the speed of your program because 1&#41; you lose the overhead time of the function call and 2&#41; the compiler can further optimize inlined expressions which could not have been optimized otherwise. </p>
+<p>Inlining optimization is in general a subtle technique; sometimes it can even fail, for example when you inline huge portions of code. The best practice is to time and benchmark your code to see what works better, see <a href="https://aviatesk.github.io/posts/inlining-101/">this post</a> by Shuhei Kadowaki. </p>
+<p>In Julia, if you want to tell the compiler to inline a function, you can do this using the <code>@inline</code> macro. Apparently, Julia automatically inlines small functions, so you should use this macro for slightly bigger functions, so if you want to forbid Julia to inline them you can use <code>@noinline</code>. </p>
+<h2 id="logging_macros"><a href="#logging_macros" class="header-anchor">Logging macros</a></h2>
+<p>Most people debug their code by gently sprinkling <code>println</code> statements all around their code. In Julia, some very useful macros allow you to do this in a more classy style: they are <code>@info, @warn, @error, @show, @debug</code>. You use them by providing variables or <code>key &#61; values</code> pairs. For example, </p>
+<pre><code class="julia hljs">julia&gt; x = rand()
+<span class="hljs-number">0.5541313526244116</span>
+
+julia&gt; <span class="hljs-meta">@info</span> <span class="hljs-string">&quot;This is an info message&quot;</span> x y = x^<span class="hljs-number">2</span>
+┌ Info: This is an info message
+│   x = <span class="hljs-number">0.5541313526244116</span>
+└   y = <span class="hljs-number">0.30706155596136</span></code></pre>
+<p>The macros <code>@warn, @error, ...</code> are similar. At first sight, one might think that these macros are just more specific versions of print statements, but in reality they are internally endowed with metadata which interact with the <code>Logging</code> package. </p>
+<p>When you call one of these macros, a <em>log event</em> happens. The metadata associated to a log event are: the source module from which the event comes from, the file, the line, an ID and some extra info. Julia&#39;s default logger then chooses to display these metadata based on various things. For example, an @info event will display the dictionnary you gave as argument, but not the file or the module, while an @error message will also display the line:</p>
+<pre><code class="julia hljs">julia&gt; <span class="hljs-meta">@info</span> <span class="hljs-string">&quot;This is an info message&quot;</span>
+[ Info: This is an info message
+
+julia&gt; <span class="hljs-meta">@error</span> <span class="hljs-string">&quot;Something just broke&quot;</span>
+┌ Error: Something just broke
+└ @ Main REPL[<span class="hljs-number">4</span>]:<span class="hljs-number">1</span></code></pre>
+<p>This example was written in a REPL, hence the line number 1. </p>
+<p>This is good and usually sufficient for one&#39;s need, but we only tickled the full power of the <code>Logging</code> functionalities in Julia. More can be found on the <a href="https://julialogging.github.io/">JuliaLogging</a> excellent webpage. </p>
+<h2 id="saving_stuff_to_files"><a href="#saving_stuff_to_files" class="header-anchor">Saving stuff to files</a></h2>
+<p>You did some experiments, got a nice result under the shape of - say - an array, and you want to keep it somewhere for later. You can of course use the good old <code>write</code> function, but at the moment it&#39;s way better to use the <code>BSON.jl</code> package. This package encodes nearly everything using the Binary JSON format and is really easy to use thanks to the utility functions <code>@load, @save</code>. </p>
+<p>Suppose that you have an array of floats to save, and a string: </p>
+<pre><code class="julia hljs">arr = rand(<span class="hljs-number">10</span>)
+phrase = <span class="hljs-string">&quot;Vote for Pedro&quot;</span></code></pre>
+<p>Then you can both save them in the file &quot;output.bson&quot; with </p>
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> BSON:<span class="hljs-meta">@save</span>, <span class="hljs-meta">@load</span>
+<span class="hljs-meta">@save</span> <span class="hljs-string">&quot;output.bson&quot;</span> arr, phrase</code></pre>
+<p>The file is created or rewritten. Later, when you want to load those variables, you only have to do </p>
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> BSON:<span class="hljs-meta">@load</span>
+<span class="hljs-meta">@load</span> <span class="hljs-string">&quot;output.bson&quot;</span> arr, phrase</code></pre>
+<p>and a variable <code>phrase</code> is created with the value you stored last time. Indeed, you don&#39;t need to load all the variables you saved. If you only need to work on the string <code>phrase</code> you can just do</p>
+<pre><code class="julia hljs"><span class="hljs-meta">@load</span> <span class="hljs-string">&quot;output.bson&quot;</span> phrase</code></pre>
+<h2 id="keyword_arguments"><a href="#keyword_arguments" class="header-anchor">Keyword arguments</a></h2>
+<p>It can be a good programming practice to wrap your function arguments inside an <code>Args</code> structure. For instance, instead of having</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">function</span> f(size, depth, epsilon, tolerance, number_iterations)
+<span class="hljs-comment"># do stuff using these args</span></code></pre>
+<p>one could simply define a type for the arguments and the using it in the signature of the function: </p>
+<pre><code class="julia hljs">mutable Struct Args
+    size
+    depth
+    epsilon
+    <span class="hljs-comment"># etc</span>
+<span class="hljs-keyword">end</span> 
+
+<span class="hljs-keyword">function</span> f(args::Args)
+<span class="hljs-comment"># do stuff with args.size, args.depth, etc</span></code></pre>
+<p>A very nice way of doing this is to use the <code>Base.@kwdef</code> macro, which requires you to use the keywords when instanciating the structure. Taken from the doc itself: </p>
+<pre><code class="julia hljs">julia&gt; Base.<span class="hljs-meta">@kwdef</span> <span class="hljs-keyword">struct</span> Foo
+             a::<span class="hljs-built_in">Int</span> = <span class="hljs-number">1</span>         <span class="hljs-comment"># specified default</span>
+             b::<span class="hljs-built_in">String</span>          <span class="hljs-comment"># required keyword</span>
+         <span class="hljs-keyword">end</span>
+
+
+julia&gt; Foo(b=<span class="hljs-string">&quot;hi&quot;</span>)
+Foo(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;hi&quot;</span>)</code></pre>
+<h2 id="type_stability"><a href="#type_stability" class="header-anchor">Type stability</a></h2>
+<p><em>A function should always return values of the same type.</em></p>
+<p>This great example is taken from the official doc. Suppose you have a function like <code>pos&#40;x&#41; &#61; x &lt; 0 ? 0 : x</code>. You did not specify any types, so Julia needs to infer the types by itself. But here, if <code>x</code> is positive, the output is <code>x</code> &#40;say, a <code>Float32</code>&#41; and if <code>x</code> is a negative float, the output is <code>0</code>, that is...</p>
+<pre><code class="julia hljs">julia&gt; x = -<span class="hljs-number">3.0</span>
+julia&gt; typeof(pos(x))
+<span class="hljs-built_in">Int64</span></code></pre>
+<p>The output is an Int. The function <code>pos</code> is not type stable – shame&#33; The solution, here, is <code>pos&#40;x&#41; &#61; x &lt; 0 ? zero&#40;0&#41; : x</code>. In general, if you have an object <code>y</code> and you want to convert it to the type of <code>x</code>, this operation can be performed &#40;if able&#41; by <code>oftype&#40;x,y&#41;</code>. There are helper functions, like <code>one&#40;x&#41;</code> which returns a unit of the same type of <code>x</code>. </p>
+<h2 id="coding_style"><a href="#coding_style" class="header-anchor">Coding style</a></h2>
+<p>Most of Julia&#39;s packages adopt the <a href="https://github.com/invenia/BlueStyle">BlueStyle</a> guideline in addition to the <a href="https://docs.julialang.org/en/v1/manual/style-guide/">general guidelines</a>. In general, you can check that your files have a correct style by using <code>JuliaFormatter.jl</code>: you just go at the root of your repo and launch <code>format&#40;&quot;.&quot;&#41;</code>. All your files will be formatted. In VSCode, you can simply right-click on your file in the text editor and select <code>Format Document</code>.  </p>
+<hr />
+<!-- 
+  Page footer is in the sidebar. 
+ --></div><!-- CONTENT ENDS HERE -->
+    </div>  <!-- div: content container -->
+    
+        
+
+
+
+    
+    
+        
+
+
+    
+  </body>
+</html>

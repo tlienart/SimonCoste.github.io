@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Simon Coste - ENS">
+  <title>Non-hermitian matrices for graph clustering?</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="assets/style.css"/>
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+    var mathElements = document.getElementsByClassName("math");
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") { katex.render(texText.data, mathElements[i], { displayMode: mathElements[i].classList.contains("display"), throwOnError: false } );
+    }}});</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Non-hermitian matrices for graph clustering?</h1>
+  <p class="author">Simon Coste - ENS</p>
+  <p class="date">GDR ISIS, Mars 2022</p>
+</section>
+
+<section id="section" class="slide level1">
+<h1></h1>
+<div style="display: inline-block;">
+<p><img src="./assets/unorderedgraph.png" alt="spectrum" title="Spectrum" width="45%" /> <img src="./assets/orderedgraph.png" alt="spectrum"
+    title="Spectrum" width="45%" /></p>
+</div>
+</section>
+<section id="clustering-algorithms-in-a-nutshell" class="slide level1">
+<h1>Clustering algorithms in a nutshell</h1>
+<div class="important">
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 39%" />
+<col style="width: 39%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Step</th>
+<th>Spectral algorithms</th>
+<th>DL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>network representation</td>
+<td>laplacian, adjacency, non-backtracking, Bethe-Hessian…</td>
+<td>tensorized representations of the graph</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>low-dim node embedding</td>
+<td>eigenvectors, singular vectors</td>
+<td>equivariant GNNs</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>clustering on the embedding</td>
+<td>K-means, EM</td>
+<td>linear classifier</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="section-1" class="slide level1">
+<h1></h1>
+<div class="pan">
+<p>
+adj.
+</p>
+<p><img src="./assets/adjacency_hist.png" alt="spectrum" title="Spectrum" /> <img src="./assets/adjacency_vec.png" alt="spectrum"
+    title="Spectrum" /></p>
+</div>
+<div class="pan">
+<p>
+lap.
+</p>
+<p><img src="./assets/laplacian_hist.png" alt="spectrum" title="Spectrum" /> <img src="./assets/laplacian_vec.png" alt="spectrum"
+    title="Spectrum" /></p>
+</div>
+<div class="pan">
+<p>
+asy.
+</p>
+<p><img src="./assets/nonsym_hist.png" alt="spectrum" title="Spectrum" /> <img src="./assets/nonsym_vec.png" alt="spectrum"
+    title="Spectrum" /></p>
+</div>
+</section>
+<section id="first-challenge-sparsity" class="slide level1">
+<h1>First challenge: sparsity</h1>
+<p>A graph is <em>sparse</em> when <span class="math inline">n_\mathrm{edges} \approx n_\mathrm{nodes}</span>.</p>
+<ul>
+<li><p>classical spectral clustering works when graphs are not too sparse</p></li>
+<li><p>classical spectral clustering doesn’t work when graphs are sparse</p></li>
+</ul>
+<div class="important">
+<p><em>Potential reasons</em></p>
+<p>Eigenvalues of normal matrices (including SVD) are aligned with high-degrees.</p>
+<p>Sparse graphs often have very heterogeneous degrees.</p>
+</div>
+</section>
+<section id="second-challenge-directedness" class="slide level1">
+<h1>Second challenge: directedness</h1>
+<ul>
+<li><p>many (most?) real-world networks are directed</p></li>
+<li><p>most clustering methods represent digraphs with normal matrices (<strong>including SVD-based methods</strong>)</p></li>
+</ul>
+</section>
+<section id="takeaway-messages-asymmetry-helps" class="slide level1">
+<h1>Takeaway messages: <strong>Asymmetry helps</strong></h1>
+<div class="theorem">
+<ol type="1">
+<li><p>non-Hermitian matrices have eigenvalues, too</p></li>
+<li><p>non-Hermitian matrices should not frighten you</p></li>
+</ol>
+</div>
+<p>[Chen, Cheng, Fan, 18] [Bordenave, C, Nadakuditi, 20] [C, Stephan, 21]</p>
+</section>
+<section id="some-spectral-theory-of-sparse-directed-graphs" class="slide level1">
+<h1>Some spectral theory of sparse directed graphs</h1>
+</section>
+<section id="a-model-of-directed-inhomogeneous-random-graphs" class="slide level1">
+<h1>A model of directed inhomogeneous <em>random</em> graphs</h1>
+<div class="important">
+<p>Parameters: size <span class="math inline">n</span> super large, connectivity matrix <span class="math inline">P=(P_{i,j})</span></p>
+<p><span class="math inline">A_{i,j}</span> = edge from node <span class="math inline">i</span> to node <span class="math inline">j</span></p>
+<p><span class="math display">A_{i,j} = \mathrm{Bernoulli}(P_{i,j}) ~~~~~~~~~~~~~~~ (\mathrm{independent})</span></p>
+</div>
+<ul>
+<li><p>Sparsity <span class="math inline">\iff \Vert P \Vert_{\infty} = O(1/n)</span></p></li>
+<li><p><span class="math inline">\mathbf{E}[A] = P</span></p></li>
+<li><p>If <span class="math inline">P</span> has a block-structure as in a SBM, this structure is visible in the eigenvectors</p></li>
+</ul>
+</section>
+<section id="section-2" class="slide level1">
+<h1></h1>
+<ul>
+<li><p><span class="math inline">\lambda_i</span> = eigenvalues of <span class="math inline">P</span> with left/right eigenvectors <span class="math inline">u_i, v_i</span>.</p></li>
+<li><p><span class="math inline">\mu_i</span> = eigenvalues of <span class="math inline">A</span> with left/right eigenvectors <span class="math inline">\varphi_i, \psi_i</span> (random).</p></li>
+</ul>
+<div class="theorem">
+<p><strong>Theorem</strong> (C, Stephan, 2021+)</p>
+<p><span class="math display"> t = \sqrt{\Vert P \Vert} ~~~~~~~~~~~~ \text{(the crucial threshold)}</span></p>
+<ul>
+<li>if <span class="math inline">|\lambda_i| &gt; t</span> then:</li>
+</ul>
+<p><span class="math display">\mu_i = \lambda_i + o(1) ~~~~~ \text{and} ~~~~~|\langle u_i, \varphi_i\rangle| \to \mathrm{something}_i</span></p>
+<ul>
+<li>other eigenvalues of <span class="math inline">A</span> are smaller than <span class="math inline">t + o(1)</span>.</li>
+</ul>
+</div>
+<p>Usage: estimate <span class="math inline">u_i</span> from <span class="math inline">\varphi_i</span>, then find the block-structure</p>
+</section>
+<section id="example" class="slide level1">
+<h1>Example</h1>
+<p>Here <span class="math inline">\mathbf{E}[A]</span> has 3 eigenvalues 1,2,3 and <span class="math inline">t=\sqrt{\Vert P \Vert} \approx 1,37</span>.</p>
+<p><img src="./assets/spectrum.png" alt="spectrum"
+    title="Spectrum" width="600" /></p>
+</section>
+<section id="directed-stochastic-block-models" class="slide level1">
+<h1>Directed Stochastic Block Models</h1>
+</section>
+<section id="sbm-with-a-block-wise-path-structure" class="slide level1">
+<h1>SBM with a block-wise path structure:</h1>
+<p><span class="math display">P = \frac{d}{n}\begin{bmatrix}1 &amp; 1- \eta &amp; 0 \\
+\eta &amp; 1 &amp; 1-\eta &amp; 0 \\
+0 &amp; \eta &amp; 1 &amp; 1 - \eta &amp; \ddots \\
+&amp;&amp;&amp;&amp;&amp;&amp;&amp;\\ 
+&amp; &amp; \ddots &amp; \ddots &amp; \ddots \\
+\\
+ \end{bmatrix}</span></p>
+<p>Eigenvalues of <span class="math inline">P</span> and threshold <span class="math inline">t=\sqrt{\Vert P \Vert}</span>:</p>
+<p>explicit in terms of <span class="math inline">k</span> (number of blocks), <span class="math inline">d</span> (density) and <span class="math inline">\eta</span> (asymmetry)</p>
+</section>
+<section id="section-3" class="slide level1">
+<h1></h1>
+<p>Green: <span style="color:green"> eig. of an ad hoc skew-Hermitian matrix ([Laenen &amp; Sun 20]) </span>.</p>
+<p><span class="math display">d=2 ~~~~~~~~~~~~~~~~~~~~~~~~~ d=5 ~~~~~~~~~~~~~~~~~~~~~~~~~ d=10 </span> <img data-src="./assets/performance.png" /></p>
+<p>(performance metric= mean adjusted overlap)</p>
+</section>
+<section id="conclusion" class="slide level1">
+<h1>Conclusion</h1>
+</section>
+<section id="question-best-graph-representations-for-gnns" class="slide level1">
+<h1>Question: best graph representations for GNNs?</h1>
+<ul>
+<li><a href="https://arxiv.org/pdf/2101.10050.pdf">[Dasoulas, Lutzeyer, Vazirgiannis 21]</a> parametrize their graph matrix representation using a few basic building blocks:<br />
+<span class="math display"> \alpha_1 D^{\gamma_1} + \alpha_2 D^{\gamma_2}A D^{\gamma_3} + \alpha_3 I</span></li>
+</ul>
+<p>They optimize this in <span class="math inline">\alpha_i, \gamma_j</span> for a fixed GNN architecture.</p>
+<div class="important">
+<p>What happens if you allow <em>truly</em> non-normal representations,</p>
+<p><strong>even if the graph is undirected</strong>?</p>
+</div>
+</section>
+<section id="section-4" class="slide level1">
+<h1></h1>
+<div class="refs">
+<p><a href="https://arxiv.org/pdf/2102.03188.pdf"><img data-src="./assets/a3_simpler.png" /></a></p>
+<p><a href="https://arxiv.org/pdf/2011.05080.pdf"><img data-src="./assets/a4_simpleherm.png" /></a></p>
+<p><a href="https://arxiv.org/pdf/1811.12804.pdf"><img data-src="./assets/a2_asymmetryhelps.png" /></a></p>
+</div>
+<p>and C. Bordenave, L. Massoulié, L. Stephan, L. Dall’Amico…</p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
